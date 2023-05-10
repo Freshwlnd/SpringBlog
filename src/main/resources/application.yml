@@ -5,7 +5,7 @@ server:
 
 telegram:
   bot:
-    enabled: true
+    enabled: false
     name: bvn13_blog_test_bot
     channel: bvn13_blog_test
     token_file: private/telegram_bot_test.token
