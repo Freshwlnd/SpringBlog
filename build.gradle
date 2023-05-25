@@ -1,133 +1,14 @@
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-version = '2.8.2'
-
-repositories {
-    mavenCentral()
-    jcenter()
-    mavenLocal()
-
-    maven { url 'http://repo.spring.io/libs-release' }
-    maven { url "http://repo.springsource.org/repo" }
-}
-
-bootRun {
-    systemProperties = System.properties
-}
-
-configurations {
-    compile.exclude module: "spring-boot-starter-tomcat"
-    all*.exclude module: 'spring-boot-starter-logging'
-}
 
 //tasks.withType(JavaCompile) {
 //    options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
 //}
 
-dependencies {
-    // spring boot
-    compile "org.springframework.boot:spring-boot-starter-web-services:1.5.9.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-jetty:1.5.9.RELEASE"
-    //compile "org.springframework.boot:spring-boot-starter-tomcat:1.5.9.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.5.9.RELEASE"
-    compile "com.domingosuarez.boot:spring-boot-starter-jade4j:0.3.2"
-    compile "org.springframework.boot:spring-boot-starter-data-redis:1.5.9.RELEASE"
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:'1.5.9.RELEASE') {
-        exclude(module: 'spring-boot-starter-logging')
-    }
-    compile ('org.springframework.boot:spring-boot-starter-log4j2:1.5.9.RELEASE') {
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
-    }
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.5.9.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-security:1.5.9.RELEASE'
-
-    // spring framework
-    compile 'org.springframework:spring-context:4.3.13.RELEASE'
-    compile 'org.springframework:spring-webmvc:4.3.13.RELEASE'
-    compile 'org.springframework.security:spring-security-config:4.2.3.RELEASE'
-    compile 'org.springframework.security:spring-security-web:4.2.3.RELEASE'
-
-    //persistence
-//    compile 'com.zaxxer:HikariCP:+'
-    compile 'com.zaxxer:HikariCP:2.5.1'
-    compile 'org.springframework:spring-orm:4.3.13.RELEASE'
-    compile 'org.hibernate:hibernate-entitymanager:5.0.12.Final'
-    compile 'javax.el:javax.el-api:+'
-    compile 'org.hsqldb:hsqldb:+'
-
-    // view
-    compile 'de.neuland-bfi:spring-jade4j:1.2.7'
-    //compile 'org.pegdown:pegdown:1.6.0'
-
-    //markdown processor
-    compile 'com.vladsch.flexmark:flexmark-all:0.28.24'
-
-    // spring data
-    compile 'org.springframework.data:spring-data-jpa:1.11.9.RELEASE'
-
-    // cache
-    compile 'org.springframework.data:spring-data-redis:1.8.9.RELEASE'
-    compile 'redis.clients:jedis:2.9.0'
-
-    // MySQL
-    //compile 'mysql:mysql-connector-java:+'
-
-    // PostgreSQL
-//    compile 'org.postgresql:postgresql:42.1.1'
-    compile 'org.postgresql:postgresql:+'
-
-    // Validation
-    compile 'org.hibernate:hibernate-validator:5.3.6.Final'
-
-    // Logging
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'org.slf4j:slf4j-api:1.7.25'
-    compile 'org.apache.commons:commons-lang3:+'
-
-    // @Inject
-    compile 'javax.inject:javax.inject:+'
-
-    // JSON
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.2'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.2'
-
-    // Utilities
-    compile 'com.google.guava:guava:+'
-    compile 'org.modelmapper:modelmapper:1.1.1'
-    compile 'org.projectlombok:lombok:1.16.16'
-    //compile 'com.qiniu:qiniu-java-sdk:7.0.+'
-
-    // static resources, ref. http://www.webjars.org/
-    compile 'org.webjars:jquery:3.2.1'
-    compile 'org.webjars:bootstrap:3.3.7-1'
-    compile 'org.webjars:font-awesome:4.7.0'
-    compile 'org.webjars:ace:1.2.8'
-
-    // telegram bot api
-    compile 'org.telegram:telegrambots:3.5'
-
-    // test
-    testCompile("org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE")
-    testCompile 'junit:junit:+'
-    testCompile 'org.mockito:mockito-core:+'
-    testCompile 'org.assertj:assertj-core:+'
-    testCompile 'org.hamcrest:hamcrest-core:+'
-    testCompile 'org.hamcrest:hamcrest-library:+'
-    testCompile 'org.objenesis:objenesis:+'
-    testCompile 'org.springframework:spring-test:+'
-
-}
-
-
+//构建Gradle脚本自身需要的资源，可以声明的资源包括依赖项、第三方插件、maven仓库地址等。
 buildscript {
     ext {
         springBootVersion = '1.5.9.RELEASE'
+        springCloudVersion = 'Edgware.RELEASE'
     }
 
     repositories {
@@ -145,3 +26,168 @@ buildscript {
     }
 
 }
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.raysmond'
+    version = '2.8.2'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        mavenLocal()
+
+        maven { url 'http://repo.spring.io/libs-release' }
+        maven { url "http://repo.springsource.org/repo" }
+    }
+
+    dependencies {
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+}
+
+//// 所有子项目继承父项目的依赖。（若放在最外层只影响父项目本身的依赖，而不是子项目的依赖。）
+//allprojects {
+//    apply plugin: 'java'
+//    apply plugin: 'idea'
+//    apply plugin: 'eclipse'
+//    apply plugin: 'org.springframework.boot'
+//    apply plugin: 'io.spring.dependency-management'
+//
+//    sourceCompatibility = 1.8
+//    targetCompatibility = 1.8
+//
+//    version = '2.8.2'
+//
+//    repositories {
+//        mavenCentral()
+//        jcenter()
+//        mavenLocal()
+//
+//        maven { url 'http://repo.spring.io/libs-release' }
+//        maven { url "http://repo.springsource.org/repo" }
+//    }
+//
+//    configurations {
+//        compile.exclude module: "spring-boot-starter-tomcat"
+//        all*.exclude module: 'spring-boot-starter-logging'
+//    }
+//
+//    bootRun {
+//        systemProperties = System.properties
+//    }
+//
+//    dependencies {
+//        // spring boot
+//        compile "org.springframework.boot:spring-boot-starter-web-services:1.5.9.RELEASE"
+//        compile "org.springframework.boot:spring-boot-starter-jetty:1.5.9.RELEASE"
+//        //compile "org.springframework.boot:spring-boot-starter-tomcat:1.5.9.RELEASE"
+//        compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.5.9.RELEASE"
+//        compile "com.domingosuarez.boot:spring-boot-starter-jade4j:0.3.2"
+//        compile "org.springframework.boot:spring-boot-starter-data-redis:1.5.9.RELEASE"
+//        compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:'1.5.9.RELEASE') {
+//            exclude(module: 'spring-boot-starter-logging')
+//        }
+//        compile ('org.springframework.boot:spring-boot-starter-log4j2:1.5.9.RELEASE') {
+//            exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+//        }
+//        compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.5.9.RELEASE'
+//        compile 'org.springframework.boot:spring-boot-starter-security:1.5.9.RELEASE'
+//
+//        // spring framework
+//        compile 'org.springframework:spring-context:4.3.13.RELEASE'
+//        compile 'org.springframework:spring-webmvc:4.3.13.RELEASE'
+//        compile 'org.springframework.security:spring-security-config:4.2.3.RELEASE'
+//        compile 'org.springframework.security:spring-security-web:4.2.3.RELEASE'
+//
+//        //persistence
+////    compile 'com.zaxxer:HikariCP:+'
+//        compile 'com.zaxxer:HikariCP:2.5.1'
+//        compile 'org.springframework:spring-orm:4.3.13.RELEASE'
+//        compile 'org.hibernate:hibernate-entitymanager:5.0.12.Final'
+//        compile 'javax.el:javax.el-api:+'
+//        compile 'org.hsqldb:hsqldb:+'
+//
+//        // view
+//        compile 'de.neuland-bfi:spring-jade4j:1.2.7'
+//        //compile 'org.pegdown:pegdown:1.6.0'
+//
+//        //markdown processor
+//        compile 'com.vladsch.flexmark:flexmark-all:0.28.24'
+//
+//        // spring data
+//        compile 'org.springframework.data:spring-data-jpa:1.11.9.RELEASE'
+//
+//        // cache
+//        compile 'org.springframework.data:spring-data-redis:1.8.9.RELEASE'
+//        compile 'redis.clients:jedis:2.9.0'
+//
+//        // MySQL
+//        //compile 'mysql:mysql-connector-java:+'
+//
+//        // PostgreSQL
+////    compile 'org.postgresql:postgresql:42.1.1'
+//        compile 'org.postgresql:postgresql:+'
+//
+//        // Validation
+//        compile 'org.hibernate:hibernate-validator:5.3.6.Final'
+//
+//        // Logging
+//        compile 'ch.qos.logback:logback-classic:1.2.3'
+//        compile 'org.slf4j:slf4j-api:1.7.25'
+//        compile 'org.apache.commons:commons-lang3:+'
+//
+//        // @Inject
+//        compile 'javax.inject:javax.inject:+'
+//
+//        // JSON
+//        compile 'com.fasterxml.jackson.core:jackson-databind:2.9.2'
+//        compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.2'
+//
+//        // Utilities
+//        compile 'com.google.guava:guava:+'
+//        compile 'org.modelmapper:modelmapper:1.1.1'
+//        compile 'org.projectlombok:lombok:1.16.16'
+//        //compile 'com.qiniu:qiniu-java-sdk:7.0.+'
+//
+//        // static resources, ref. http://www.webjars.org/
+//        compile 'org.webjars:jquery:3.2.1'
+//        compile 'org.webjars:bootstrap:3.3.7-1'
+//        compile 'org.webjars:font-awesome:4.7.0'
+//        compile 'org.webjars:ace:1.2.8'
+//
+//        // telegram bot api
+//        compile 'org.telegram:telegrambots:3.5'
+//
+//        // test
+//        testCompile("org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE")
+//        testCompile 'junit:junit:+'
+//        testCompile 'org.mockito:mockito-core:+'
+//        testCompile 'org.assertj:assertj-core:+'
+//        testCompile 'org.hamcrest:hamcrest-core:+'
+//        testCompile 'org.hamcrest:hamcrest-library:+'
+//        testCompile 'org.objenesis:objenesis:+'
+//        testCompile 'org.springframework:spring-test:+'
+//
+//    }
+//
+//    dependencyManagement {
+//        imports {
+//            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//        }
+//    }
+//}
+//

@@ -1,0 +1,19 @@
+
+
+.load-more
+  nav
+    ul.pager
+
+      if page > 1
+        li.previous
+          a.btn(href="?page=#{page - 1}")
+            span(aria-hidden="true") &larr;
+            | Newer posts
+
+
+      if totalPages > page
+        li.next
+          a.btn(href="?page=#{page + 1}")
+            | Older posts
+            span(aria-hidden="true") &rarr;
+

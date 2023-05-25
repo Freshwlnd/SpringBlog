@@ -1,1 +1,11 @@
 rootProject.name = 'SpringBlog'
+include 'eureka'
+include 'microservice1'
+include 'microservice2'
+include 'microservice3'
+include 'microservice4'
+include 'microservice5'
+include 'microservice6'
+include 'microservice7'
+include 'common'
+

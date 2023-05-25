@@ -1,0 +1,67 @@
+server:
+  port: 8002
+  contextPath:
+
+telegram:
+  bot:
+    enabled: false
+    name: bvn13_blog_test_bot
+    channel: bvn13_blog_test
+    token_file: private/telegram_bot_test.token
+    master_name : bvn13
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true   #表示将自己的ip注册到eureka上，如果不配置该属性或者设置为false，则表示注册微服务所在的操作系统的hostname到eureka上
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+
+spring:
+  application:
+    name: springblog-microservice2
+
+  profiles:
+    active: dev
+
+  thymeleaf:
+    cache: false
+
+  jade4j:
+    caching: false
+
+  dataSource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/blog
+    username: blog
+    password: blogpass
+
+  hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    hbm2ddl.auto: update
+    show_sql: true
+    use_sql_comments: true
+    format_sql: true
+
+  redis:
+    host: localhost
+    port: 6379
+    default_expire_time: 86400
+
+
+  session:
+    store-type: redis
+
+  http:
+    multipart:
+      max-file-size: 100Mb
+      max-request-size: 100Mb
+
+
+security:
+  basic:
+    enabled: false
+management:
+  security:
+    enabled: false

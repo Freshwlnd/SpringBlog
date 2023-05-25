@@ -1,0 +1,55 @@
+package com.raysmond.blog.microservice1.admin.controllers;
+
+import com.raysmond.blog.common.models.Post;
+import com.raysmond.blog.common.models.dto.PostAnnouncementDTO;
+import com.raysmond.blog.common.models.support.PostStatus;
+import com.raysmond.blog.microservice1.notificators.Notificator;
+import com.raysmond.blog.microservice1.services.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+/**
+ * Created by bvn13 on 22.12.2017.
+ */
+@Controller
+@RequestMapping(value = "/admin/notify")
+public class NotificatorController {
+
+    @Autowired
+    private Notificator notificator;
+
+
+    @Autowired
+    private PostService postService;
+
+
+
+    @PostMapping(value = "/{postId:[0-9]+}/telegram", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    PostAnnouncementDTO sendTelegramAnnounce(@PathVariable Long postId, Model model) {
+
+        Post post = postService.getPost(postId);
+        if (post.getPostStatus().equals(PostStatus.PUBLISHED)) {
+            try {
+                notificator.announcePost(post);
+                return new PostAnnouncementDTO(false);
+            } catch (IllegalArgumentException iae) {
+                iae.printStackTrace();
+                return new PostAnnouncementDTO(true, iae.getMessage());
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+                return new PostAnnouncementDTO(true, "Error occures");
+            }
+        } else {
+            return new PostAnnouncementDTO(true, "Post is not published!");
+        }
+    }
+
+}

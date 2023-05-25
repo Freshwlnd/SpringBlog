@@ -1,0 +1,17 @@
+extends ../layout/admin
+
+block content
+  h1 Upload status
+  hr
+
+
+  div
+    if uploadStatus == null || uploadStatus.isEmpty()
+      | Nothing is received
+    else
+      = uploadStatus
+
+  br
+
+  div
+    a.btn.btn-default(href="/admin/files") Back

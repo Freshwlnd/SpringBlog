@@ -1,0 +1,18 @@
+extends ../layout/app
+
+block page_title
+  // .avatar
+  //  img(src="/images/user.jpg")
+  h1 #{App.getSiteName()}
+  p.meta #{App.getSiteSlogan()}
+
+  // p Hi, there. I'm bvn13.
+
+block title 
+  = App.getSiteName()
+
+block content
+  include ../posts/index
+
+  .loadmore
+    a.btn.btn-default(href="/posts/archive") More

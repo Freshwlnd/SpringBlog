@@ -1,0 +1,8 @@
+div
+  span.sympathy-block
+    span.sympathy #{viewHelper.formatNumberByThousands(post.getVisitsCount())}
+    img.borderless(src="/images/open-eye-with-blank-pupil_min.png")
+  span.sympathy-block
+    img.borderless(src="/images/like_min.png")
+    span.sympathy #{viewHelper.formatNumberByThousands(post.getSympathyCount())}
+    img.borderless(src="/images/dislike_min.png")

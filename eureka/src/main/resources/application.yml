@@ -1,0 +1,20 @@
+#声名服务端口号
+server:
+  port: 8761
+
+#设置服务名称
+spring:
+  application:  # 应用名字，eureka 会根据它作为服务id
+    name: springblog-eureka
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    #是否在注册中心注册自己
+    register-with-eureka: false
+    #是否从 eureka 获取注册信息
+    fetch-registry: false
+    #配置注册中心的url (注意:地址最后面的 /eureka/ 这个是固定值)服务注册也就依赖这个url，后续我们会用到
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
