@@ -27,7 +27,8 @@
     <logger name="com.raysmond.blog.notificators.telegram" level="DEBUG" />
 	<logger name="com.raysmond.blog.notificators.telegram.TelegramBotManager.TelegramBot" level="DEBUG" />
 
-	<root level="WARN">
+<!--	<root level="WARN">-->
+	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

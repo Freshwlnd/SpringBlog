@@ -14,4 +14,10 @@ public class UserForm {
 
     @NotNull
     private String newPassword;
+
+    // TODO
+    public UserForm() {
+        password = "1";
+        newPassword = "2";
+    }
 }

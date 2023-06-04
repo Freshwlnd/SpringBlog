@@ -25,7 +25,7 @@ public class Post extends BaseModel {
     private static final SimpleDateFormat SLUG_DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
 
     @Column(nullable = false, columnDefinition = "boolean DEFAULT false")
-    private Boolean deleted;
+    private Boolean deleted = false;
 
     @ManyToOne
     private User user;
@@ -94,5 +94,15 @@ public class Post extends BaseModel {
     public Integer getSympathyCount() {
         if (this.sympathyCount == null) return 0;
         else return this.sympathyCount;
+    }
+
+    // TODO
+    public void init() {
+        user = new User();
+        title = "title";
+        content = "content";
+        renderedContent = "renderedContent";
+        announcement = "announcement";
+        permalink = "permalink";
     }
 }

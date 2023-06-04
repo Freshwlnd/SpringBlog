@@ -30,4 +30,13 @@ public class SettingsForm {
     @NotNull
     private String telegramMasterChatId;
 
+    // TODO
+    public SettingsForm() {
+        siteName = "SpringBlog";
+        siteSlogan = "An interesting place to discover";
+        pageSize = 5;
+        storagePath = "/tmp";
+        mainUri = "http://localhost/";
+        telegramMasterChatId = "";
+    }
 }

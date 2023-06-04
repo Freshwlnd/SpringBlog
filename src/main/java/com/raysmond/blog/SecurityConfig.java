@@ -41,27 +41,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //.httpBasic().disable()
-            .authorizeRequests()
-                .antMatchers("/admin/**").authenticated()
-                //.antMatchers("/authenticate").permitAll()
-                .anyRequest().permitAll()
-                .and()
-            .formLogin()
-                .loginPage("/signin")
-                .permitAll()
-                .failureUrl("/signin?error=1")
-                .loginProcessingUrl("/authenticate")
-                .and()
-            .logout()
-                .logoutUrl("/logout")
-                .permitAll()
-                .logoutSuccessUrl("/signin?logout")
-                .and()
-            .rememberMe()
-                .rememberMeServices(rememberMeServices())
-                .key("remember-me-secret")
-                //.tokenValiditySeconds(60*60) //NB: Not here
+                .httpBasic().disable()
+//            .authorizeRequests()
+//                .antMatchers("/admin/**").authenticated()   // one who logged in can access
+//                //.antMatchers("/authenticate").permitAll()
+//                .anyRequest().permitAll()   // anyone can access
+//                .and()
+//            .formLogin()
+//                .loginPage("/signin")
+//                .permitAll()
+//                .failureUrl("/signin?error=1")
+//                .loginProcessingUrl("/authenticate")
+//                .and()
+//            .logout()
+//                .logoutUrl("/logout")
+//                .permitAll()
+//                .logoutSuccessUrl("/signin?logout")
+//                .and()
+//            .rememberMe()
+//                .rememberMeServices(rememberMeServices())
+//                .key("remember-me-secret")
+//                //.tokenValiditySeconds(60*60) //NB: Not here
                 ;
     }
 }

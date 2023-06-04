@@ -65,6 +65,21 @@ public class PostForm {
     @NotNull
     private OgLocale seoOgLocale;
 
+    public PostForm() {
+        this.setTitle("");
+        this.setPermalink("");
+        this.setContent("");
+        this.setPostTags("");
+        this.setPostStatus(PostStatus.PUBLISHED);
+        this.setPostFormat(PostFormat.MARKDOWN);
+        this.setSeoKeywords("");
+        this.setSeoOgImage("");
+        this.setSeoOgLocale(OgLocale.en_EN);
+        //this.setSeoOgTitle("");
+        this.setSeoOgType(OgType.ARTICLE);
+        this.setSeoOgVideo("");
+    }
+
     public void init() {
         this.setTitle("");
         this.setPermalink("");

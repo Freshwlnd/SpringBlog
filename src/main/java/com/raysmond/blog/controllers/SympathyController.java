@@ -6,6 +6,7 @@ import com.raysmond.blog.services.*;
 import com.raysmond.blog.support.web.ViewHelper;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,5 +61,45 @@ public class SympathyController {
     }
 
 
+    // TODO
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
+        SympathyRequestData data = new SympathyRequestData();
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
+
+        if (method.equals("all") || method.equals("likeIt")) {
+            likeIt_test(data, request);
+        }
+        if (method.equals("all") || method.equals("dislikeIt")) {
+            dislikeIt_test(data, request);
+        }
+
+        return "test";
+    }
+
+    public LikeForm likeIt_test(SympathyRequestData data, HttpServletRequest request) {
+//        Post post = this.postService.findPostByPermalink(data.getPostId());
+        Post post = new Post();
+//        this.likeService.likePost(post, this.requestProcessorService.getRealIp(request));
+        ViewHelper viewHelper = new ViewHelper(this.appSetting);
+        LikeForm result = new LikeForm();
+//        result.setSympathy(viewHelper.formatNumberByThousands(this.likeService.getTotalLikesByPost(post)));
+        result.setSympathy(viewHelper.formatNumberByThousands(1));
+        return result;
+    }
+
+    public LikeForm dislikeIt_test(SympathyRequestData data, HttpServletRequest request) {
+//        Post post = this.postService.findPostByPermalink(data.getPostId());
+        Post post = new Post();
+//        this.likeService.dislikePost(post, this.requestProcessorService.getRealIp(request));
+        ViewHelper viewHelper = new ViewHelper(this.appSetting);
+        LikeForm result = new LikeForm();
+//        result.setSympathy(viewHelper.formatNumberByThousands(this.likeService.getTotalLikesByPost(post)));
+        result.setSympathy(viewHelper.formatNumberByThousands(1));
+        return result;
+    }
 
 }

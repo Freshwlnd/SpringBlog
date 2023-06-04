@@ -1,15 +1,25 @@
 package com.raysmond.blog.admin.controllers;
 
+import com.raysmond.blog.forms.PostForm;
+import com.raysmond.blog.forms.SeoRobotAgentForm;
+import com.raysmond.blog.models.User;
 import com.raysmond.blog.models.dto.PostsIdListDTO;
 import com.raysmond.blog.models.dto.VisitsStatsChartDTO;
 import com.raysmond.blog.services.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
+import java.security.Principal;
 import java.util.Date;
 
 /**
@@ -36,6 +46,40 @@ public class StatisticsController {
             @RequestBody PostsIdListDTO postsDto)
     {
         VisitsStatsChartDTO chart = statisticsService.getChartDataByPeriodAndPostsList(start, end, postsDto.getIds());
+        return chart;
+    }
+
+
+    // TODO
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
+        Date start = new Date(1);
+        Date end = new Date(1);
+        PostsIdListDTO postsDto = new PostsIdListDTO();
+
+
+        if (method.equals("all") || method.equals("getVisitsChart")) {
+            getVisitsChart_test();
+        }
+        if (method.equals("all") || method.equals("getVisitsChartByPeriodAndPostsIdList")) {
+            getVisitsChartByPeriodAndPostsIdList_test(start, end, postsDto);
+        }
+
+        return "test";
+    }
+
+    public VisitsStatsChartDTO getVisitsChart_test() {
+//        VisitsStatsChartDTO chart = statisticsService.getFullVisitsStatsChartData();
+        VisitsStatsChartDTO chart = new VisitsStatsChartDTO();
+        return chart;
+    }
+
+    public VisitsStatsChartDTO getVisitsChartByPeriodAndPostsIdList_test(Date start, Date end, PostsIdListDTO postsDto)
+    {
+//        VisitsStatsChartDTO chart = statisticsService.getChartDataByPeriodAndPostsList(start, end, postsDto.getIds());
+        VisitsStatsChartDTO chart = new VisitsStatsChartDTO();
         return chart;
     }
 

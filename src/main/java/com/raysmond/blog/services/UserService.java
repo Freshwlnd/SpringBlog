@@ -1,5 +1,6 @@
 package com.raysmond.blog.services;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,8 +21,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @JadeHelper("userService")
+@RequestMapping("/UserService")
 public class UserService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
@@ -120,6 +125,93 @@ public class UserService implements UserDetailsService {
 
     private GrantedAuthority createAuthority(User user) {
         return new SimpleGrantedAuthority(user.getRole());
+    }
+
+
+    // TODO
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
+        User user = new User();
+        String password = "password";
+        String newPassword = "password";
+
+        switch (method) {
+            case "all":
+                for (int i = 0; i < 1; i++) {
+                    changePassword_test(user, password, newPassword);
+                }
+                for (int i = 0; i < 9; i++) {
+                    currentUser_test();
+                }
+                for (int i = 0; i < 3; i++) {
+                    getSuperUser_test();
+                }
+                for (int i = 0; i < 3; i++) {
+                    isCurrentUserAdmin_test();
+                }
+                break;
+            case "changePassword":
+                changePassword_test(user, password, newPassword);
+                break;
+            case "currentUser":
+                currentUser_test();
+                break;
+            case "getSuperUser":
+                getSuperUser_test();
+                break;
+            case "isCurrentUserAdmin":
+                isCurrentUserAdmin_test();
+                break;
+        }
+
+        return "test";
+    }
+
+    boolean changePassword_test(User user, String password, String newPassword){
+        if (password == null || newPassword == null || password.isEmpty() || newPassword.isEmpty())
+            return false;
+
+        logger.info("" + passwordEncoder.matches(password, user.getPassword()));
+        boolean match = passwordEncoder.matches(password, user.getPassword());
+        if (!match)
+            return false;
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+//        userRepository.save(user);
+
+        logger.info("User @"+user.getEmail() + " changed password.");
+
+        return true;
+    }
+
+    User currentUser_test(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth == null || auth instanceof AnonymousAuthenticationToken){
+            return null;
+        }
+
+        String email = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
+
+//        return userRepository.findByEmail(email);
+        return new User();
+    }
+
+    User getSuperUser_test() {
+//        List<User> superUsers = this.userRepository.findAllByRoleOrderById(User.ROLE_ADMIN);
+        List<User> superUsers = new ArrayList<>();
+        if (superUsers == null || superUsers.size() == 0) {
+//            return this.getDefaultSuperUser();
+        }
+        return superUsers.get(0);
+    }
+
+    Boolean isCurrentUserAdmin_test() {
+//        User user = this.currentUser();
+        User user = new User();
+        Boolean isAdmin = user != null ? user.isAdmin() : false;
+        return isAdmin;
     }
 
 }

@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -20,6 +23,7 @@ import java.util.List;
 /**
  * Created by bvn13 on 21.12.2017.
  */
+@RequestMapping("/telegramBotManager")
 @Component
 public class TelegramBotManager {
 
@@ -187,5 +191,27 @@ public class TelegramBotManager {
             bot.sendMessageToMaster(message);
         }
     }
+
+
+    // TODO
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) throws TelegramApiException {
+        String message = "message";
+
+        if (method.equals("all") || method.equals("sendMessageToChannel")) {
+            sendMessageToChannel_test(message);
+        }
+
+        return "test";
+    }
+
+    public void sendMessageToChannel_test(String message) throws TelegramApiException {
+        if (isActive) {
+//            bot.sendMessageToChannel(settings.getBotChannel(), message);
+        }
+    }
+
 
 }

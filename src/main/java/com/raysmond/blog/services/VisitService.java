@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import java.math.BigInteger;
@@ -24,6 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@RequestMapping("/VisitService")
 public class VisitService {
 
     @Autowired
@@ -107,6 +111,78 @@ public class VisitService {
         });
 
         return count.get();
+    }
+
+
+    // TODO
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
+        Post post = new Post();
+        String clientIp = "clientIp";
+        String userAgent = "userAgent";
+
+        switch (method) {
+            case "all":
+                for (int i = 0; i < 3; i++) {
+                    saveVisit_test(post, clientIp, userAgent);
+                }
+                for (int i = 0; i < 1; i++) {
+                    getUniqueVisitsCount_test(post);
+                }
+                break;
+            case "saveVisit":
+                saveVisit_test(post, clientIp, userAgent);
+                break;
+            case "getUniqueVisitsCount":
+                getUniqueVisitsCount_test(post);
+                break;
+        }
+
+        return "test";
+    }
+
+
+    void saveVisit_test(Post post, String clientIp, String userAgent) {
+//        if (this.userService.currentUser().isAdmin())
+//            return;
+
+//        User user = this.userService.currentUser();
+        User user = new User();
+
+        Visit visit = new Visit();
+        visit.setClientIp(clientIp);
+        visit.setPost(post);
+        visit.setUser(user);
+        visit.setIsAdmin(user != null ? user.isAdmin() : false);
+        visit.setUserAgent(userAgent);
+        this.visitRepository.save(visit);
+    }
+
+    Long getUniqueVisitsCount_test(Post post) {
+
+        Session session = (Session) this.entityManager.getDelegate();
+        SQLQuery query = session.createSQLQuery(
+                "SELECT COUNT(DISTINCT v.clientIp) " +
+                        "FROM visits AS v " +
+                        "LEFT JOIN seo_robots_agents AS ra " +
+                        //"ON LOWER(v.userAgent) LIKE concat('%', LOWER(ra.userAgent), '%') " +
+                        "ON CASE WHEN ra.isregexp = TRUE THEN " +
+                        "LOWER(v.userAgent) ~* LOWER(ra.userAgent) " +
+                        "ELSE " +
+                        "LOWER(v.userAgent) LIKE concat('%', LOWER(ra.userAgent), '%') " +
+                        "END " +
+                        "WHERE v.post_id = :post_id AND v.isAdmin = FALSE " +
+                        "AND ra.id IS NULL ");
+        query.setLong("post_id", post.getId());
+        List<Object> result = query.list();
+        if (result.size() > 0L) {
+            return ((BigInteger)result.get(0)).longValue();
+        }
+
+        return 0L;
+
     }
 
 }

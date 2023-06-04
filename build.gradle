@@ -112,6 +112,7 @@ dependencies {
     // telegram bot api
     compile 'org.telegram:telegrambots:3.5'
 
+    compile "org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE"
     // test
     testCompile("org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE")
     testCompile 'junit:junit:+'

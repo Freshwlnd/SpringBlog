@@ -6,14 +6,14 @@ import com.raysmond.blog.services.SeoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = {"/seo", ""})
+@RequestMapping(value = {"/seo"})
 public class SitemapController {
 
     @Autowired
@@ -26,6 +26,26 @@ public class SitemapController {
     public @ResponseBody String getSiteMap() {
         List<Post> posts = this.postService.getAllPublishedPosts();
         return this.seoService.createSitemap(posts);
+    }
+
+    // TODO
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
+
+        if (method.equals("all") || method.equals("getSiteMap")) {
+            getSiteMap_test();
+        }
+
+        return "test";
+    }
+
+    String getSiteMap_test() {
+//        List<Post> posts = this.postService.getAllPublishedPosts();
+        List<Post> posts = new ArrayList<>();
+//        return this.seoService.createSitemap(posts);
+        return "test";
     }
 
 }

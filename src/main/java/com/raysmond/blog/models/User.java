@@ -33,8 +33,11 @@ public class User extends BaseModel {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
     private Collection<StoredFile> storedFiles = new ArrayList<>();
 
+    // TODO
     public User() {
-
+        this.email = "admin@admin.com";
+        this.password = "0f89fd5f7e08cab4e12a383c4ce59e1881a1dc987ea80711d535435c56e890e16826514cc6cdcb83";
+        this.role = ROLE_ADMIN;
     }
 
     public Boolean isAdmin() {
