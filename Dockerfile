@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8
 WORKDIR /home
 ADD JMX_Exporter/prometheus-jmx-config.yaml prometheus-jmx-config.yaml
 ADD JMX_Exporter/jmx_prometheus_javaagent-0.16.1.jar jmx_prometheus_javaagent-0.16.1.jar
