@@ -1,9 +1,11 @@
+DATASOURCE_INSTANCE_HOSTNAME: localhost
+
 server:
-  port: 8001
+  port: 8051
   contextPath:
 
-logging:
-  level: DEBUG
+#logging:
+#  level: DEBUG
 
 telegram:
   bot:
@@ -26,7 +28,8 @@ spring:
 
   dataSource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/blog
+    url: jdbc:postgresql://${DATASOURCE_INSTANCE_HOSTNAME}:5432/blog
+#    url: jdbc:postgresql://postgresSpringBlog:5432/blog
     username: blog
     password: blogpass
 

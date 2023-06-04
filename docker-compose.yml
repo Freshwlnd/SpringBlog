@@ -1,22 +1,20 @@
 version: '2'
 services:
-    mysql:
-      image: mysql
-      hostname: mysql
-      environment:
-        - MYSQL_USER=root
-        - MYSQL_DATABASE=spring_blog
-        - MYSQL_ROOT_PASSWORD=
-    webapp:
-      image: java:8
-      links:
-        - mysql:mysql
-        # - redis:redis
-      volumes:
-        - ./build/libs/SpringBlog-0.1.jar:/app/app.jar
-      ports:
-        - "9000:9000"
-      command: "java -jar /app/app.jar --spring.profiles.active=dev"
-
-#    redis:
-#      image: redis
+  postgresSpringBlog:
+    image: postgres
+    hostname: postgresSpringBlog
+    environment:
+      - POSTGRES_USER=blog
+      - POSTGRES_PASSWORD=blogpass
+      - POSTGRES_DATABASE=blog
+    -
+#  webapp:
+#    image: java:8
+#    links:
+#      - postgresSpringBlog:postgresSpringBlog
+#      # - redis:redis
+#    volumes:
+#      - ./build/libs/SpringBlog-2.8.2:/app/app.jar
+#    ports:
+#      - "8001:8001"
+#    command: "java -jar /app/app.jar"

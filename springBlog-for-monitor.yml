@@ -1,0 +1,57 @@
+#deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springblog-for-monitor
+spec:
+  selector:
+    matchLabels:
+      app: springblog-for-monitor
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: springblog-for-monitor
+    spec:
+      nodeSelector:
+        #        kubernetes.io/hostname: vm-8c16g-node12
+        kubernetes.io/hostname: vm-8c16g-node9
+      containers:
+        - name: springblog-for-monitor
+          image: registry.cn-hangzhou.aliyuncs.com/microservice-extraction/springblog:springblog-for-monitor
+          imagePullPolicy: Always
+          env:
+            - name: DATASOURCE_INSTANCE_HOSTNAME
+              value: postgresSpringBlog
+          ports:
+            - containerPort: 8051
+            - containerPort: 8088
+          resources:
+            requests:
+              cpu: 5000m
+              memory: 1500Mi
+            limits:
+              cpu: 5000m
+              memory: 1500Mi
+---
+#service
+apiVersion: v1
+kind: Service
+metadata:
+  name: springblog-for-monitor
+  labels:
+    app: springblog-for-monitor
+spec:
+  type: NodePort
+  ports:
+    - port: 8051
+      targetPort: 8051
+      nodePort: 30051
+      name: http
+    - port: 31241
+      targetPort: 8088
+      nodePort: 31241
+      name: jmx-metrics
+  selector:
+    app: springblog-for-monitor
+---
