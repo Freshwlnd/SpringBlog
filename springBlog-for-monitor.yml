@@ -22,7 +22,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DATASOURCE_INSTANCE_HOSTNAME
-              value: postgresSpringBlog
+              value: postgres-service
           ports:
             - containerPort: 8051
             - containerPort: 8088
