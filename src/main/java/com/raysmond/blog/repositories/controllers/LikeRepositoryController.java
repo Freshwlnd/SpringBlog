@@ -4,6 +4,8 @@ import com.raysmond.blog.models.Like;
 import com.raysmond.blog.models.Post;
 import com.raysmond.blog.models.User;
 import com.raysmond.blog.repositories.LikeRepository;
+import com.raysmond.blog.services.PostService;
+import com.raysmond.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,24 +19,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/LikeRepositoryController")
 public class LikeRepositoryController {
-
     @Autowired
     LikeRepository likeRepository;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    PostService postService;
+
+    User user;
+    Post post;
+    String clientIp;
+    Like like;
+
+    private void init() {
+        user = this.userService.getSuperUser();
+        post = this.postService.getPost(1L);
+        clientIp = "10.60.150.33";
+        like = new Like();
+        like.setClientIp(clientIp);
+        like.setPost(post);
+        like.setUser(user);
+        like.setIsAdmin(user.isAdmin());
+        like.setSympathy(1);
+    }
 
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        Post post = new Post();
-        User user = new User();
-        String clientIp = "10.60.150.33";
-        Like like = new Like();
-        like.setClientIp(clientIp);
-        like.setPost(post);
-        like.setUser(user);
-        like.setIsAdmin(user.isAdmin());
-        like.setSympathy(1);
+        if (user == null) {
+            init();
+        }
 
 
         switch (method) {
