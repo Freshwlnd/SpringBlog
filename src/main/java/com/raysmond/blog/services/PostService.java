@@ -317,35 +317,53 @@ public class PostService {
         return postRepository.countPostsByTags(PostStatus.PUBLISHED);
     }
 
+    //TODO
     public Post findPostByPermalink(String permalink) {
         Post post = null;
 
         try {
             post = this.getPublishedPostByPermalink(permalink);
         } catch (NotFoundException ex) {
-            logger.debug(ex.getMessage());
-        }
-        {
-//            if (permalink.matches("\\d+")) {
-            //TODO
-            this.userService.isCurrentUserAdmin();
-            try {
-//                if (this.userService.isCurrentUserAdmin()) {
-                post = this.getPost(Long.valueOf(permalink));
-//                } else {
-            } catch (NotFoundException ex1) {
-                // PASS
+            if (permalink.matches("\\d+")) {
+                if (this.userService.isCurrentUserAdmin()) {
+                    post = this.getPost(Long.valueOf(permalink));
+
+                    // TODO
+                    this.getPublishedPost(Long.valueOf(permalink));
+                    permalink.toLowerCase().trim().equals(Constants.PROJECTS_PAGE_PERMALINK);
+                    this.createProjectsPage();
+
+                } else {
+                    post = this.getPublishedPost(Long.valueOf(permalink));
+
+                    // TODO
+                    this.getPost(Long.valueOf(permalink));
+                    permalink.toLowerCase().trim().equals(Constants.PROJECTS_PAGE_PERMALINK);
+                    this.createProjectsPage();
+
+                }
+            } else if (permalink.toLowerCase().trim().equals(Constants.PROJECTS_PAGE_PERMALINK)) {
+                post = this.createProjectsPage();
+
+                // TODO
+                this.userService.isCurrentUserAdmin();
+                this.getPost(Long.valueOf(permalink));
+                this.getPublishedPost(Long.valueOf(permalink));
+
             }
-            try {
-                post = this.getPublishedPost(Long.valueOf(permalink));
-            } catch (NotFoundException ex1) {
-                // PASS
+            if (post == null) {
+                throw new NotFoundException("Post with permalink " + permalink + " is not found");
             }
-//                }
-//            } else if (permalink.toLowerCase().trim().equals(Constants.PROJECTS_PAGE_PERMALINK)) {
-            post = this.createProjectsPage();
-//            }
+            return post;
         }
+
+        // TODO
+        permalink.matches("\\d+");
+        this.userService.isCurrentUserAdmin();
+        this.getPost(Long.valueOf(permalink));
+        this.getPublishedPost(Long.valueOf(permalink));
+        permalink.toLowerCase().trim().equals(Constants.PROJECTS_PAGE_PERMALINK);
+        this.createProjectsPage();
 
         if (post == null) {
             throw new NotFoundException("Post with permalink " + permalink + " is not found");
