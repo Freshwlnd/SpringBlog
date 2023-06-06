@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @author Raysmond<i@raysmond.com>
+ * @author Raysmond<i @ raysmond.com>
  */
 @Controller
 @RequestMapping("/SettingRepositoryController")
@@ -55,6 +55,11 @@ public class SettingRepositoryController {
     }
 
     Setting save(Setting setting) {
-        return settingRepository.save(setting);
+        try {
+            return settingRepository.save(setting);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return setting;
     }
 }
