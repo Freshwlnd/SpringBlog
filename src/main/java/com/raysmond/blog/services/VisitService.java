@@ -75,7 +75,7 @@ public class VisitService {
         query.setLong("post_id", post.getId());
         List<Object> result = query.list();
         if (result.size() > 0L) {
-            return ((BigInteger)result.get(0)).longValue();
+            return ((BigInteger) result.get(0)).longValue();
         }
 
         return 0L;
@@ -97,14 +97,14 @@ public class VisitService {
 
             if (robotsAgents.size() == 0 || v[1] == null) {
                 //count[0]++;
-                count.set(count.get()+1);
+                count.set(count.get() + 1);
             } else {
                 robotsAgents.forEach(ra -> {
-                    Pattern p = Pattern.compile(".*("+ra.getUserAgent()+").*", Pattern.CASE_INSENSITIVE);
+                    Pattern p = Pattern.compile(".*(" + ra.getUserAgent() + ").*", Pattern.CASE_INSENSITIVE);
                     Matcher m = p.matcher((String) v[1]);
                     if (!m.matches()) {
                         //count[0]++;
-                        count.set(count.get()+1);
+                        count.set(count.get() + 1);
                     }
                 });
             }
@@ -117,11 +117,23 @@ public class VisitService {
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @Autowired
+    PostService postService;
+    Post post = null;
+    User user = null;
+
+    private void init() {
+        post = this.postService.getPost(1L);
+        user = this.userService.getSuperUser();
+    }
+
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        Post post = new Post();
         String clientIp = "clientIp";
         String userAgent = "userAgent";
+        if (post == null) {
+            init();
+        }
 
         switch (method) {
             case "all":
@@ -149,7 +161,7 @@ public class VisitService {
 //            return;
 
 //        User user = this.userService.currentUser();
-        User user = new User();
+//        User user = new User();
 
         Visit visit = new Visit();
         visit.setClientIp(clientIp);
@@ -178,7 +190,7 @@ public class VisitService {
         query.setLong("post_id", post.getId());
         List<Object> result = query.list();
         if (result.size() > 0L) {
-            return ((BigInteger)result.get(0)).longValue();
+            return ((BigInteger) result.get(0)).longValue();
         }
 
         return 0L;
