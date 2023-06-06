@@ -15,8 +15,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
  * Created by bvn13 on 21.12.2017.
  */
 @RequestMapping("/notificator")
-//@Component
-@Controller
+@Component
 public class Notificator {
 
     @Autowired
@@ -30,11 +29,11 @@ public class Notificator {
         if (post == null || post.getAnnouncement().isEmpty()) {
             throw new IllegalArgumentException("Nothing to announce");
         }
-        String postUrl = appSetting.getMainUriStripped()+"/posts/"+(post.getPermalink().isEmpty() ? post.getId() : post.getPermalink());
+        String postUrl = appSetting.getMainUriStripped() + "/posts/" + (post.getPermalink().isEmpty() ? post.getId() : post.getPermalink());
         String message = String.format(
                 "*%s*\r\n\n" +
-                "%s\r\n\r\n" +
-                "[%s](%s)",
+                        "%s\r\n\r\n" +
+                        "[%s](%s)",
                 post.getTitle(),
                 post.getAnnouncement() != null ? post.getAnnouncement() : "",
                 postUrl, postUrl
@@ -63,7 +62,7 @@ public class Notificator {
 //            throw new IllegalArgumentException("Nothing to announce");
         }
 //        String postUrl = appSetting.getMainUriStripped()+"/posts/"+(post.getPermalink().isEmpty() ? post.getId() : post.getPermalink());
-        String postUrl = "/posts/"+(post.getPermalink().isEmpty() ? post.getId() : post.getPermalink());
+        String postUrl = "/posts/" + (post.getPermalink().isEmpty() ? post.getId() : post.getPermalink());
         String message = String.format(
                 "*%s*\r\n\n" +
                         "%s\r\n\r\n" +
