@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.*;
 
 /**
- * @author Raysmond<i@raysmond.com>.
+ * @author Raysmond<i @ raysmond.com>.
  */
 @Service
 @RequestMapping("/PostService")
@@ -320,30 +320,30 @@ public class PostService {
     public Post findPostByPermalink(String permalink) {
         Post post = null;
 
-        try{
+        try {
             post = this.getPublishedPostByPermalink(permalink);
-        } catch (NotFoundException ex){
+        } catch (NotFoundException ex) {
             logger.debug(ex.getMessage());
         }
         {
 //            if (permalink.matches("\\d+")) {
-                //TODO
-                this.userService.isCurrentUserAdmin();
-                try {
+            //TODO
+            this.userService.isCurrentUserAdmin();
+            try {
 //                if (this.userService.isCurrentUserAdmin()) {
-                    post = this.getPost(Long.valueOf(permalink));
+                post = this.getPost(Long.valueOf(permalink));
 //                } else {
-                } catch (NotFoundException ex1) {
-                    // PASS
-                }
-                try {
-                    post = this.getPublishedPost(Long.valueOf(permalink));
-                } catch (NotFoundException ex1) {
-                    // PASS
-                }
+            } catch (NotFoundException ex1) {
+                // PASS
+            }
+            try {
+                post = this.getPublishedPost(Long.valueOf(permalink));
+            } catch (NotFoundException ex1) {
+                // PASS
+            }
 //                }
 //            } else if (permalink.toLowerCase().trim().equals(Constants.PROJECTS_PAGE_PERMALINK)) {
-                post = this.createProjectsPage();
+            post = this.createProjectsPage();
 //            }
         }
 
@@ -384,9 +384,14 @@ public class PostService {
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    Post post = null;
+
+    private void init() {
+        post = getPost(1L);
+    }
+
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        Post post = new Post();
         Long postId = 1L;
         int page = 1;
         int pageSize = 1;
@@ -395,6 +400,10 @@ public class PostService {
         String tagName = "tagName";
         String tagNames = "tagNames";
         Set<Tag> tags = new HashSet<>();
+
+        if (post == null) {
+            init();
+        }
 
         switch (method) {
             case "all":
@@ -625,19 +634,19 @@ public class PostService {
 //            post = this.getPublishedPostByPermalink(permalink);
 //        } catch (NotFoundException ex){
 //            if (permalink.matches("\\d+")) {
-            //TODO
+        //TODO
 //            this.userService.isCurrentUserAdmin();
 //            try {
 //                if (this.userService.isCurrentUserAdmin()) {
 //                post = this.getPost(Long.valueOf(permalink));
 //                } else {
 //            } catch (NotFoundException ex1) {
-                // PASS
+        // PASS
 //            }
 //            try {
 //                post = this.getPublishedPost(Long.valueOf(permalink));
 //            } catch (NotFoundException ex1) {
-                // PASS
+        // PASS
 //            }
 //                }
 //            } else if (permalink.toLowerCase().trim().equals(Constants.PROJECTS_PAGE_PERMALINK)) {
