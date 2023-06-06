@@ -30,7 +30,9 @@ public class LikeService {
     }
 
     public void likePost(Post post, String clientIp) {
-        User user = this.userService.currentUser();
+        // TODO
+        User user = this.userService.getSuperUser();
+//        User user = this.userService.currentUser();
         Integer currentSympathy = 0;
 
         // TODO
@@ -46,7 +48,9 @@ public class LikeService {
     }
 
     public void dislikePost(Post post, String clientIp) {
-        User user = this.userService.currentUser();
+        // TODO
+        User user = this.userService.getSuperUser();
+//        User user = this.userService.currentUser();
         Integer currentSympathy = 0;
 
 //        if (user != null) {
