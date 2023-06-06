@@ -30,36 +30,6 @@ import java.util.Collections;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // TODO
-    private class DefaultLoginFilter extends AbstractAuthenticationProcessingFilter {
-
-        private final AuthenticationManager authenticationManager;
-
-        public DefaultLoginFilter(AuthenticationManager authenticationManager) {
-            super(new AntPathRequestMatcher("/authenticate", "POST"));
-            this.authenticationManager = authenticationManager;
-        }
-
-        @Override
-        public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-            // 在这里实现自动登录的逻辑
-            User user = userService().getSuperUser();
-            userService().signin(user);
-            return new UsernamePasswordAuthenticationToken(createSpringUser(user), null, Collections.singleton(createAuthority(user)));
-        }
-
-        private org.springframework.security.core.userdetails.User createSpringUser(User user) {
-            return new org.springframework.security.core.userdetails.User(
-                    user.getEmail(),
-                    user.getPassword(),
-                    Collections.singleton(createAuthority(user)));
-        }
-
-        private GrantedAuthority createAuthority(User user) {
-            return new SimpleGrantedAuthority(user.getRole());
-        }
-    }
-
     @Bean
     public UserService userService() {
         return new UserService();
@@ -88,30 +58,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                // .httpBasic().disable()
-           .authorizeRequests()
-               .antMatchers("/admin/**").authenticated()   // one who logged in can access
-               //.antMatchers("/authenticate").permitAll()
-               .anyRequest().permitAll()   // anyone can access
-               .and()
-           .formLogin()
-               .loginPage("/signin")
-               .permitAll()
-               .failureUrl("/signin?error=1")
-               .loginProcessingUrl("/authenticate")
-               .and()
-           .logout()
-               .logoutUrl("/logout")
-               .permitAll()
-               .logoutSuccessUrl("/signin?logout")
-               .and()
-           .rememberMe()
-               .rememberMeServices(rememberMeServices())
-               .key("remember-me-secret")
-               //.tokenValiditySeconds(60*60) //NB: Not here
-               .and()
-            // TODO
-            .addFilterBefore(new DefaultLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)   // 自动登录默认账号
+                 .httpBasic().disable()
+//           .authorizeRequests()
+//               .antMatchers("/admin/**").authenticated()   // one who logged in can access
+//               //.antMatchers("/authenticate").permitAll()
+//               .anyRequest().permitAll()   // anyone can access
+//               .and()
+//           .formLogin()
+//               .loginPage("/signin")
+//               .permitAll()
+//               .failureUrl("/signin?error=1")
+//               .loginProcessingUrl("/authenticate")
+//               .and()
+//           .logout()
+//               .logoutUrl("/logout")
+//               .permitAll()
+//               .logoutSuccessUrl("/signin?logout")
+//               .and()
+//           .rememberMe()
+//               .rememberMeServices(rememberMeServices())
+//               .key("remember-me-secret")
+//               //.tokenValiditySeconds(60*60) //NB: Not here
                 ;
     }
 }

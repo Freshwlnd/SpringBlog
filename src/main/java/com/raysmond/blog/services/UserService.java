@@ -37,6 +37,8 @@ public class UserService implements UserDetailsService {
     @Inject
     private PasswordEncoder passwordEncoder;
 
+    User defaultUser = null;
+
     @PostConstruct
     protected void initialize() {
         getSuperUser();
@@ -77,7 +79,12 @@ public class UserService implements UserDetailsService {
     public User currentUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth == null || auth instanceof AnonymousAuthenticationToken){
-            return null;
+//            return null;
+            // TODO
+            if(defaultUser==null) {
+                defaultUser = getSuperUser();
+            }
+            auth = authenticate(defaultUser);
         }
 
         String email = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
