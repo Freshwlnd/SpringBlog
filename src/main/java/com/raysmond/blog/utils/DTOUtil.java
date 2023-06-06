@@ -4,6 +4,7 @@ import com.raysmond.blog.forms.PostForm;
 import com.raysmond.blog.models.Post;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,15 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Raysmond<i@raysmond.com>
+ * @author Raysmond<i @ raysmond.com>
  */
+@Component
 @RequestMapping("/DTOUtil")
 public class DTOUtil {
 
     private static ModelMapper MAPPER = null;
 
-    private static ModelMapper getMapper(){
-        if(MAPPER == null){
+    private static ModelMapper getMapper() {
+        if (MAPPER == null) {
             MAPPER = new ModelMapper();
             MAPPER.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         }
