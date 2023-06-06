@@ -19,10 +19,10 @@ import java.util.Date;
 public class Setting extends BaseModel{
 
     @Column(name = "_key", unique = true, nullable = false)
-    private String key;
+    private String key = "key";
 
     @Lob
     @Column(name = "_value")
-    private Serializable value;
+    private Serializable value = "value";
 
 }
