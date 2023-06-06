@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
         getSuperUser();
     }
 
-    public User createUser(User user){
+    public User createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -57,7 +57,7 @@ public class UserService implements UserDetailsService {
         return superUsers.get(0);
     }
 
-    public User getDefaultSuperUser(){
+    public User getDefaultSuperUser() {
         User user = userRepository.findByEmail(Constants.DEFAULT_ADMIN_EMAIL);
 
         if (user == null) {
@@ -76,12 +76,12 @@ public class UserService implements UserDetailsService {
         return createSpringUser(user);
     }
 
-    public User currentUser(){
+    public User currentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null || auth instanceof AnonymousAuthenticationToken){
+        if (auth == null || auth instanceof AnonymousAuthenticationToken) {
 //            return null;
             // TODO
-            if(defaultUser==null) {
+            if (defaultUser == null) {
                 defaultUser = getSuperUser();
             }
             auth = authenticate(defaultUser);
@@ -98,7 +98,7 @@ public class UserService implements UserDetailsService {
         return isAdmin;
     }
 
-    public boolean changePassword(User user, String password, String newPassword){
+    public boolean changePassword(User user, String password, String newPassword) {
         if (password == null || newPassword == null || password.isEmpty() || newPassword.isEmpty())
             return false;
 
@@ -110,7 +110,7 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
-        logger.info("User @"+user.getEmail() + " changed password.");
+        logger.info("User @" + user.getEmail() + " changed password.");
 
         return true;
     }
@@ -176,7 +176,7 @@ public class UserService implements UserDetailsService {
         return "test";
     }
 
-    boolean changePassword_test(User user, String password, String newPassword){
+    boolean changePassword_test(User user, String password, String newPassword) {
         if (password == null || newPassword == null || password.isEmpty() || newPassword.isEmpty())
             return false;
 
@@ -188,14 +188,14 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(newPassword));
 //        userRepository.save(user);
 
-        logger.info("User @"+user.getEmail() + " changed password.");
+        logger.info("User @" + user.getEmail() + " changed password.");
 
         return true;
     }
 
-    User currentUser_test(){
+    User currentUser_test() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null || auth instanceof AnonymousAuthenticationToken){
+        if (auth == null || auth instanceof AnonymousAuthenticationToken) {
             return null;
         }
 
@@ -209,6 +209,7 @@ public class UserService implements UserDetailsService {
 //        List<User> superUsers = this.userRepository.findAllByRoleOrderById(User.ROLE_ADMIN);
         List<User> superUsers = new ArrayList<>();
         if (superUsers == null || superUsers.size() == 0) {
+            return new User();
 //            return this.getDefaultSuperUser();
         }
         return superUsers.get(0);
