@@ -4,6 +4,7 @@ import com.raysmond.blog.models.Post;
 import com.raysmond.blog.models.support.PostStatus;
 import com.raysmond.blog.models.support.PostType;
 import com.raysmond.blog.repositories.PostRepository;
+import com.raysmond.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,20 +32,32 @@ public class PostRepositoryController {
     @Autowired
     PostRepository postRepository;
 
+    @Autowired
+    PostService postService;
+
+    Post post = null;
+    PageRequest pageRequest = null;
+    PostStatus postStatus = PostStatus.PUBLISHED;
+    PostType postType = PostType.POST;
+    Boolean deleted = false;
+    Long postId = 1L;
+    String permalink = "permalink";
+    String tag = "tag";
+
+    private void init() {
+        post = this.postService.getPost(1L);
+        pageRequest= new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.DESC, "createdAt");
+    }
+
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        PostStatus postStatus = PostStatus.PUBLISHED;
-        Post post = new Post();
-        post.init();
-        PostType postType = PostType.POST;
-        PageRequest pageRequest= new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.DESC, "createdAt");
-        Boolean deleted = false;
-        Long postId = 1L;
-        String permalink = "permalink";
-        String tag = "tag";
+
+        if (post==null) {
+            init();
+        }
 
         switch (method) {
             case "all":
