@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @author Raysmond<i@raysmond.com>.
+ * @author Raysmond<i @ raysmond.com>.
  */
 @Controller
 @RequestMapping("/TagRepositoryController")
@@ -54,7 +54,12 @@ public class TagRepositoryController {
     }
 
     Tag save(Tag tag) {
-        return tagRepository.save(tag);
+        try {
+            return tagRepository.save(tag);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tag;
     }
 
 }
