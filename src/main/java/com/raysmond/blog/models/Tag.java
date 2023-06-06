@@ -17,7 +17,7 @@ import java.util.List;
 public class Tag extends BaseModel {
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String name = "tag";
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
     private List<Post> posts = new ArrayList<>();
