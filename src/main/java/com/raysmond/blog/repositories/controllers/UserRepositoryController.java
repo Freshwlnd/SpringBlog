@@ -2,6 +2,7 @@ package com.raysmond.blog.repositories.controllers;
 
 import com.raysmond.blog.models.User;
 import com.raysmond.blog.repositories.UserRepository;
+import com.raysmond.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 /**
- * @author Raysmond<i@raysmond.com>
+ * @author Raysmond<i @ raysmond.com>
  */
 @Controller
 @RequestMapping("/UserRepositoryController")
@@ -23,16 +24,27 @@ public class UserRepositoryController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserService userService;
+
+    User user = null;
+    String role = "ADMIN";
+    String email = "admin@admin.com";
+    Long id = 1L;
+
+    private void init() {
+        user = userService.getSuperUser();
+    }
+
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        String role = "ADMIN";
-        String email = "admin@admin.com";
-        Long id = 1L;
-        User user = new User();
 
+        if (user == null) {
+            init();
+        }
 
         switch (method) {
             case "all":
@@ -68,7 +80,7 @@ public class UserRepositoryController {
 
 
     List<User> findAllByRoleOrderById(String role) {
-        return findAllByRoleOrderById(role);
+        return userRepository.findAllByRoleOrderById(role);
     }
 
     User findByEmail(String email) {
@@ -80,6 +92,11 @@ public class UserRepositoryController {
     }
 
     User save(User user) {
-        return userRepository.save(user);
+        try {
+            return userRepository.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }
