@@ -66,7 +66,11 @@ public class StoredFileRepositoryController {
     }
 
     void delete(StoredFile storedFile) {
-        storedFileRepository.delete(storedFile);
+        try {
+            storedFileRepository.delete(storedFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     List<StoredFile> findAll() {

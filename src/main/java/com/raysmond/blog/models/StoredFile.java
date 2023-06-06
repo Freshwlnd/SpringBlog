@@ -18,13 +18,13 @@ public class StoredFile extends BaseModel {
     private User user;
 
     @Column(nullable = false)
-    private String title;
+    private String title = "title";
 
     @Column(nullable = false)
-    private String name;
+    private String name = "name";
 
     @Column(nullable = false)
-    private String path;
+    private String path = "path";
 
     @Column(columnDefinition = "bigint default 0")
     private Long size;
