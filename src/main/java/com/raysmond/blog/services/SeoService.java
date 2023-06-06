@@ -46,7 +46,7 @@ public class SeoService {
             root.setAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
             doc.appendChild(root);
 
-            for(Post post : posts) {
+            for (Post post : posts) {
                 Element url = doc.createElement("url");
                 //loc
                 Element loc = doc.createElement("loc");
@@ -88,10 +88,21 @@ public class SeoService {
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @Autowired
+    PostService postService;
+
+    List<Post> posts = null;
+
+    private void init() {
+        posts = new ArrayList<>();
+        posts.add(this.postService.getPost(1L));
+    }
+
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        List<Post> posts = new ArrayList<>();
-        posts.add(new Post());
+        if (posts == null) {
+            init();
+        }
 
         switch (method) {
             case "all":
@@ -122,7 +133,7 @@ public class SeoService {
             root.setAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
             doc.appendChild(root);
 
-            for(Post post : posts) {
+            for (Post post : posts) {
                 Element url = doc.createElement("url");
                 //loc
                 Element loc = doc.createElement("loc");
