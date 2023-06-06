@@ -27,7 +27,7 @@ public class SeoRobotAgentRepositoryController {
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         SeoRobotAgent ua = new SeoRobotAgent();
-        Long recordId = 1L;
+        Long recordId = 0L;
 
         switch (method) {
             case "all":
@@ -63,7 +63,11 @@ public class SeoRobotAgentRepositoryController {
 
 
     void delete(Long recordId) {
-        seoRobotAgentRepository.delete(recordId);
+        try {
+            seoRobotAgentRepository.delete(recordId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     List<SeoRobotAgent> findAll() {
