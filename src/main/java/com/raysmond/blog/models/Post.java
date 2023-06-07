@@ -70,6 +70,7 @@ public class Post extends BaseModel {
     @OneToOne
     private SeoPostData seoData;
 
+    @Column(nullable = false, unique = true)
     private String permalink;
 
     public String getRenderedContent() {

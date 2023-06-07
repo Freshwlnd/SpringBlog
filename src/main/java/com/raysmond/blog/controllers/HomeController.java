@@ -49,6 +49,8 @@ public class HomeController {
         Post post = null;
         try {
             post = postService.getPublishedPostByPermalink(Constants.ABOUT_PAGE_PERMALINK);
+            // TODO
+            postService.createAboutPage();
         } catch (NotFoundException nfe) {
             logger.debug("Get post with permalink " + Constants.ABOUT_PAGE_PERMALINK);
             post = postService.createAboutPage();
