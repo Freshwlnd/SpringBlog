@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 /**
- * @author Raysmond<i@raysmond.com>
+ * @author Raysmond<i @ raysmond.com>
  */
 @Controller
 @RequestMapping("/PostRepositoryController")
@@ -36,17 +36,20 @@ public class PostRepositoryController {
     PostService postService;
 
     Post post = null;
+    Post deletePost = null;
     PageRequest pageRequest = null;
     PostStatus postStatus = PostStatus.PUBLISHED;
     PostType postType = PostType.POST;
     Boolean deleted = false;
-    Long postId = 1L;
+    Long postId = 9L;
     String permalink = "permalink";
     String tag = "tag";
 
     private void init() {
         post = this.postService.getPost(1L);
-        pageRequest= new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.DESC, "createdAt");
+        pageRequest = new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.DESC, "createdAt");
+        deletePost = new Post();
+        deletePost.setId(9L);
     }
 
     // TODO
@@ -55,7 +58,7 @@ public class PostRepositoryController {
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
 
-        if (post==null) {
+        if (post == null) {
             init();
         }
 
@@ -65,7 +68,7 @@ public class PostRepositoryController {
                     countPostsByTags(postStatus);
                 }
                 for (int i = 0; i < 1; i++) {
-                    delete(post);
+                    delete(deletePost);
                 }
                 for (int i = 0; i < 2; i++) {
                     findAll();
@@ -93,7 +96,7 @@ public class PostRepositoryController {
                 countPostsByTags(postStatus);
                 break;
             case "delete":
-                delete(post);
+                delete(deletePost);
                 break;
             case "findAll":
                 findAll();
