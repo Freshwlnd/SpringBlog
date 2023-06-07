@@ -41,7 +41,7 @@ public class PostRepositoryController {
     PostStatus postStatus = PostStatus.PUBLISHED;
     PostType postType = PostType.POST;
     Boolean deleted = false;
-    Long postId = 9L;
+    Long postId = 0L;
     String permalink = "permalink";
     String tag = "tag";
 
@@ -49,7 +49,7 @@ public class PostRepositoryController {
         post = this.postService.getPost(1L);
         pageRequest = new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.DESC, "createdAt");
         deletePost = new Post();
-        deletePost.setId(9L);
+        deletePost.setId(0L);
         deletePost.setPermalink(permalink);
     }
 

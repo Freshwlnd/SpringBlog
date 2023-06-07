@@ -22,7 +22,7 @@ public class SeoRobotAgent extends BaseModel {
     public SeoRobotAgent() {
         userAgent = "userAgent";
         isRegexp = false;
-        setId(1L);
+        setId(0L);
     }
 
     public SeoRobotAgent(String userAgent) {

@@ -2,6 +2,7 @@ package com.raysmond.blog.repositories.controllers;
 
 import com.raysmond.blog.models.Post;
 import com.raysmond.blog.models.SeoPostData;
+import com.raysmond.blog.models.SeoRobotAgent;
 import com.raysmond.blog.repositories.SeoPostDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,9 +22,26 @@ public class SeoPostDataRepositoryController {
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    SeoPostData data = null;
+
+    private void init() {
+        try {
+            data = seoPostDataRepository.findAll().get(0);
+        } catch (Exception e) {
+            data = new SeoPostData();
+            data = seoPostDataRepository.save(data);
+        }
+        if (data == null) {
+            data = new SeoPostData();
+            data = seoPostDataRepository.save(data);
+        }
+    }
+
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        SeoPostData data = new SeoPostData();
+        if (data == null) {
+            init();
+        }
 
         switch (method) {
             case "all":

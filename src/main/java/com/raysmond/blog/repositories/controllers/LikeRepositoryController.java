@@ -2,6 +2,7 @@ package com.raysmond.blog.repositories.controllers;
 
 import com.raysmond.blog.models.Like;
 import com.raysmond.blog.models.Post;
+import com.raysmond.blog.models.SeoRobotAgent;
 import com.raysmond.blog.models.User;
 import com.raysmond.blog.repositories.LikeRepository;
 import com.raysmond.blog.services.PostService;
@@ -37,12 +38,26 @@ public class LikeRepositoryController {
         user = this.userService.getSuperUser();
         post = this.postService.getPost(1L);
         clientIp = "10.60.150.33";
-        like = new Like();
-        like.setClientIp(clientIp);
-        like.setPost(post);
-        like.setUser(user);
-        like.setIsAdmin(user.isAdmin());
-        like.setSympathy(1);
+        try {
+            like = likeRepository.findAll().get(0);
+        } catch (Exception e) {
+            like = new Like();
+            like.setClientIp(clientIp);
+            like.setPost(post);
+            like.setUser(user);
+            like.setIsAdmin(user.isAdmin());
+            like.setSympathy(1);
+            like = likeRepository.save(like);
+        }
+        if (like == null) {
+            like = new Like();
+            like.setClientIp(clientIp);
+            like.setPost(post);
+            like.setUser(user);
+            like.setIsAdmin(user.isAdmin());
+            like.setSympathy(1);
+            like = likeRepository.save(like);
+        }
     }
 
     // TODO
@@ -88,7 +103,7 @@ public class LikeRepositoryController {
     }
 
 
-    Integer getTotalLikesByUserAndPost(User user,Post post) {
+    Integer getTotalLikesByUserAndPost(User user, Post post) {
         return likeRepository.getTotalLikesByUserAndPost(user, post);
     }
 

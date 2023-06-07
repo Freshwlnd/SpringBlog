@@ -1,5 +1,6 @@
 package com.raysmond.blog.repositories.controllers;
 
+import com.raysmond.blog.models.SeoRobotAgent;
 import com.raysmond.blog.models.Setting;
 import com.raysmond.blog.repositories.SettingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,27 @@ public class SettingRepositoryController {
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    Setting setting = null;
+
+    private void init() {
+        try {
+            setting = settingRepository.findAll().get(0);
+        } catch (Exception e) {
+            setting = new Setting();
+            setting = settingRepository.save(setting);
+        }
+        if (setting == null) {
+            setting = new Setting();
+            setting = settingRepository.save(setting);
+        }
+    }
+
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         String key = "key";
-        Setting setting = new Setting();
+        if (setting == null) {
+            init();
+        }
 
         switch (method) {
             case "all":

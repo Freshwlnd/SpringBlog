@@ -1,5 +1,6 @@
 package com.raysmond.blog.repositories.controllers;
 
+import com.raysmond.blog.models.SeoRobotAgent;
 import com.raysmond.blog.models.StoredFile;
 import com.raysmond.blog.repositories.StoredFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,34 @@ public class StoredFileRepositoryController {
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    StoredFile storedFile = null;
+    StoredFile deleteStoredFile = new StoredFile();
+
+    private void init() {
+        try {
+            storedFile = storedFileRepository.findAll().get(0);
+        } catch (Exception e) {
+            storedFile = new StoredFile();
+            storedFile = storedFileRepository.save(storedFile);
+        }
+        if (storedFile == null) {
+            storedFile = new StoredFile();
+            storedFile = storedFileRepository.save(storedFile);
+        }
+    }
+
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        StoredFile storedFile = new StoredFile();
         Long fileId = 1L;
         String fileName = "fileName";
+        if (storedFile == null) {
+            init();
+        }
 
         switch (method) {
             case "all":
                 for (int i = 0; i < 1; i++) {
-                    delete(storedFile);
+                    delete(deleteStoredFile);
                 }
                 for (int i = 0; i < 1; i++) {
                     findAll();
@@ -46,7 +65,7 @@ public class StoredFileRepositoryController {
                 }
                 break;
             case "delete":
-                delete(storedFile);
+                delete(deleteStoredFile);
                 break;
             case "findAll":
                 findAll();
