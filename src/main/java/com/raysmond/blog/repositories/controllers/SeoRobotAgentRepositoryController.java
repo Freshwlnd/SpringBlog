@@ -24,15 +24,16 @@ public class SeoRobotAgentRepositoryController {
     // TODO
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    SeoRobotAgent ua = new SeoRobotAgent();
+
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        SeoRobotAgent ua = new SeoRobotAgent();
-        Long recordId = 0L;
+        Long recordId = 1L;
 
         switch (method) {
             case "all":
                 for (int i = 0; i < 1; i++) {
-                    delete(recordId);
+                    delete(ua);
                 }
                 for (int i = 0; i < 1; i++) {
                     findAll();
@@ -45,7 +46,7 @@ public class SeoRobotAgentRepositoryController {
                 }
                 break;
             case "delete":
-                delete(recordId);
+                delete(ua);
                 break;
             case "findAll":
                 findAll();
@@ -62,9 +63,9 @@ public class SeoRobotAgentRepositoryController {
     }
 
 
-    void delete(Long recordId) {
+    void delete(SeoRobotAgent ua) {
         try {
-            seoRobotAgentRepository.delete(recordId);
+            seoRobotAgentRepository.delete(ua);
         } catch (Exception e) {
             e.printStackTrace();
         }
