@@ -1,4 +1,7 @@
-DATASOURCE_INSTANCE_HOSTNAME: localhost
+#DATASOURCE_INSTANCE_HOSTNAME: localhost
+#DATASOURCE_INSTANCE_PORT: 5432
+DATASOURCE_INSTANCE_HOSTNAME: x
+DATASOURCE_INSTANCE_PORT: 32070
 
 server:
   port: 8051
@@ -28,8 +31,7 @@ spring:
 
   dataSource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://${DATASOURCE_INSTANCE_HOSTNAME}:5432/blog
-#    url: jdbc:postgresql://postgresSpringBlog:5432/blog
+    url: jdbc:postgresql://${DATASOURCE_INSTANCE_HOSTNAME}:${DATASOURCE_INSTANCE_PORT}/blog
     username: blog
     password: blogpass
 
