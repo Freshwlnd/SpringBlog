@@ -50,6 +50,7 @@ public class PostRepositoryController {
         pageRequest = new PageRequest(0, Integer.MAX_VALUE, Sort.Direction.DESC, "createdAt");
         deletePost = new Post();
         deletePost.setId(9L);
+        deletePost.setPermalink(permalink);
     }
 
     // TODO

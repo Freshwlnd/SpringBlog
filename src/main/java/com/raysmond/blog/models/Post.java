@@ -16,11 +16,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Raysmond<i@raysmond.com>
+ * @author Raysmond<i @ raysmond.com>
  */
 @Entity
 @Table(name = "posts")
-@Getter @Setter
+@Getter
+@Setter
 public class Post extends BaseModel {
     private static final SimpleDateFormat SLUG_DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -31,9 +32,9 @@ public class Post extends BaseModel {
     private User user;
 
     @Column(nullable = false)
-    private String title;
+    private String title = "title";
 
-    @Type(type="text")
+    @Type(type = "text")
     private String content;
 
     @Type(type = "text")
@@ -70,28 +71,30 @@ public class Post extends BaseModel {
     @OneToOne
     private SeoPostData seoData;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String permalink;
 
     public String getRenderedContent() {
         //if (this.postFormat == PostFormat.MARKDOWN)
-            return renderedContent;
+        return renderedContent;
 
         //return getContent();
     }
 
-    public void setPermalink(String permalink){
+    public void setPermalink(String permalink) {
         String token = permalink.toLowerCase().replace("\n", " ").replaceAll("[^a-z\\d\\s]", " ");
         this.permalink = StringUtils.arrayToDelimitedString(StringUtils.tokenizeToStringArray(token, " "), "-");
     }
 
     private Long visitsCount = 0L;
+
     public Long getVisitsCount() {
         if (this.visitsCount == null) return 0L;
         else return this.visitsCount;
     }
 
     private Integer sympathyCount = 0;
+
     public Integer getSympathyCount() {
         if (this.sympathyCount == null) return 0;
         else return this.sympathyCount;
