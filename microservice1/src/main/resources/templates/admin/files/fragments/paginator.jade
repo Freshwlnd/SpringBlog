@@ -1,0 +1,26 @@
+
+.load-more
+  nav
+    ul.pagination
+      if page >= 1
+        li.previous
+          a.btn(href="?page=#{page - 1}")
+            span(aria-hidden="true") &larr;
+            |  Newer files
+
+      for pageNum in pagesList
+        if pageNum==page
+          li.active
+            a.btn(href="?page=#{pageNum}")
+              = pageNum+1
+        else
+          li
+            a.btn(href="?page=#{pageNum}")
+              = pageNum+1
+
+
+      if totalPages-1 > page
+        li.next
+          a.btn(href="?page=#{page + 1}")
+            | Older files
+            span(aria-hidden="true") &rarr;
