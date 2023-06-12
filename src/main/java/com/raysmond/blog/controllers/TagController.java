@@ -6,6 +6,8 @@ import com.raysmond.blog.models.Tag;
 import com.raysmond.blog.services.AppSetting;
 import com.raysmond.blog.services.PostService;
 import com.raysmond.blog.services.TagService;
+import org.apache.lucene.util.RamUsageEstimator;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -40,6 +42,10 @@ public class TagController {
 
     @RequestMapping(value = "", method = GET)
     public String index(Model model){
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(model));
+
         model.addAttribute("tags", postService.countPostsByTags());
         return "tags/index";
     }
@@ -47,6 +53,12 @@ public class TagController {
     @RequestMapping(value = "{tagName}", method = GET)
     public String showTag(@PathVariable String tagName, @RequestParam(defaultValue = "1") int page, Model model) {
         Tag tag = tagService.getTag(tagName);
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("Tag: ");
+//        System.out.println(RamUsageEstimator.sizeOf(tag));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(tag));
+//        System.out.println(ClassLayout.parseInstance(tag).toPrintable());
 
         if (tag == null) {
             throw new NotFoundException("Tag " + tagName + " is not found.");

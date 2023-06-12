@@ -1,6 +1,6 @@
 package com.raysmond.blog.utils;
 
-import com.raysmond.blog.models.Post;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,11 +45,11 @@ public class PaginatorUtil {
         switch (method) {
             case "all":
                 for (int i = 0; i < 3; i++) {
-                    createPagesList(from, to);
+                    createPagesList_test(from, to);
                 }
                 break;
             case "createPagesList":
-                createPagesList(from, to);
+                createPagesList_test(from, to);
                 break;
         }
 
@@ -61,6 +61,11 @@ public class PaginatorUtil {
         for (int i = from; i <= to; i++) {
             result.add(i);
         }
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+        // import org.apache.lucene.util.RamUsageEstimator;
+//        System.out.println(RamUsageEstimator.sizeOf(result));
+
         return result;
     }
 

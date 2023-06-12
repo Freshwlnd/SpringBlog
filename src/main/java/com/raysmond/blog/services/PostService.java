@@ -14,6 +14,7 @@ import com.raysmond.blog.notificators.Notificator;
 import com.raysmond.blog.repositories.PostRepository;
 import com.raysmond.blog.repositories.SeoPostDataRepository;
 import com.raysmond.blog.support.web.MarkdownService;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -233,7 +234,7 @@ public class PostService {
     }
 
     @Cacheable(value = CACHE_NAME_PAGE, key = "T(java.lang.String).valueOf(#page).concat('-').concat(#pageSize)")
-    public Page<Post> getAllPublishedPostsByPage(int page, int pageSize) {
+    public Page<Post> getAllPublishedPostsByPage(Integer page, Integer pageSize) {
         logger.debug("Get posts by page " + page);
 
         Page<Post> posts = postRepository.findAllByPostTypeAndPostStatusAndDeleted(
@@ -330,7 +331,12 @@ public class PostService {
     public List<Object[]> countPostsByTags() {
         logger.debug("Count posts group by tags.");
 
-        return postRepository.countPostsByTags(PostStatus.PUBLISHED);
+        List<Object[]> list = postRepository.countPostsByTags(PostStatus.PUBLISHED);
+        
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(list));
+
+        return list;
     }
 
     //TODO
@@ -438,6 +444,11 @@ public class PostService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//            System.out.println("SeoPostData: ");
+//            System.out.println(RamUsageEstimator.sizeOf(data));
+
         }
     }
 
@@ -640,6 +651,9 @@ public class PostService {
     List<Object[]> countPostsByTags_test() {
         logger.debug("Count posts group by tags.");
 
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(new ArrayList<>()));
+
 //        return postRepository.countPostsByTags(PostStatus.PUBLISHED);
         return new ArrayList<>();
     }
@@ -709,6 +723,10 @@ public class PostService {
     }
 
     Page<Post> findAllPosts_test(PageRequest pageRequest) {
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(false));
+
 //        return postRepository.findAllByDeleted(pageRequest, false);
         return new PageImpl<>(new ArrayList<>());
     }
@@ -744,12 +762,21 @@ public class PostService {
     List<Post> getAllPublishedPosts_test() {
         logger.debug("Get all published posts");
 
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(PostType.POST));
+//        System.out.println(RamUsageEstimator.sizeOf(PostStatus.PUBLISHED));
+
+
 //        return this.postRepository.findAllByPostTypeAndPostStatusAndDeleted(PostType.POST, PostStatus.PUBLISHED, false);
         return new ArrayList<>();
     }
 
-    Page<Post> getAllPublishedPostsByPage_test(int page, int pageSize) {
+    Page<Post> getAllPublishedPostsByPage_test(Integer page, Integer pageSize) {
         logger.debug("Get posts by page " + page);
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(page));
 
         Page<Post> posts = new PageImpl<>(new ArrayList<>());
         new PageRequest(page, pageSize, Sort.Direction.DESC, "createdAt");

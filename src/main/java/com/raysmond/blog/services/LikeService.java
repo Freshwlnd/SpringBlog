@@ -4,6 +4,8 @@ import com.raysmond.blog.models.Like;
 import com.raysmond.blog.models.Post;
 import com.raysmond.blog.models.User;
 import com.raysmond.blog.repositories.LikeRepository;
+import org.apache.lucene.util.RamUsageEstimator;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,6 +69,13 @@ public class LikeService {
         like.setUser(user);
         like.setIsAdmin(user != null ? user.isAdmin() : false);
         like.setSympathy(sympathy);
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("Like");
+//        System.out.println(RamUsageEstimator.sizeOf(like));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(like));
+//        System.out.println(ClassLayout.parseInstance(like).toPrintable());
+
         this.likeRepository.save(like);
     }
 

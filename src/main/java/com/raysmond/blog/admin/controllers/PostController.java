@@ -12,6 +12,8 @@ import com.raysmond.blog.services.UserService;
 import com.raysmond.blog.support.web.MarkdownService;
 import com.raysmond.blog.utils.DTOUtil;
 import com.raysmond.blog.utils.PaginatorUtil;
+import org.apache.lucene.util.RamUsageEstimator;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -58,12 +60,26 @@ public class PostController {
 
     @RequestMapping(value = "")
     public String index(@RequestParam(defaultValue = "0") int page, Model model) {
-        Page<Post> posts = postService.findAllPosts(new PageRequest(page, PAGE_SIZE, Sort.Direction.DESC, "id"));
+//        Page<Post> posts = postService.findAllPosts(new PageRequest(page, PAGE_SIZE, Sort.Direction.DESC, "id"));
+        PageRequest pgReq = new PageRequest(page, PAGE_SIZE, Sort.Direction.DESC, "id");
+        Page<Post> posts = postService.findAllPosts(pgReq);
 
         model.addAttribute("totalPages", posts.getTotalPages());
         model.addAttribute("page", page);
         model.addAttribute("posts", posts);
         model.addAttribute("pagesList", PaginatorUtil.createPagesList(0, posts.getTotalPages() - 1));
+
+
+//        List<Integer> pageList = PaginatorUtil.createPagesList(0, posts.getTotalPages() - 1);
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(pageList));
+//        System.out.println("Page<com.raysmond.blog.models.Post>");
+//        System.out.println(RamUsageEstimator.sizeOf(posts));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(posts));
+//        System.out.println(ClassLayout.parseInstance(posts).toPrintable());
+//        System.out.println("PageRequest");
+//        System.out.println(RamUsageEstimator.sizeOf(pgReq));
+//        model.addAttribute("pagesList", pageList);
 
         return "admin/posts/index";
     }
@@ -101,6 +117,19 @@ public class PostController {
         if (postForm == null) {
             postForm = DTOUtil.map(post, PostForm.class);
         }
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("Set<com.raysmond.blog.models.Tag>");
+//        System.out.println(RamUsageEstimator.sizeOf(post.getTags()));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(post.getTags()));
+//        System.out.println(ClassLayout.parseInstance(post.getTags()).toPrintable());
+//        System.out.println("com.raysmond.blog.forms.PostForm");
+//        System.out.println(RamUsageEstimator.sizeOf(postForm));
+//        System.out.println("com.raysmond.blog.models.Post");
+//        System.out.println(RamUsageEstimator.sizeOf(post));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(post));
+//        System.out.println(ClassLayout.parseInstance(post).toPrintable());
+
 
         postForm.init();
         DTOUtil.mapTo(post, postForm);

@@ -8,6 +8,7 @@ import com.raysmond.blog.models.SeoPostData;
 import com.raysmond.blog.models.Tag;
 import com.raysmond.blog.models.User;
 import com.raysmond.blog.services.*;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,12 @@ public class PostController {
     public String archive(Model model){
         model.addAttribute("posts", postService.getArchivePosts());
 
+
+//        List<Post> posts = postService.getArchivePosts();
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(posts));
+//        model.addAttribute("posts", posts);
+
         return "posts/archive";
     }
 
@@ -86,6 +93,12 @@ public class PostController {
         model.addAttribute("seoKeywords", this.postService.getSeoKeywordsAsString(post));
         model.addAttribute("seoDescription", post.getSeoDescription());
         model.addAttribute("seoData", seoData);
+
+//        List<Tag> tags = this.postService.getPostTags(post);
+//        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(tags));
+//        model.addAttribute("tags", tags);
+
 
         return "posts/show";
     }

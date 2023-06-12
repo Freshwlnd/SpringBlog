@@ -2,6 +2,7 @@ package com.raysmond.blog.services;
 
 import com.raysmond.blog.models.Setting;
 import com.raysmond.blog.repositories.SettingRepository;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,11 @@ public class CacheSettingService implements SettingService {
             
             logger.info("Cannot save setting value with type: " + value.getClass() + ". key = " + key);
         }
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("Setting");
+//        System.out.println(RamUsageEstimator.sizeOf(setting));
+
     }
 
 

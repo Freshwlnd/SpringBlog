@@ -11,6 +11,7 @@ import com.domingosuarez.boot.autoconfigure.jade4j.JadeHelper;
 import com.raysmond.blog.Constants;
 import com.raysmond.blog.models.User;
 import com.raysmond.blog.repositories.UserRepository;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,10 @@ public class UserService implements UserDetailsService {
 
     public User getSuperUser() {
         List<User> superUsers = this.userRepository.findAllByRoleOrderById(User.ROLE_ADMIN);
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println(RamUsageEstimator.sizeOf(superUsers));
+
         if (superUsers == null || superUsers.size() == 0) {
             return this.getDefaultSuperUser();
         }

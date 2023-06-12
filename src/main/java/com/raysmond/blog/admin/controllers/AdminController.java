@@ -9,6 +9,8 @@ import com.raysmond.blog.services.PostService;
 import com.raysmond.blog.services.StatisticsService;
 import com.raysmond.blog.support.web.MessageHelper;
 import com.raysmond.blog.utils.DTOUtil;
+import org.apache.lucene.util.RamUsageEstimator;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +45,25 @@ public class AdminController {
     @RequestMapping("")
     public String index(Model model) {
         List<PostIdTitleDTO> postIdTitleDTOList = postService.getPostsIdTitleList();
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        Boolean bl = false;
+//        Integer it = 1;
+//        Long ln = 1L;
+//        String str = "admin/home/index";
+//        int itn = 1;
+//        System.out.println("Boolean: ");
+//        System.out.println(RamUsageEstimator.sizeOf(bl));
+//        System.out.println("Integer: ");
+//        System.out.println(RamUsageEstimator.sizeOf(it));
+//        System.out.println("Long: ");
+//        System.out.println(RamUsageEstimator.sizeOf(ln));
+//        System.out.println("String: ");
+//        System.out.println(RamUsageEstimator.sizeOf(str));
+//        System.out.println("int: ");
+//        System.out.println(RamUsageEstimator.sizeOf(itn));
+//        System.out.println(RamUsageEstimator.sizeOf(postIdTitleDTOList));
+
         model.addAttribute("posts", postIdTitleDTOList);
         return "admin/home/index";
     }
@@ -50,6 +71,14 @@ public class AdminController {
     @RequestMapping(value = "settings")
     public String settings(Model model){
         SettingsForm settingsForm = DTOUtil.map(appSetting, SettingsForm.class);
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("com.raysmond.blog.services.AppSetting");
+//        System.out.println(RamUsageEstimator.sizeOf(appSetting));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(appSetting));
+//        System.out.println(ClassLayout.parseInstance(appSetting).toPrintable());
+//        System.out.println("SettingsForm");
+//        System.out.println(RamUsageEstimator.sizeOf(settingsForm));
 
         model.addAttribute("settings", settingsForm);
         return "admin/home/settings";

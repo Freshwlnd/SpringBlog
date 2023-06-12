@@ -7,6 +7,8 @@ import com.raysmond.blog.repositories.UserRepository;
 import com.raysmond.blog.services.UserService;
 import com.raysmond.blog.support.web.MessageHelper;
 import com.raysmond.blog.utils.DTOUtil;
+import org.apache.lucene.util.RamUsageEstimator;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -46,7 +48,15 @@ public class UserController {
 
     @RequestMapping("profile")
     public String profile(Model model){
-        model.addAttribute("user", userService.currentUser());
+//        model.addAttribute("user", userService.currentUser());
+        User user = userService.currentUser();
+        model.addAttribute("user", user);
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("User: ");
+//        System.out.println(RamUsageEstimator.sizeOf(user));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(user));
+//        System.out.println(ClassLayout.parseInstance(user).toPrintable());
 
         return "admin/users/profile";
     }

@@ -11,6 +11,8 @@ import com.raysmond.blog.services.FileStorageService;
 import com.raysmond.blog.services.UserService;
 import com.raysmond.blog.utils.DTOUtil;
 import com.raysmond.blog.utils.PaginatorUtil;
+import org.apache.lucene.util.RamUsageEstimator;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -57,6 +59,12 @@ public class StoredFileController {
     public String index(@RequestParam(defaultValue = "0") int page, Model model) {
         Page<StoredFile> files = storedFileRepository.findAll(new PageRequest(page, PAGE_SIZE, Sort.Direction.DESC, "id"));
 
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("Page<StoredFile>");
+//        System.out.println(RamUsageEstimator.sizeOf(files));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(files));
+//        System.out.println(ClassLayout.parseInstance(files).toPrintable());
+
         model.addAttribute("totalPages", files.getTotalPages());
         model.addAttribute("page", page);
         model.addAttribute("files", files);
@@ -78,6 +86,13 @@ public class StoredFileController {
 
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
+
+            // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//            System.out.println("byte: ");
+//            System.out.println(RamUsageEstimator.sizeOf(bytes));
+//            System.out.println("String: ");
+//            System.out.println(RamUsageEstimator.sizeOf(file.getOriginalFilename()));
+
 
             this.storageService.storeFile(file.getOriginalFilename(), bytes);
 
@@ -113,6 +128,15 @@ public class StoredFileController {
 
         model.addAttribute("file", file);
         model.addAttribute("fileForm", fileForm);
+
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("StoredFileForm: ");
+//        System.out.println(RamUsageEstimator.sizeOf(fileForm));
+//        System.out.println("StoredFile: ");
+//        System.out.println(RamUsageEstimator.sizeOf(file));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(file));
+//        System.out.println(ClassLayout.parseInstance(file).toPrintable());
 
         return "admin/files/edit";
     }

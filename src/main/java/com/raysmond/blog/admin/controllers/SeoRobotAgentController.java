@@ -6,6 +6,7 @@ import com.raysmond.blog.models.SeoRobotAgent;
 import com.raysmond.blog.models.User;
 import com.raysmond.blog.repositories.SeoRobotAgentRepository;
 import com.raysmond.blog.utils.DTOUtil;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -62,6 +63,13 @@ public class SeoRobotAgentController {
         DTOUtil.mapTo(form, ua);
 
         this.seoRobotAgentRepository.save(ua);
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("SeoRobotAgentForm");
+//        System.out.println(RamUsageEstimator.sizeOf(form));
+//        System.out.println("SeoRobotAgent");
+//        System.out.println(RamUsageEstimator.sizeOf(ua));
+
 
         return "redirect:/admin/robotsAgents";
     }

@@ -31,6 +31,11 @@ configurations {
 //}
 
 dependencies {
+    // 获取对象大小
+    compile "org.openjdk.jol:jol-core:0.9"
+    compile "org.apache.lucene:lucene-core:4.0.0"
+    compile "org.apache.commons:commons-lang3:3.12.0"
+
     // spring boot
     compile "org.springframework.boot:spring-boot-starter-web-services:1.5.9.RELEASE"
     compile "org.springframework.boot:spring-boot-starter-jetty:1.5.9.RELEASE"

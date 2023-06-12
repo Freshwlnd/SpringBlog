@@ -6,6 +6,7 @@ import com.raysmond.blog.models.User;
 import com.raysmond.blog.models.dto.PostsIdListDTO;
 import com.raysmond.blog.models.dto.VisitsStatsChartDTO;
 import com.raysmond.blog.services.StatisticsService;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -46,6 +47,13 @@ public class StatisticsController {
             @RequestBody PostsIdListDTO postsDto)
     {
         VisitsStatsChartDTO chart = statisticsService.getChartDataByPeriodAndPostsList(start, end, postsDto.getIds());
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("VisitsStatsChartDTO: ");
+//        System.out.println(RamUsageEstimator.sizeOf(chart));
+//        System.out.println("PostsIdListDTO: ");
+//        System.out.println(RamUsageEstimator.sizeOf(postsDto));
+
         return chart;
     }
 

@@ -7,6 +7,7 @@ import com.raysmond.blog.models.support.PostStatus;
 import com.raysmond.blog.notificators.Notificator;
 import com.raysmond.blog.notificators.telegram.TelegramBotManager;
 import com.raysmond.blog.services.PostService;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,10 @@ public class NotificatorController {
 
     @PostMapping(value = "/{postId:[0-9]+}/telegram", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody PostAnnouncementDTO sendTelegramAnnounce(@PathVariable Long postId, Model model) {
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("PostAnnouncementDTO: ");
+//        System.out.println(RamUsageEstimator.sizeOf(new PostAnnouncementDTO(true, "Post is not published!")));
 
         Post post = postService.getPost(postId);
         if (post.getPostStatus().equals(PostStatus.PUBLISHED)) {

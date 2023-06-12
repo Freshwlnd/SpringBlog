@@ -1,5 +1,7 @@
 package com.raysmond.blog.services;
 
+import org.apache.lucene.util.RamUsageEstimator;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +56,13 @@ public class RequestProcessorService {
     }
 
     String getRealIp_test(HttpServletRequest request) {
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("request: ");
+//        System.out.println(RamUsageEstimator.sizeOf(request));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(request));
+//        System.out.println(ClassLayout.parseInstance(request).toPrintable());
+
         String xRealIp = request.getHeader("X-Real-IP");
         if (xRealIp == null || request.getHeader("X-Real-IP").isEmpty()) {
             return request.getRemoteAddr();

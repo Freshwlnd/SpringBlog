@@ -5,6 +5,7 @@ import com.raysmond.blog.models.Post;
 import com.raysmond.blog.services.*;
 import com.raysmond.blog.support.web.ViewHelper;
 import lombok.Data;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,11 @@ public class SympathyController {
 
     @PostMapping(value = "/like")
     public @ResponseBody LikeForm likeIt(@RequestBody SympathyRequestData data, HttpServletRequest request) {
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("SympathyRequestData");
+//        System.out.println(RamUsageEstimator.sizeOf(data));
+
         Post post = this.postService.findPostByPermalink(data.getPostId());
         this.likeService.likePost(post, this.requestProcessorService.getRealIp(request));
         ViewHelper viewHelper = new ViewHelper(this.appSetting);

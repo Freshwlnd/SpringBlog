@@ -6,10 +6,12 @@ import com.raysmond.blog.models.User;
 import com.raysmond.blog.models.Visit;
 import com.raysmond.blog.repositories.SeoRobotAgentRepository;
 import com.raysmond.blog.repositories.VisitRepository;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.data.jpa.provider.HibernateUtils;
@@ -55,6 +57,14 @@ public class VisitService {
         visit.setIsAdmin(user != null ? user.isAdmin() : false);
         visit.setUserAgent(userAgent);
         this.visitRepository.save(visit);
+
+
+        // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
+//        System.out.println("Visit: ");
+//        System.out.println(RamUsageEstimator.sizeOf(visit));
+//        System.out.println(RamUsageEstimator.shallowSizeOf(visit));
+//        System.out.println(ClassLayout.parseInstance(visit).toPrintable());
+
     }
 
     public Long getUniqueVisitsCount(Post post) {
