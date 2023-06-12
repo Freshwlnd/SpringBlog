@@ -99,7 +99,6 @@ public class TelegramBotManager {
             sm.setText(message);
             this.execute(sm);
         }
-
         public void send(String message, Long chatId) throws TelegramApiException {
             SendMessage sm = new SendMessage();
             sm.setChatId(chatId);
@@ -116,7 +115,6 @@ public class TelegramBotManager {
                 e.printStackTrace();
             }
         }
-
         private void _send(String message, Long chatId) {
             try {
                 this.send(message, chatId);

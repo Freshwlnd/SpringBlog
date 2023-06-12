@@ -1,8 +1,8 @@
 package com.raysmond.blog.microservice2.models;
 
-import com.raysmond.blog.models.support.PostFormat;
-import com.raysmond.blog.models.support.PostStatus;
-import com.raysmond.blog.models.support.PostType;
+import com.raysmond.blog.microservice2.models.support.PostFormat;
+import com.raysmond.blog.microservice2.models.support.PostStatus;
+import com.raysmond.blog.microservice2.models.support.PostType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;

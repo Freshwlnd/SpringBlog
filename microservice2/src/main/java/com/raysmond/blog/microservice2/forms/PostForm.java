@@ -1,11 +1,11 @@
 package com.raysmond.blog.microservice2.forms;
 
-import com.raysmond.blog.models.Post;
-import com.raysmond.blog.models.SeoPostData;
-import com.raysmond.blog.models.support.OgLocale;
-import com.raysmond.blog.models.support.OgType;
-import com.raysmond.blog.models.support.PostFormat;
-import com.raysmond.blog.models.support.PostStatus;
+import com.raysmond.blog.microservice2.models.Post;
+import com.raysmond.blog.microservice2.models.SeoPostData;
+import com.raysmond.blog.microservice2.models.support.OgLocale;
+import com.raysmond.blog.microservice2.models.support.OgType;
+import com.raysmond.blog.microservice2.models.support.PostFormat;
+import com.raysmond.blog.microservice2.models.support.PostStatus;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 

@@ -28,6 +28,7 @@ public class NotificatorController {
     private PostService postService;
 
 
+
     @PostMapping(value = "/{postId:[0-9]+}/telegram", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     PostAnnouncementDTO sendTelegramAnnounce(@PathVariable Long postId, Model model) {

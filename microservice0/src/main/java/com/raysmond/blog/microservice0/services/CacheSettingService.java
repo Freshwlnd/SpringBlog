@@ -111,7 +111,6 @@ public class CacheSettingService implements SettingService {
         Serializable value = get_test(key);
         return value == null ? defaultValue : value;
     }
-
     public Serializable get_test(String key) {
 //        Setting setting = settingRepository.findByKey(key);
         Setting setting = new Setting();

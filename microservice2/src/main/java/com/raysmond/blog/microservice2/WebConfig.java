@@ -1,6 +1,6 @@
 package com.raysmond.blog.microservice2;
 
-import com.raysmond.blog.support.web.ViewHelper;
+import com.raysmond.blog.microservice2.support.web.ViewHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

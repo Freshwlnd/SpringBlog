@@ -1,7 +1,8 @@
 package com.raysmond.blog.microservice1;
 
-import com.raysmond.blog.services.UserService;
-import org.springframework.context.annotation.*;
+import com.raysmond.blog.microservice1.services.UserService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;

@@ -1,7 +1,7 @@
 package com.raysmond.blog.microservice2.models;
 
-import com.raysmond.blog.models.support.OgLocale;
-import com.raysmond.blog.models.support.OgType;
+import com.raysmond.blog.microservice2.models.support.OgLocale;
+import com.raysmond.blog.microservice2.models.support.OgType;
 import lombok.Getter;
 import lombok.Setter;
 

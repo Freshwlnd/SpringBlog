@@ -108,6 +108,7 @@ public class StoredFileController {
     }
 
 
+
     @GetMapping(value = "/{fileId:[\\d]+}/edit")
     public String editFileById(@PathVariable Long fileId, Model model) {
         Assert.notNull(fileId);

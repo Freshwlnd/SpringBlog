@@ -7,7 +7,6 @@ public class PostAnnouncementDTO extends AjaxAnswerDTO {
     public PostAnnouncementDTO(Boolean error, String message) {
         super(error, message);
     }
-
     public PostAnnouncementDTO(Boolean error) {
         super(error, "");
     }

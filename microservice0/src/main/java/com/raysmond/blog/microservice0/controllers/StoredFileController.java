@@ -50,7 +50,7 @@ public class StoredFileController {
 //            } else {
 //                response.sendError(404, String.format("File %s not found", file.getName()));
 //            }
-        return null;
+            return null;
 //        }
 
 //        HttpHeaders header = new HttpHeaders();

@@ -35,7 +35,7 @@ public class LikeService {
 
         // TODO
 //        if (user != null) {
-        currentSympathy = this.likeRepository.getTotalLikesByUserAndPost(user, post);
+            currentSympathy = this.likeRepository.getTotalLikesByUserAndPost(user, post);
 //        } else {
         currentSympathy = this.likeRepository.getTotalLikesByClientIpAndPost(clientIp, post);
 //        }
