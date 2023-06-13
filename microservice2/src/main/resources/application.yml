@@ -4,7 +4,7 @@ DATASOURCE_INSTANCE_HOSTNAME: 10.60.150.56
 DATASOURCE_INSTANCE_PORT: 32070
 
 server:
-  port: 8051
+  port: 8052
   contextPath:
 
 #logging:

@@ -1,10 +1,14 @@
 package com.raysmond.blog.microservice0.controllers;
 
+import com.raysmond.blog.microservice0.Constants;
+import com.raysmond.blog.microservice0.error.NotFoundException;
 import com.raysmond.blog.microservice0.forms.PostForm;
 import com.raysmond.blog.microservice0.models.Post;
 import com.raysmond.blog.microservice0.models.SeoPostData;
 import com.raysmond.blog.microservice0.models.Tag;
 import com.raysmond.blog.microservice0.models.User;
+import com.raysmond.blog.microservice0.services.*;
+import org.apache.lucene.util.RamUsageEstimator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
 /**

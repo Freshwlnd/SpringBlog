@@ -5,11 +5,15 @@ import com.raysmond.blog.microservice0.forms.PostPreviewForm;
 import com.raysmond.blog.microservice0.models.Post;
 import com.raysmond.blog.microservice0.models.User;
 import com.raysmond.blog.microservice0.models.dto.PostPreviewDTO;
+import com.raysmond.blog.microservice0.models.support.*;
 import com.raysmond.blog.microservice0.repositories.UserRepository;
 import com.raysmond.blog.microservice0.services.PostService;
+import com.raysmond.blog.microservice0.services.UserService;
 import com.raysmond.blog.microservice0.support.web.MarkdownService;
 import com.raysmond.blog.microservice0.utils.DTOUtil;
 import com.raysmond.blog.microservice0.utils.PaginatorUtil;
+import org.apache.lucene.util.RamUsageEstimator;
+import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,10 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -72,7 +73,7 @@ public class PostController {
 //        List<Integer> pageList = PaginatorUtil.createPagesList(0, posts.getTotalPages() - 1);
         // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
 //        System.out.println(RamUsageEstimator.sizeOf(pageList));
-//        System.out.println("Page<com.raysmond.blog.models.Post>");
+//        System.out.println("Page<com.raysmond.blog.microservice0.models.Post>");
 //        System.out.println(RamUsageEstimator.sizeOf(posts));
 //        System.out.println(RamUsageEstimator.shallowSizeOf(posts));
 //        System.out.println(ClassLayout.parseInstance(posts).toPrintable());
@@ -118,13 +119,13 @@ public class PostController {
         }
 
         // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
-//        System.out.println("Set<com.raysmond.blog.models.Tag>");
+//        System.out.println("Set<com.raysmond.blog.microservice0.models.Tag>");
 //        System.out.println(RamUsageEstimator.sizeOf(post.getTags()));
 //        System.out.println(RamUsageEstimator.shallowSizeOf(post.getTags()));
 //        System.out.println(ClassLayout.parseInstance(post.getTags()).toPrintable());
-//        System.out.println("com.raysmond.blog.forms.PostForm");
+//        System.out.println("com.raysmond.blog.microservice0.forms.PostForm");
 //        System.out.println(RamUsageEstimator.sizeOf(postForm));
-//        System.out.println("com.raysmond.blog.models.Post");
+//        System.out.println("com.raysmond.blog.microservice0.models.Post");
 //        System.out.println(RamUsageEstimator.sizeOf(post));
 //        System.out.println(RamUsageEstimator.shallowSizeOf(post));
 //        System.out.println(ClassLayout.parseInstance(post).toPrintable());

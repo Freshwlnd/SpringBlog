@@ -1,31 +1,29 @@
 package com.raysmond.blog.microservice2.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
 import com.domingosuarez.boot.autoconfigure.jade4j.JadeHelper;
 import com.raysmond.blog.microservice2.Constants;
+import com.raysmond.blog.microservice2.models.User;
 import com.raysmond.blog.microservice2.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @JadeHelper("userService")
 @RequestMapping("/UserService")
@@ -93,7 +91,7 @@ public class UserService implements UserDetailsService {
             auth = authenticate(defaultUser);
         }
 
-        String email = ((User) auth.getPrincipal()).getUsername();
+        String email = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
 
         return userRepository.findByEmail(email);
     }
@@ -129,8 +127,8 @@ public class UserService implements UserDetailsService {
         return new UsernamePasswordAuthenticationToken(createSpringUser(user), null, Collections.singleton(createAuthority(user)));
     }
 
-    private User createSpringUser(User user) {
-        return new User(
+    private org.springframework.security.core.userdetails.User createSpringUser(User user) {
+        return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
                 Collections.singleton(createAuthority(user)));
@@ -205,7 +203,7 @@ public class UserService implements UserDetailsService {
             return null;
         }
 
-        String email = ((User) auth.getPrincipal()).getUsername();
+        String email = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
 
 //        return userRepository.findByEmail(email);
         return new User();
