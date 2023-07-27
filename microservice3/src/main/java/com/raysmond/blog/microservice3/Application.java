@@ -14,7 +14,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 // Open the cache Please uncomment the downlink
 //@EnableCaching
 @EnableEurekaClient
-//@EnableFeignClients(basePackages = "com.raysmond.blog.microservice4.client")
+//@EnableFeignClients(basePackages = "com.raysmond.blog.microservice3.client")
 public class Application {
 
     public static void main(String[] args) {

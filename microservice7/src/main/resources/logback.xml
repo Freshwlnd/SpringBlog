@@ -3,6 +3,7 @@
 	<contextName>SpringBlog</contextName>
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+<!--	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender" level="DEBUG">-->
 		<encoder>
 			<pattern>
 				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{32} - %msg%n
@@ -28,6 +29,7 @@
 	<logger name="com.raysmond.blog.microservice1.notificators.telegram.TelegramBotManager.TelegramBot" level="DEBUG" />
 
 	<root level="WARN">
+<!--	<root level="DEBUG">-->
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

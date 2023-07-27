@@ -11,16 +11,22 @@ dependencies {
     compile(project(':common'))
 
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'org.glassfish.web', name: 'javax.el', version: '2.2.6'
     // eureka
     compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     compile('org.springframework.cloud:spring-cloud-starter-openfeign')
+
+    // 获取对象大小
+    compile "org.openjdk.jol:jol-core:0.9"
+    compile "org.apache.lucene:lucene-core:4.0.0"
+    compile "org.apache.commons:commons-lang3:3.12.0"
 
     // spring boot
     compile "org.springframework.boot:spring-boot-starter-web-services:1.5.9.RELEASE"
     compile "org.springframework.boot:spring-boot-starter-jetty:1.5.9.RELEASE"
     //compile "org.springframework.boot:spring-boot-starter-tomcat:1.5.9.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.5.9.RELEASE"
-    compile "com.domingosuarez.boot:spring-boot-starter-jade4j:0.3.2"
+//    compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.5.9.RELEASE"
+//    compile "com.domingosuarez.boot:spring-boot-starter-jade4j:0.3.2"
     compile "org.springframework.boot:spring-boot-starter-data-redis:1.5.9.RELEASE"
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:'1.5.9.RELEASE') {
         exclude(module: 'spring-boot-starter-logging')
@@ -29,13 +35,13 @@ dependencies {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
     }
     compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.5.9.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-security:1.5.9.RELEASE'
+//    compile 'org.springframework.boot:spring-boot-starter-security:1.5.9.RELEASE'
 
     // spring framework
     compile 'org.springframework:spring-context:4.3.13.RELEASE'
     compile 'org.springframework:spring-webmvc:4.3.13.RELEASE'
-    compile 'org.springframework.security:spring-security-config:4.2.3.RELEASE'
-    compile 'org.springframework.security:spring-security-web:4.2.3.RELEASE'
+//    compile 'org.springframework.security:spring-security-config:4.2.3.RELEASE'
+//    compile 'org.springframework.security:spring-security-web:4.2.3.RELEASE'
 
     //persistence
 //    compile 'com.zaxxer:HikariCP:+'
@@ -46,7 +52,7 @@ dependencies {
     compile 'org.hsqldb:hsqldb:+'
 
     // view
-    compile 'de.neuland-bfi:spring-jade4j:1.2.7'
+//    compile 'de.neuland-bfi:spring-jade4j:1.2.7'
     //compile 'org.pegdown:pegdown:1.6.0'
 
     //markdown processor
@@ -97,6 +103,7 @@ dependencies {
     compile 'org.telegram:telegrambots:3.5'
 
     // test
+    compile "org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE"
     testCompile("org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE")
     testCompile 'junit:junit:+'
     testCompile 'org.mockito:mockito-core:+'

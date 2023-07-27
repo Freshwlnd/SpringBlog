@@ -1,5 +1,8 @@
 package com.raysmond.blog.common.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.raysmond.blog.common.models.support.PostFormat;
 import com.raysmond.blog.common.models.support.PostStatus;
 import com.raysmond.blog.common.models.support.PostType;
@@ -9,6 +12,7 @@ import org.hibernate.annotations.Type;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
+
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +23,7 @@ import java.util.Set;
 @Entity
 @Table(name = "posts")
 @Getter @Setter
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Post.class)
 public class Post extends BaseModel {
     private static final SimpleDateFormat SLUG_DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -26,6 +31,7 @@ public class Post extends BaseModel {
     private Boolean deleted;
 
     @ManyToOne
+//    @JsonIgnore
     private User user;
 
     @Column(nullable = false)
@@ -92,5 +98,15 @@ public class Post extends BaseModel {
     public Integer getSympathyCount() {
         if (this.sympathyCount == null) return 0;
         else return this.sympathyCount;
+    }
+
+    // TODO
+    public void init() {
+        user = new User();
+        title = "title";
+        content = "content";
+        renderedContent = "renderedContent";
+        announcement = "announcement";
+        permalink = "permalink";
     }
 }

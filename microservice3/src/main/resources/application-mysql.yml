@@ -9,8 +9,8 @@ spring:
     thymeleaf:
         cache: false
 
-    jade4j:
-        caching: false
+#    jade4j:
+#        caching: false
 
     dataSource:
       driverClassName: com.mysql.cj.jdbc.Driver

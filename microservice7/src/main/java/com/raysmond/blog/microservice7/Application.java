@@ -2,8 +2,11 @@ package com.raysmond.blog.microservice7;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
 
 /**
@@ -14,7 +17,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 // Open the cache Please uncomment the downlink
 //@EnableCaching
 @EnableEurekaClient
-//@EnableFeignClients(basePackages = "com.raysmond.blog.microservice4.client")
+@EnableFeignClients(basePackages = "com.raysmond.blog.microservice7.client")
 public class Application {
 
     public static void main(String[] args) {

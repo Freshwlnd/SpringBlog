@@ -1,11 +1,14 @@
 package com.raysmond.blog.microservice1.notificators.telegram;
 
+import com.raysmond.blog.microservice1.client.AppSettingClient;
 import com.raysmond.blog.microservice1.services.TelegramBotSettings;
-import com.raysmond.blog.microservice1.services.AppSetting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -19,11 +22,12 @@ import javax.annotation.PreDestroy;
 /**
  * Created by bvn13 on 21.12.2017.
  */
+@RequestMapping("/telegramBotManager")
 @Component
 public class TelegramBotManager {
 
     @Autowired
-    private AppSetting appSetting;
+    private AppSettingClient appSetting;
 
     // https://core.telegram.org/bots/api#sendmessage
 
@@ -51,14 +55,14 @@ public class TelegramBotManager {
         public void onUpdateReceived(Update update) {
             // We check if the update has a message and the message has text
             if (update.hasMessage() && update.getMessage().hasText()) {
-                logger.debug("CHAT ID: "+update.getMessage().getChatId().toString()+" / MESSAGE: "+update.getMessage().getText());
+                logger.debug("CHAT ID: " + update.getMessage().getChatId().toString() + " / MESSAGE: " + update.getMessage().getText());
 
                 Long chatId = update.getMessage().getChatId();
 
                 if (update.getMessage().getChat().getUserName().equals(masterName)) {
                     if (update.getMessage().getText().startsWith("/master")) {
                         this.manager.appSetting.setTelegramMasterChatId(chatId.toString());
-                        this._send("Master chat ID changed to: "+chatId.toString(), chatId);
+                        this._send("Master chat ID changed to: " + chatId.toString(), chatId);
                     } else {
                         this._send("Hello, master!", chatId);
                     }
@@ -79,7 +83,8 @@ public class TelegramBotManager {
             return this.token;
         }
 
-        public void sendMessageToChannel(String channelName, String message) throws TelegramApiException {
+        @RequestMapping(value = "/sendMessageToChannel", method = RequestMethod.GET)
+        public void sendMessageToChannel(@RequestParam("channelName") String channelName, @RequestParam("message") String message) throws TelegramApiException {
             this.send(message, "@" + channelName);
         }
 
@@ -186,5 +191,27 @@ public class TelegramBotManager {
             bot.sendMessageToMaster(message);
         }
     }
+
+
+    // TODO
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) throws TelegramApiException {
+        String message = "message";
+
+        if (method.equals("all") || method.equals("sendMessageToChannel")) {
+            sendMessageToChannel_test(message);
+        }
+
+        return "test";
+    }
+
+    public void sendMessageToChannel_test(String message) throws TelegramApiException {
+        if (isActive) {
+//            bot.sendMessageToChannel(settings.getBotChannel(), message);
+        }
+    }
+
 
 }

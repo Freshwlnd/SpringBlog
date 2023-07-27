@@ -1,31 +1,62 @@
 package com.raysmond.blog.microservice1.seo.controllers;
 
 import com.raysmond.blog.common.models.Post;
-import com.raysmond.blog.microservice1.services.PostService;
+import com.raysmond.blog.microservice1.client.PostServiceClient;
 import com.raysmond.blog.microservice1.services.SeoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = {"/seo", ""})
+@RequestMapping(value = {"/seo"})
 public class SitemapController {
 
     @Autowired
-    private PostService postService;
+    private PostServiceClient postService;
 
     @Autowired
     private SeoService seoService;
 
+    // TODO
+
+    @RequestMapping(value = "testGetSiteMap", method = RequestMethod.GET)
+    public String testGetSiteMap() {
+        getSiteMap();
+
+        return "test";
+    }
+
+    ////////////////////////////////////
+
     @GetMapping(value = "/sitemap", produces = MediaType.APPLICATION_XML_VALUE)
-    public @ResponseBody String getSiteMap() {
+    public @ResponseBody
+    String getSiteMap() {
         List<Post> posts = this.postService.getAllPublishedPosts();
         return this.seoService.createSitemap(posts);
+    }
+
+    // TODO
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
+
+        if (method.equals("all") || method.equals("getSiteMap")) {
+            getSiteMap_test();
+        }
+
+        return "test";
+    }
+
+    String getSiteMap_test() {
+//        List<Post> posts = this.postService.getAllPublishedPosts();
+        List<Post> posts = new ArrayList<>();
+//        return this.seoService.createSitemap(posts);
+        return "test";
     }
 
 }

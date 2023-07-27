@@ -23,7 +23,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-jetty:1.5.9.RELEASE"
     //compile "org.springframework.boot:spring-boot-starter-tomcat:1.5.9.RELEASE"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf:1.5.9.RELEASE"
-    compile "com.domingosuarez.boot:spring-boot-starter-jade4j:0.3.2"
+//    compile "com.domingosuarez.boot:spring-boot-starter-jade4j:0.3.2"
     compile "org.springframework.boot:spring-boot-starter-data-redis:1.5.9.RELEASE"
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:'1.5.9.RELEASE') {
         exclude(module: 'spring-boot-starter-logging')
@@ -49,7 +49,7 @@ dependencies {
     compile 'org.hsqldb:hsqldb:+'
 
     // view
-    compile 'de.neuland-bfi:spring-jade4j:1.2.7'
+//    compile 'de.neuland-bfi:spring-jade4j:1.2.7'
     //compile 'org.pegdown:pegdown:1.6.0'
 
     //markdown processor

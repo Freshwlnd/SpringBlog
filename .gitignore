@@ -1,8 +1,7 @@
 .idea
 .gradle
-eureka/build
-microservice1/build
-microservice2/build
+*/build
+*.DS_Store
 bin
 scripts
 classes
@@ -11,7 +10,5 @@ production_app.properties
 *.iml
 *.ipr
 *.iws
-microservice1/src/main/resources/resources/bower_components
-microservice2/src/main/resources/resources/bower_components
 temp
 private

@@ -34,7 +34,7 @@ allprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
-    group = 'com.raysmond'
+    group = 'com.raysmond.blog'
     version = '2.8.2'
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
