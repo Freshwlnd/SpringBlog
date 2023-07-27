@@ -7,7 +7,8 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class WebError implements Serializable {
+//public class WebError implements Serializable {
+public class WebError {
 
     private String field;
 

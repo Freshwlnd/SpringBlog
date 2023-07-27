@@ -14,7 +14,8 @@ import java.util.List;
  * Created by bvn13 on 20.12.2017.
  */
 @Data
-public class VisitsStatsChartDTO implements Serializable{
+//public class VisitsStatsChartDTO implements Serializable {
+public class VisitsStatsChartDTO {
 
     @Data
     @RequiredArgsConstructor

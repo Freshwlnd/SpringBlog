@@ -36,6 +36,7 @@ public class AppSetting {
     }
 
     @RequestMapping(value = "/getSiteName", method = RequestMethod.GET)
+    @ResponseBody
     public String getSiteName() {
         return (String) settingService.get(SITE_NAME, siteName);
     }
@@ -48,16 +49,19 @@ public class AppSetting {
 
     @RequestMapping(value = "/getPageSize", method = RequestMethod.GET)
     public Integer getPageSize() {
-        return (Integer) settingService.get(PAGE_SIZE, pageSize);
+//        return (Integer) settingService.get(PAGE_SIZE, pageSize);
+        return (Integer) Integer.valueOf(settingService.get(PAGE_SIZE, pageSize.toString()));
     }
 
     @RequestMapping(value = "/setPageSize", method = RequestMethod.POST)
     public void setPageSize(@RequestParam("pageSize") Integer pageSize) {
         this.pageSize = pageSize;
-        settingService.put(PAGE_SIZE, pageSize);
+//        settingService.put(PAGE_SIZE, pageSize);
+        settingService.put(PAGE_SIZE, pageSize.toString());
     }
 
     @RequestMapping(value = "/getSiteSlogan", method = RequestMethod.GET)
+    @ResponseBody
     public String getSiteSlogan() {
         return (String) settingService.get(SITE_SLOGAN, siteSlogan);
     }
@@ -69,6 +73,7 @@ public class AppSetting {
     }
 
     @RequestMapping(value = "/getStoragePath", method = RequestMethod.GET)
+    @ResponseBody
     public String getStoragePath() {
         return (String) settingService.get(STORAGE_PATH, storagePath);
     }
@@ -80,6 +85,7 @@ public class AppSetting {
     }
 
     @RequestMapping(value = "/getMainUri", method = RequestMethod.GET)
+    @ResponseBody
     public String getMainUri() {
         String uri = (String) settingService.get(MAIN_URI, mainUri);
         if (!uri.endsWith("/")) {
@@ -89,6 +95,7 @@ public class AppSetting {
     }
 
     @RequestMapping(value = "/getMainUriStripped", method = RequestMethod.GET)
+    @ResponseBody
     public String getMainUriStripped() {
         String uri = (String) settingService.get(MAIN_URI, mainUri);
         if (uri.endsWith("/")) {
@@ -104,6 +111,7 @@ public class AppSetting {
     }
 
     @RequestMapping(value = "/getTelegramMasterChatId", method = RequestMethod.GET)
+    @ResponseBody
     public String getTelegramMasterChatId() {
         String id = (String) settingService.get(TELEGRAM_MASTER_CHAT_ID, "");
         return id;
@@ -137,6 +145,7 @@ public class AppSetting {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         String mainUri = "localhost:8080/";
         Integer pageSize = 1;

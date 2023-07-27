@@ -75,6 +75,7 @@ public class NotificatorController {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         Model model = new BindingAwareModelMap();
 

@@ -39,6 +39,7 @@ public interface FileStorageServiceClient {
     public void deleteFileById(@RequestParam("fileId") Long fileId) throws IOException;
 
     @RequestMapping(value = "/getContentType", method = RequestMethod.GET)
+    @ResponseBody
     public String getContentType(@RequestParam("fileName") String fileName);
 
 }

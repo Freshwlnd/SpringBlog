@@ -69,6 +69,8 @@ public class SettingRepositoryController {
     @ResponseBody
     Setting findByKey(@RequestParam("key") String key) {
         return settingRepository.findByKey(key);
+//        Setting ret = settingRepository.findByKey(key);
+//        return ret;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.GET)

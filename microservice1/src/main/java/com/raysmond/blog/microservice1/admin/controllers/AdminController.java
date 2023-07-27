@@ -78,6 +78,7 @@ public class AdminController {
 
 
     @RequestMapping("")
+    @ResponseBody
     public String index(Model model) {
         List<PostIdTitleDTO> postIdTitleDTOList = postService.getPostsIdTitleList();
 
@@ -104,6 +105,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "settings")
+    @ResponseBody
     public String settings(Model model) {
         SettingsForm settingsForm = DTOUtil.map(appSetting, SettingsForm.class);
 
@@ -120,6 +122,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "settings", method = RequestMethod.POST)
+    @ResponseBody
     public String updateSettings(@Valid SettingsForm settingsForm, Errors errors, Model model, RedirectAttributes ra) {
         if (errors.hasErrors()) {
             return "admin/settings";
@@ -141,6 +144,7 @@ public class AdminController {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         Model model = new BindingAwareModelMap();
         SettingsForm settingsForm = new SettingsForm();

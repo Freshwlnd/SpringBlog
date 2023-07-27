@@ -51,6 +51,7 @@ public class PostRepositoryController {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
 
         if (post == null) {

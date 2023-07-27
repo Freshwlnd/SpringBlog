@@ -63,6 +63,7 @@ public class UserController {
     ////////////////////////////////////
 
     @RequestMapping("profile")
+    @ResponseBody
     public String profile(Model model) {
 //        model.addAttribute("user", userService.currentUser());
         User user = userService.currentUser();
@@ -78,6 +79,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "{userId:[0-9]+}", method = POST)
+    @ResponseBody
     public String update(@PathVariable Long userId, @Valid UserForm userForm, Errors errors, RedirectAttributes ra) {
         User user = userRepository.findOne(userId);
         Assert.notNull(user);
@@ -105,6 +107,7 @@ public class UserController {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         Model model = new BindingAwareModelMap();
         UserForm userForm = new UserForm();

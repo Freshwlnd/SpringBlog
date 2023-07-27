@@ -17,6 +17,7 @@ import java.util.List;
 public interface AppSettingClient {
 
     @RequestMapping(value = "/getSiteName", method = RequestMethod.GET)
+    @ResponseBody
     public String getSiteName() ;
 
     @RequestMapping(value = "/setSiteName", method = RequestMethod.GET)
@@ -29,27 +30,32 @@ public interface AppSettingClient {
     public void setPageSize(@RequestParam("pageSize") Integer pageSize) ;
 
     @RequestMapping(value = "/getSiteSlogan", method = RequestMethod.GET)
+    @ResponseBody
     public String getSiteSlogan() ;
 
     @RequestMapping(value = "/setSiteSlogan", method = RequestMethod.GET)
     public void setSiteSlogan(@RequestParam("siteSlogan") String siteSlogan) ;
 
     @RequestMapping(value = "/getStoragePath", method = RequestMethod.GET)
+    @ResponseBody
     public String getStoragePath() ;
 
     @RequestMapping(value = "/setStoragePath", method = RequestMethod.GET)
     public void setStoragePath(@RequestParam("storagePath") String storagePath) ;
 
     @RequestMapping(value = "/getMainUri", method = RequestMethod.GET)
+    @ResponseBody
     public String getMainUri() ;
 
     @RequestMapping(value = "/getMainUriStripped", method = RequestMethod.GET)
+    @ResponseBody
     public String getMainUriStripped() ;
 
     @RequestMapping(value = "/setMainUri", method = RequestMethod.GET)
     public void setMainUri(@RequestParam("mainUri") String mainUri) ;
 
     @RequestMapping(value = "/getTelegramMasterChatId", method = RequestMethod.GET)
+    @ResponseBody
     public String getTelegramMasterChatId() ;
 
     @RequestMapping(value = "/setTelegramMasterChatId", method = RequestMethod.GET)

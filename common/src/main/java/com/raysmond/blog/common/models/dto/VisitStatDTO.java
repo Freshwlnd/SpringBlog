@@ -9,7 +9,8 @@ import java.util.Date;
  * Created by bvn13 on 20.12.2017.
  */
 @Data
-public class VisitStatDTO implements Serializable {
+//public class VisitStatDTO implements Serializable {
+public class VisitStatDTO {
 
     private Date dt;
     private Long post_id;

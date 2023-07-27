@@ -3,7 +3,8 @@ package com.raysmond.blog.microservice1.support.web;
 /**
  * A message to be displayed in web context. Depending on the type, different style will be applied.
  */
-public class Message implements java.io.Serializable {
+//public class Message implements java.io.Serializable {
+public class Message {
     /**
      * Name of the flash attribute.
      */

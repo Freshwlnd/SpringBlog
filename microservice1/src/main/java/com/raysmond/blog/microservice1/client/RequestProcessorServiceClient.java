@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 public interface RequestProcessorServiceClient {
 
     @RequestMapping(value = "/getRealIp", method = RequestMethod.POST)
+    @ResponseBody
     public String getRealIp(@RequestBody HttpServletRequest request);
 
     @RequestMapping(value = "/getUserAgent", method = RequestMethod.POST)
+    @ResponseBody
     public String getUserAgent(@RequestBody HttpServletRequest request);
 
 }

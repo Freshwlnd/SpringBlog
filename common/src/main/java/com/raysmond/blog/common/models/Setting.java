@@ -31,13 +31,10 @@ public class Setting extends BaseModel{
     @Lob
     @Column(name = "_value")
     @JsonDeserialize(contentUsing = StringDeserializer.class, contentAs = String.class)
-    private Serializable value;
+//    private Serializable value;
+    private String value;
 
     public void setValue(String value) {
-        this.value = value;
-    }
-
-    public void setValue(Serializable value) {
         this.value = value;
     }
 

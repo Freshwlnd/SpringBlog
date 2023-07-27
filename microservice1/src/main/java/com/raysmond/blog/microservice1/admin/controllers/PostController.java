@@ -132,6 +132,7 @@ public class PostController {
 
 
     @RequestMapping(value = "")
+    @ResponseBody
     public String index(@RequestParam(defaultValue = "0") int page, Model model) {
 //        Page<Post> posts = postService.findAllPosts(new PageRequest(page, PAGE_SIZE, Sort.Direction.DESC, "id"));
         PageRequest pgReq = new PageRequest(page, PAGE_SIZE, Sort.Direction.DESC, "id");
@@ -176,6 +177,7 @@ public class PostController {
     }
 
     @RequestMapping(value = "new")
+    @ResponseBody
     public String newPost(Model model) {
         return this.makeFormPostCreation(model);
     }
@@ -219,17 +221,20 @@ public class PostController {
     }
 
     @RequestMapping(value = "{postId:[0-9]+}/edit")
+    @ResponseBody
     public String editPost(@PathVariable Long postId, Model model) {
         return this.makeFormPostEdition(postId, model);
     }
 
     @RequestMapping(value = "{postId:[0-9]+}/delete", method = {DELETE, POST})
+    @ResponseBody
     public String deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
         return "redirect:/admin/posts";
     }
 
     @RequestMapping(value = "", method = POST)
+    @ResponseBody
     public String create(Principal principal, @Valid PostForm postForm, Errors errors, Model model) {
         // TODO
         makeFormPostCreation(new BindingAwareModelMap(), new PostForm());
@@ -256,6 +261,7 @@ public class PostController {
     }
 
     @RequestMapping(value = "{postId:[0-9]+}", method = {PUT, POST})
+    @ResponseBody
     public String update(@PathVariable Long postId, @Valid PostForm postForm, Errors errors, Model model) {
         // TODO
         makeFormPostEdition(postId, new BindingAwareModelMap(), new PostForm());
@@ -294,6 +300,7 @@ public class PostController {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         Model model = new BindingAwareModelMap();
         Principal principal = new UsernamePasswordAuthenticationToken(new User(), null);

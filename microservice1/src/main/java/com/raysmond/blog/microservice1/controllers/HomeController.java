@@ -59,6 +59,7 @@ public class HomeController {
     ////////////////////////////////////
 
     @RequestMapping(value = "", method = GET)
+    @ResponseBody
     public String index(@RequestParam(defaultValue = "1") int page, Model model) {
         page = page < 1 ? 0 : page - 1;
         Page<Post> posts = postService.getAllPublishedPostsByPage(page, appSetting.getPageSize());
@@ -71,6 +72,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "about", method = GET)
+    @ResponseBody
     public String about(Model model) {
 
         Post post = null;
@@ -95,6 +97,7 @@ public class HomeController {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         Model model = new BindingAwareModelMap();
 

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RequestProcessorService {
 
     @RequestMapping(value = "/getRealIp", method = RequestMethod.POST)
+    @ResponseBody
     public String getRealIp(@RequestBody HttpServletRequest request) {
         String xRealIp = request.getHeader("X-Real-IP");
         if (xRealIp == null || request.getHeader("X-Real-IP").isEmpty()) {
@@ -23,6 +24,7 @@ public class RequestProcessorService {
     }
 
     @RequestMapping(value = "/getUserAgent", method = RequestMethod.POST)
+    @ResponseBody
     public String getUserAgent(@RequestBody HttpServletRequest request) {
         String userAgent = request.getHeader("User-Agent");
         return userAgent;
@@ -33,6 +35,7 @@ public class RequestProcessorService {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         HttpServletRequest request = new MockHttpServletRequest();
 

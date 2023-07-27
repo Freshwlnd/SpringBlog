@@ -10,7 +10,8 @@ import java.io.Serializable;
  */
 @Data
 @AllArgsConstructor
-public class AjaxAnswerDTO implements Serializable {
+//public class AjaxAnswerDTO implements Serializable {
+public class AjaxAnswerDTO {
 
     private Boolean error;
     private String message;

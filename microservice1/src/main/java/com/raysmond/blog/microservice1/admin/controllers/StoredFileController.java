@@ -52,6 +52,7 @@ public class StoredFileController {
     // TODO
 
     @RequestMapping(value = "testDeletePost", method = RequestMethod.GET)
+    @ResponseBody
     public String testDeletePost() {
         deletePost(0L);
 
@@ -59,6 +60,7 @@ public class StoredFileController {
     }
 
     @RequestMapping(value = "testEditFileById", method = RequestMethod.GET)
+    @ResponseBody
     public String testEditFileById() {
         Model model = new BindingAwareModelMap();
 
@@ -68,6 +70,7 @@ public class StoredFileController {
     }
 
     @RequestMapping(value = "testIndex", method = RequestMethod.GET)
+    @ResponseBody
     public String testIndex() {
         Model model = new BindingAwareModelMap();
 
@@ -77,6 +80,7 @@ public class StoredFileController {
     }
 
     @RequestMapping(value = "testSaveFile", method = RequestMethod.GET)
+    @ResponseBody
     public String testSaveFile() {
         StoredFileForm fileForm = new StoredFileForm();
         Errors errors = new BeanPropertyBindingResult(fileForm, "fileForm", true, 256);
@@ -87,6 +91,7 @@ public class StoredFileController {
     }
 
     @RequestMapping(value = "testUpload", method = RequestMethod.GET)
+    @ResponseBody
     public String testUpload() {
         byte[] content = "Hello World!".getBytes();
         MultipartFile file = new MockMultipartFile("file", "hello.txt", "text/plain", content);
@@ -100,6 +105,7 @@ public class StoredFileController {
     ////////////////////////////////////
 
     @GetMapping("")
+    @ResponseBody
     public String index(@RequestParam(defaultValue = "0") int page, Model model) {
         Page<StoredFile> files = storedFileRepository.findAll(new PageRequest(page, PAGE_SIZE, Sort.Direction.DESC, "id"));
 
@@ -118,6 +124,7 @@ public class StoredFileController {
     }
 
     @PostMapping("/upload") //new annotation since 4.3
+    @ResponseBody
     public String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("uploadStatus", "Please select a file to upload");
@@ -153,6 +160,7 @@ public class StoredFileController {
     }
 
     @GetMapping("/status")
+    @ResponseBody
     public String uploadStatus() {
         return "admin/files/status";
     }
@@ -160,6 +168,7 @@ public class StoredFileController {
 
 
     @GetMapping(value = "/{fileId:[\\d]+}/edit")
+    @ResponseBody
     public String editFileById(@PathVariable Long fileId, Model model) {
         Assert.notNull(fileId);
         StoredFile file = this.storageService.getFileById(fileId);
@@ -187,6 +196,7 @@ public class StoredFileController {
 
 
     @PostMapping(value = "/{fileId:[\\d]+}")
+    @ResponseBody
     public String saveFile(@PathVariable Long fileId, @Valid StoredFileForm fileForm, Errors errors) {
         Assert.notNull(fileId);
 
@@ -204,6 +214,7 @@ public class StoredFileController {
     }
 
     @RequestMapping(value = "{fileId:[0-9]+}/delete", method = {DELETE, POST})
+    @ResponseBody
     public String deletePost(@PathVariable Long fileId) {
         try {
             this.storageService.deleteFileById(fileId);
@@ -217,6 +228,7 @@ public class StoredFileController {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
+    @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         Model model = new BindingAwareModelMap();
         byte[] content = "Hello World!".getBytes();

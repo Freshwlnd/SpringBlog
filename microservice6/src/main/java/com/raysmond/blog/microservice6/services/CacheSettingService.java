@@ -33,9 +33,11 @@ public class CacheSettingService implements SettingService {
     @Override
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ResponseBody
-    public Serializable get(@RequestParam("key") String key) {
+//    public Serializable get(@RequestParam("key") String key) {
+    public String get(@RequestParam("key") String key) {
         Setting setting = settingRepository.findByKey(key);
-        Serializable value = null;
+//        Serializable value = null;
+        String value = null;
         try {
             value = setting == null ? null : setting.getValue();
         } catch (Exception ex) {
@@ -51,15 +53,18 @@ public class CacheSettingService implements SettingService {
     @Cacheable(value = CACHE_NAME, key = "#key")
     @RequestMapping(value = "/get", method = RequestMethod.POST)
     @ResponseBody
-    public Serializable get(@RequestParam("key") String key, @RequestBody Serializable defaultValue) {
-        Serializable value = get(key);
+//    public Serializable get(@RequestParam("key") String key, @RequestBody Serializable defaultValue) {
+    public String get(@RequestParam("key") String key, @RequestBody String defaultValue) {
+//        Serializable value = get(key);
+        String value = get(key);
         return value == null ? defaultValue : value;
     }
 
     @Override
     @CacheEvict(value = CACHE_NAME, key = "#key")
     @RequestMapping(value = "/put", method = RequestMethod.POST)
-    public void put(@RequestParam("key") String key, @RequestBody Serializable value) {
+//    public void put(@RequestParam("key") String key, @RequestBody Serializable value) {
+    public void put(@RequestParam("key") String key, @RequestBody String value) {
         logger.info("Update setting " + key + " to database. Value = " + value);
 
         Setting setting = settingRepository.findByKey(key);
@@ -88,7 +93,8 @@ public class CacheSettingService implements SettingService {
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         String key = "site_name";
-        Serializable value = "SpringBlog";
+//        Serializable value = "SpringBlog";
+        String value = "SpringBlog";
 
         switch (method) {
             case "all":
@@ -110,14 +116,18 @@ public class CacheSettingService implements SettingService {
         return "test";
     }
 
-    public Serializable get_test(String key, Serializable defaultValue) {
-        Serializable value = get_test(key);
+//    public Serializable get_test(String key, Serializable defaultValue) {
+    public String get_test(String key, String defaultValue) {
+//        Serializable value = get_test(key);
+        String value = get_test(key);
         return value == null ? defaultValue : value;
     }
-    public Serializable get_test(String key) {
+//    public Serializable get_test(String key) {
+    public String get_test(String key) {
 //        Setting setting = settingRepository.findByKey(key);
         Setting setting = new Setting();
-        Serializable value = null;
+//        Serializable value = null;
+        String value = null;
         try {
             value = setting == null ? null : setting.getValue();
         } catch (Exception ex) {
@@ -129,7 +139,8 @@ public class CacheSettingService implements SettingService {
         return value;
     }
 
-    public void put_test(String key, Serializable value) {
+//    public void put_test(String key, Serializable value) {
+    public void put_test(String key, String value) {
         logger.info("Update setting " + key + " to database. Value = " + value);
 
 //        Setting setting = settingRepository.findByKey(key);
