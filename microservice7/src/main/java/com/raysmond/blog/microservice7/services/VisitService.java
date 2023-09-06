@@ -10,10 +10,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import java.math.BigInteger;
@@ -39,6 +36,7 @@ public class VisitService {
     private EntityManager entityManager;
 
     @RequestMapping(value = "/saveVisit", method = RequestMethod.POST)
+    @ResponseBody
     public void saveVisit(@RequestBody Post post, @RequestParam("clientIp") String clientIp, @RequestParam("userAgent") String userAgent) {
 //        if (this.userService.currentUser().isAdmin())
 //            return;
@@ -63,6 +61,7 @@ public class VisitService {
     }
 
     @RequestMapping(value = "/getUniqueVisitsCount", method = RequestMethod.POST)
+    @ResponseBody
     public Long getUniqueVisitsCount(@RequestBody Post post) {
 
         Session session = (Session) this.entityManager.getDelegate();
@@ -89,6 +88,7 @@ public class VisitService {
     }
 
     @RequestMapping(value = "/getUniqueVisitsCount_old", method = RequestMethod.POST)
+    @ResponseBody
     public Long getUniqueVisitsCount_old(@RequestBody Post post) {
         //return this.visitRepository.getUniquePostVisitsCount(post);
 

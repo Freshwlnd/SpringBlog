@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "seo_robots_agents")
@@ -24,5 +25,14 @@ public class SeoRobotAgent extends BaseModel {
     public SeoRobotAgent(String userAgent) {
         this.userAgent = userAgent;
     }
+
+    public void init() {
+        this.userAgent = "userAgent";
+        this.isRegexp = true;
+        this.setId(1L);
+        this.setCreatedAt(new Date());
+        this.setUpdatedAt(new Date());
+    }
+
 
 }

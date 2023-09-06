@@ -22,31 +22,34 @@ public interface UserServiceClient {
 
     @RequestMapping(value = "/createUser", method = RequestMethod.POST)
     @ResponseBody
-    public User createUser(@RequestBody User user) ;
+    User createUser(@RequestBody User user) ;
 
-    @RequestMapping(value = "/createUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/getSuperUser", method = RequestMethod.GET)
     @ResponseBody
-    public User getSuperUser() ;
+    User getSuperUser() ;
 
-    @RequestMapping(value = "/createUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/getDefaultSuperUser", method = RequestMethod.GET)
     @ResponseBody
-    public User getDefaultSuperUser() ;
+    User getDefaultSuperUser() ;
 
-    @RequestMapping(value = "/createUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadUserByUsername", method = RequestMethod.GET)
     @ResponseBody
-    public UserDetails loadUserByUsername(@RequestParam("username") String username) throws UsernameNotFoundException ;
+    UserDetails loadUserByUsername(@RequestParam("username") String username) throws UsernameNotFoundException ;
 
-    @RequestMapping(value = "/createUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/currentUser", method = RequestMethod.GET)
     @ResponseBody
-    public User currentUser() ;
+    User currentUser() ;
 
-    @RequestMapping(value = "/createUser", method = RequestMethod.GET)
-    public Boolean isCurrentUserAdmin();
+    @RequestMapping(value = "/isCurrentUserAdmin", method = RequestMethod.GET)
+    @ResponseBody
+    Boolean isCurrentUserAdmin();
 
-    @RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    public boolean changePassword(@RequestBody User user, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword);
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @ResponseBody
+    boolean changePassword(@RequestBody User user, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword);
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public void signin(@RequestBody User user);
+    @ResponseBody
+    void signin(@RequestBody User user);
 
 }

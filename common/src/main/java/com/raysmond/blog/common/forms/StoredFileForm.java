@@ -19,4 +19,10 @@ public class StoredFileForm {
     @NotNull
     private Long size;
 
+    public void init() {
+        this.setPath("/tmp/testSaveFile.txt");
+        this.setTitle("testSaveFile");
+        this.setName("testSaveFile");
+        this.setSize(11L);
+    }
 }

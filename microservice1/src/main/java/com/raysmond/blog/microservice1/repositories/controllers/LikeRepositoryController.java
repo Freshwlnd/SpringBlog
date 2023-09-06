@@ -9,10 +9,8 @@ import com.raysmond.blog.microservice1.client.UserServiceClient;
 import com.raysmond.blog.microservice1.repositories.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.DispatcherServlet;
 
 @Controller
 @RequestMapping("/LikeRepositoryController")
@@ -100,6 +98,7 @@ public class LikeRepositoryController {
     }
 
     @RequestMapping(value = "/getTotalLikesByUserAndPost", method = RequestMethod.POST)
+    @ResponseBody
     Integer getTotalLikesByUserAndPost(@RequestBody PostUserParams postUserParams) {
         User user = postUserParams.getUser();
         Post post = postUserParams.getPost();
@@ -111,18 +110,25 @@ public class LikeRepositoryController {
     }
 
     @RequestMapping(value = "/getTotalLikesByPost", method = RequestMethod.POST)
+    @ResponseBody
     Integer getTotalLikesByPost(@RequestBody Post post) {
         return likeRepository.getTotalLikesByPost(post);
     }
 
     @RequestMapping(value = "/getTotalLikesByClientIpAndPost", method = RequestMethod.POST)
+    @ResponseBody
     Integer getTotalLikesByClientIpAndPost(@RequestParam("clientIp") String clientIp, @RequestBody Post post) {
         return likeRepository.getTotalLikesByClientIpAndPost(clientIp, post);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
     void save(@RequestBody Like like) {
-        likeRepository.save(like);
+        try {
+            likeRepository.save(like);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

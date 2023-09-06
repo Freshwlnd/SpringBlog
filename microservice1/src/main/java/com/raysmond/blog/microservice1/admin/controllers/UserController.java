@@ -43,7 +43,7 @@ public class UserController {
     public String testProfile() {
         Model model = new BindingAwareModelMap();
 
-        profile_test(model);
+        profile(model);
 
         return "test";
     }
@@ -52,10 +52,11 @@ public class UserController {
     @ResponseBody
     public String testUpdate() {
         UserForm userForm = new UserForm();
+        userForm.init();
         Errors errors = new BeanPropertyBindingResult(userForm, "userForm", true, 256);
         RedirectAttributes ra = new RedirectAttributesModelMap();
 
-        update_test(0L, userForm, errors, ra);
+        update(1L, userForm, errors, ra);
 
         return "test";
     }

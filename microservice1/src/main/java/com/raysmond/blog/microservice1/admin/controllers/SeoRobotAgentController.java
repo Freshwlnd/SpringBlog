@@ -40,7 +40,7 @@ public class SeoRobotAgentController {
     public String testEditSeoRobotAgent() {
         Model model = new BindingAwareModelMap();
 
-        editSeoRobotAgent(0L, model);
+        editSeoRobotAgent(9L, model);
 
         return "test";
     }
@@ -82,6 +82,11 @@ public class SeoRobotAgentController {
 
         SeoRobotAgent ua = this.seoRobotAgentRepository.findOne(recordId);
 
+        if(ua==null){
+            ua = new SeoRobotAgent();
+            ua.init();
+        }
+
         Assert.notNull(ua);
 
         model.addAttribute("form", DTOUtil.map(ua, SeoRobotAgentForm.class));
@@ -116,7 +121,11 @@ public class SeoRobotAgentController {
 
     @PostMapping(value = "/{recordId:[\\d]+}/delete")
     public String deleteSeoRobotAgent(@PathVariable Long recordId) {
-        this.seoRobotAgentRepository.delete(recordId);
+        try {
+            this.seoRobotAgentRepository.delete(recordId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "redirect:/admin/robotsAgents";
     }
 

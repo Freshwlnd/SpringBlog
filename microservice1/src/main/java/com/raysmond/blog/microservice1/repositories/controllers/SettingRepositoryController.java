@@ -4,10 +4,7 @@ import com.raysmond.blog.common.models.Setting;
 import com.raysmond.blog.microservice1.repositories.SettingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Raysmond<i @ raysmond.com>
@@ -73,9 +70,9 @@ public class SettingRepositoryController {
 //        return ret;
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.GET)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    Setting save(@RequestParam("setting") Setting setting) {
+    Setting save(@RequestBody Setting setting) {
         try {
             return settingRepository.save(setting);
         } catch (Exception e) {

@@ -109,6 +109,7 @@ public class UserService implements UserDetailsService {
     }
 
     @RequestMapping(value = "/isCurrentUserAdmin", method = RequestMethod.GET)
+    @ResponseBody
     public Boolean isCurrentUserAdmin() {
         User user = this.currentUser();
         Boolean isAdmin = user != null ? user.isAdmin() : false;
@@ -116,6 +117,7 @@ public class UserService implements UserDetailsService {
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @ResponseBody
     public boolean changePassword(@RequestBody User user, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword) {
         if (password == null || newPassword == null || password.isEmpty() || newPassword.isEmpty())
             return false;
@@ -134,6 +136,7 @@ public class UserService implements UserDetailsService {
     }
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    @ResponseBody
     public void signin(@RequestBody User user) {
         SecurityContextHolder.getContext().setAuthentication(authenticate(user));
     }

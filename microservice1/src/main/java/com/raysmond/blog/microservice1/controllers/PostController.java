@@ -1,6 +1,7 @@
 package com.raysmond.blog.microservice1.controllers;
 
 import com.raysmond.blog.common.forms.PostForm;
+import com.raysmond.blog.common.models.FakeHttpServletRequest;
 import com.raysmond.blog.common.models.Post;
 import com.raysmond.blog.common.models.SeoPostData;
 import com.raysmond.blog.common.models.Tag;
@@ -71,7 +72,8 @@ public class PostController {
     @ResponseBody
     public String testShow() {
         Model model = new BindingAwareModelMap();
-        MockHttpServletRequest request = new MockHttpServletRequest();
+        // MockHttpServletRequest request = new MockHttpServletRequest();
+        FakeHttpServletRequest request = new FakeHttpServletRequest();
 
         show("projects", model, request);
 
@@ -94,7 +96,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "{permalink}", method = GET)
-    public String show(@PathVariable String permalink, Model model, HttpServletRequest request) {
+    // public String show(@PathVariable String permalink, Model model, HttpServletRequest request) {
+    public String show(@PathVariable String permalink, Model model, FakeHttpServletRequest request) {
         Post post = this.postService.findPostByPermalink(permalink);
 
         logger.debug(String.format("ACCESS %s from IP: %s", permalink, this.requestProcessorService.getRealIp(request)));
@@ -136,7 +139,8 @@ public class PostController {
         PostForm postForm = new PostForm();
         Errors errors = new BeanPropertyBindingResult(postForm, "postForm", true, 256);
         RedirectAttributes ra = new RedirectAttributesModelMap();
-        MockHttpServletRequest request = new MockHttpServletRequest();
+        // MockHttpServletRequest request = new MockHttpServletRequest();
+        FakeHttpServletRequest request = new FakeHttpServletRequest();
 
         if (method.equals("all") || method.equals("archive")) {
             archive_test(model);
@@ -157,7 +161,8 @@ public class PostController {
         return "posts/archive";
     }
 
-    public String show_test(String permalink, Model model, HttpServletRequest request) {
+    // public String show_test(String permalink, Model model, HttpServletRequest request) {
+    public String show_test(String permalink, Model model, FakeHttpServletRequest request) {
 //        Post post = this.postService.findPostByPermalink(permalink);
         Post post = new Post();
 

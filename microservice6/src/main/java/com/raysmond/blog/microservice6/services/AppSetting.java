@@ -37,26 +37,29 @@ public class AppSetting {
 
     @RequestMapping(value = "/getSiteName", method = RequestMethod.GET)
     @ResponseBody
-    public String getSiteName() {
+    public String getSiteName() { 
         return (String) settingService.get(SITE_NAME, siteName);
     }
 
     @RequestMapping(value = "/setSiteName", method = RequestMethod.GET)
+    @ResponseBody
     public void setSiteName(@RequestParam("siteName") String siteName) {
         this.siteName = siteName;
         settingService.put(SITE_NAME, siteName);
     }
 
     @RequestMapping(value = "/getPageSize", method = RequestMethod.GET)
+    @ResponseBody
     public Integer getPageSize() {
-//        return (Integer) settingService.get(PAGE_SIZE, pageSize);
+        // return (Integer) settingService.get(PAGE_SIZE, pageSize);   // Serializable
         return (Integer) Integer.valueOf(settingService.get(PAGE_SIZE, pageSize.toString()));
     }
 
-    @RequestMapping(value = "/setPageSize", method = RequestMethod.POST)
+    @RequestMapping(value = "/setPageSize", method = RequestMethod.GET)
+    @ResponseBody
     public void setPageSize(@RequestParam("pageSize") Integer pageSize) {
         this.pageSize = pageSize;
-//        settingService.put(PAGE_SIZE, pageSize);
+        // settingService.put(PAGE_SIZE, pageSize);    // Serializable
         settingService.put(PAGE_SIZE, pageSize.toString());
     }
 
@@ -67,6 +70,7 @@ public class AppSetting {
     }
 
     @RequestMapping(value = "/setSiteSlogan", method = RequestMethod.GET)
+    @ResponseBody
     public void setSiteSlogan(@RequestParam("siteSlogan") String siteSlogan) {
         this.siteSlogan = siteSlogan;
         settingService.put(SITE_SLOGAN, siteSlogan);
@@ -79,6 +83,7 @@ public class AppSetting {
     }
 
     @RequestMapping(value = "/setStoragePath", method = RequestMethod.GET)
+    @ResponseBody
     public void setStoragePath(@RequestParam("storagePath") String storagePath) {
         this.storagePath = storagePath;
         settingService.put(STORAGE_PATH, storagePath);
@@ -105,6 +110,7 @@ public class AppSetting {
     }
 
     @RequestMapping(value = "/setMainUri", method = RequestMethod.GET)
+    @ResponseBody
     public void setMainUri(@RequestParam("mainUri") String mainUri) {
         this.mainUri = mainUri;
         settingService.put(MAIN_URI, mainUri);
@@ -118,6 +124,7 @@ public class AppSetting {
     }
 
     @RequestMapping(value = "/setTelegramMasterChatId", method = RequestMethod.GET)
+    @ResponseBody
     public void setTelegramMasterChatId(@RequestParam("id") String id) {
         this.telegramMasterChatId = id;
         settingService.put(TELEGRAM_MASTER_CHAT_ID, id);

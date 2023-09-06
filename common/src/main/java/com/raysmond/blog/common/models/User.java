@@ -2,9 +2,7 @@ package com.raysmond.blog.common.models;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +15,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "users")
 @Getter @Setter
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = User.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, scope = User.class)
 public class User extends BaseModel {
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String ROLE_USER  = "ROLE_USER";
@@ -25,7 +23,7 @@ public class User extends BaseModel {
     @Column(unique = true)
     private String email;
 
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
 
     private String role = ROLE_USER;

@@ -75,6 +75,7 @@ public class SeoRobotAgentRepositoryController {
 
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     void delete(@RequestBody SeoRobotAgent ua) {
         try {
             seoRobotAgentRepository.delete(ua);

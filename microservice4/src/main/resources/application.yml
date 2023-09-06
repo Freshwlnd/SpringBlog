@@ -23,9 +23,30 @@ eureka:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/
 
+#feign:
+#  client:
+#    config:
+#      default:
+#        connectTimeout: 10000
+#        readTimeout: 10000
+#  hystrix:
+#    enabled: false
+
 spring:
   application:
     name: springblog-microservice4
+
+  jackson:
+    deserialization: true
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+    generator: true
+
+  cloud:
+    openfeign:
+      autoconfiguration:
+        jackson:
+          enabled: true
 
   profiles:
     active: dev
@@ -65,3 +86,7 @@ spring:
       max-file-size: 100Mb
       max-request-size: 100Mb
 
+
+security:
+  basic:
+    enabled: false

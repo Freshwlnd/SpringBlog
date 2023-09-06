@@ -1,15 +1,12 @@
 package com.raysmond.blog.microservice7.services;
 
-import com.raysmond.blog.common.models.User;
+import com.raysmond.blog.common.models.*;
 import com.raysmond.blog.microservice7.Constants;
 import com.raysmond.blog.microservice7.client.NotificatorClient;
 import com.raysmond.blog.microservice7.client.PostRepositoryClient;
 import com.raysmond.blog.microservice7.client.SeoPostDataRepositoryClient;
 import com.raysmond.blog.microservice7.error.NotFoundException;
 import com.raysmond.blog.microservice7.support.web.MarkdownService;
-import com.raysmond.blog.common.models.Post;
-import com.raysmond.blog.common.models.SeoPostData;
-import com.raysmond.blog.common.models.Tag;
 import com.raysmond.blog.common.models.dto.PostIdTitleDTO;
 import com.raysmond.blog.common.models.support.PostFormat;
 import com.raysmond.blog.common.models.support.PostStatus;
@@ -20,10 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+// import com.raysmond.blog.common.models.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,9 +72,10 @@ public class PostService {
 
         Post post = postRepository.findOne(postId);
 
-        if (post == null || post.getDeleted()) {
-            throw new NotFoundException("Post with id " + postId + " is not found.");
-        }
+        // TODO
+//        if (post == null || post.getDeleted()) {
+//            throw new NotFoundException("Post with id " + postId + " is not found.");
+//        }
 
         return post;
     }
@@ -155,7 +151,8 @@ public class PostService {
         try {
             return postRepository.save(post);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            logger.debug("Error saving post: " + e.getMessage());
             return post;
         }
     }
@@ -170,6 +167,7 @@ public class PostService {
             @CacheEvict(value = CACHE_NAME_COUNTS, allEntries = true)
     })
     @RequestMapping(value = "/deletePost", method = RequestMethod.POST)
+    @ResponseBody
     public void deletePost(@RequestBody Post post) {
         post.setDeleted(true);
         postRepository.save(post);
@@ -186,6 +184,7 @@ public class PostService {
             @CacheEvict(value = CACHE_NAME_COUNTS, allEntries = true)
     })
     @RequestMapping(value = "/deletePost", method = RequestMethod.GET)
+    @ResponseBody
     public void deletePost(@RequestParam("postId") Long postId) {
         Post post = postRepository.findOne(postId);
 //        post.setDeleted(true);
@@ -251,7 +250,8 @@ public class PostService {
     @Cacheable(value = CACHE_NAME_PAGE, key = "T(java.lang.String).valueOf(#page).concat('-').concat(#pageSize)")
     @RequestMapping(value = "/getAllPublishedPostsByPage", method = RequestMethod.GET)
     @ResponseBody
-    public Page<Post> getAllPublishedPostsByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+    public RestPage<Post> getAllPublishedPostsByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+//    public Page<Post> getAllPublishedPostsByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
         logger.debug("Get posts by page " + page);
 
         Page<Post> posts = postRepository.findAllByPostTypeAndPostStatusAndDeleted(
@@ -265,7 +265,8 @@ public class PostService {
             p.setVisitsCount(this.visitService.getUniqueVisitsCount(p));
         });
 
-        return posts;
+//        return posts;
+        return new RestPage<Post>(posts);
     }
 
     @RequestMapping(value = "/getAllPublishedPosts", method = RequestMethod.GET)
@@ -354,8 +355,10 @@ public class PostService {
     // cache or not?
     @RequestMapping(value = "/findPostsByTag", method = RequestMethod.GET)
     @ResponseBody
-    public Page<Post> findPostsByTag(@RequestParam("tagName") String tagName, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        return postRepository.findByTag(tagName, new PageRequest(page, pageSize, Sort.Direction.DESC, "createdAt"));
+    public RestPage<Post> findPostsByTag(@RequestParam("tagName") String tagName, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+        return new RestPage<Post>(postRepository.findByTag(tagName, new PageRequest(page, pageSize, Sort.Direction.DESC, "createdAt")));
+//    public Page<Post> findPostsByTag(@RequestParam("tagName") String tagName, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+//        return postRepository.findByTag(tagName, new PageRequest(page, pageSize, Sort.Direction.DESC, "createdAt"));
     }
 
     @Cacheable(value = CACHE_NAME_COUNTS, key = "#root.method.name")
@@ -506,6 +509,10 @@ public class PostService {
 
     @RequestMapping(value = "/findAllPosts", method = RequestMethod.POST)
     @ResponseBody
+    public RestPage<Post> findAllPosts(@RequestBody PostParams postPrams) {
+        Pageable pageRequest = postPrams.getPageRequest();
+        return new RestPage<Post>(postRepository.findAllByDeleted(pageRequest, false));
+    }
     public Page<Post> findAllPosts(@RequestBody PageRequest pageRequest) {
         return postRepository.findAllByDeleted(pageRequest, false);
     }

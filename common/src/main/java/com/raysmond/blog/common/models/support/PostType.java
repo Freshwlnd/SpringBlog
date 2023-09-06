@@ -4,10 +4,14 @@ package com.raysmond.blog.common.models.support;
  * @author Raysmond<i@raysmond.com>
  */
 public enum PostType {
-    PAGE("Page"),
-    POST("Post");
+    PAGE("PAGE"),
+    POST("POST");
 
     private String name;
+
+    PostType(){
+        this.name = "POST";
+    }
 
     PostType(String name){
         this.name = name;

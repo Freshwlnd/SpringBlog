@@ -5,7 +5,7 @@ DATASOURCE_INSTANCE_PORT: 32070
 
 server:
   port: 8051
-  contextPath:
+#  contextPath:
 
 telegram:
   bot:
@@ -23,11 +23,30 @@ eureka:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/
 
+#feign:
+#  client:
+#    config:
+#      default:
+#        connectTimeout: 600000
+#        readTimeout: 600000
+#  hystrix:
+#    enabled: false
+
 spring:
   application:
     name: springblog-microservice1
 
+  jackson:
+    deserialization: true
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+    generator: true
 
+  cloud:
+    openfeign:
+      autoconfiguration:
+        jackson:
+          enabled: true
 
   profiles:
     active: dev
@@ -74,7 +93,4 @@ spring:
 
 security:
   basic:
-    enabled: false
-management:
-  security:
     enabled: false

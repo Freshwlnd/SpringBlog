@@ -17,6 +17,7 @@ import org.openjdk.jol.info.ClassLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+// import com.raysmond.blog.common.models.PageRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
@@ -67,6 +68,7 @@ public class PostController {
         Model model = new BindingAwareModelMap();
         Principal principal = new UsernamePasswordAuthenticationToken(new User(), null);
         PostForm postForm = new PostForm();
+        postForm.init();
         Errors errors = new BeanPropertyBindingResult(postForm, "postForm", true, 256);
 
         create(principal, postForm, errors, model);
@@ -120,8 +122,9 @@ public class PostController {
     public String testUpdate() {
         Model model = new BindingAwareModelMap();
         PostForm postForm = new PostForm();
+        postForm.init();
         Errors errors = new BeanPropertyBindingResult(postForm, "postForm", true, 256);
-        Long postId = 1L;
+        Long postId = 15L;
 
         update(postId, postForm, errors, model);
 
@@ -189,6 +192,10 @@ public class PostController {
     private String makeFormPostEdition(Long postId, Model model, PostForm postForm) {
         Post post = postService.getPost(postId);
 
+        if(post == null){
+            post = new Post();
+            post.init();
+        }
         if (postForm == null) {
             postForm = DTOUtil.map(post, PostForm.class);
         }
@@ -275,6 +282,10 @@ public class PostController {
             return this.makeFormPostEdition(postId, model, postForm);
         } else {
             Post post = postService.getPost(postId);
+            if(post == null) {
+                post = new Post();
+                post.init();
+            }
             DTOUtil.mapTo(postForm, post);
             post.setTags(postService.parseTagNames(postForm.getPostTags()));
             postForm.fillOgFieldsInPost(post);

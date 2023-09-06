@@ -8,10 +8,8 @@ import com.raysmond.blog.microservice7.client.LikeRepositoryClient;
 import com.raysmond.blog.microservice7.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.DispatcherServlet;
 
 @Service
 @RequestMapping("/LikeService")
@@ -25,11 +23,13 @@ public class LikeService {
 
 
     @RequestMapping(value = "/getTotalLikesByPost", method = RequestMethod.POST)
+    @ResponseBody
     public Integer getTotalLikesByPost(@RequestBody Post post) {
         return this.likeRepository.getTotalLikesByPost(post);
     }
 
     @RequestMapping(value = "/getTotalLikesByUserAndPost", method = RequestMethod.POST)
+    @ResponseBody
     public Integer getTotalLikesByUserAndPost(@RequestBody PostUserParams postUserParams) {
         User user = postUserParams.getUser();
         Post post = postUserParams.getPost();
@@ -41,6 +41,7 @@ public class LikeService {
     }
 
     @RequestMapping(value = "/likePost", method = RequestMethod.POST)
+    @ResponseBody
     public void likePost(@RequestBody Post post, @RequestParam("clientIp") String clientIp) {
         User user = this.userService.currentUser();
         Integer currentSympathy = 0;
@@ -58,6 +59,7 @@ public class LikeService {
     }
 
     @RequestMapping(value = "/dislikePost", method = RequestMethod.POST)
+    @ResponseBody
     public void dislikePost(@RequestBody Post post, @RequestParam("clientIp") String clientIp) {
         User user = this.userService.currentUser();
         Integer currentSympathy = 0;
@@ -75,6 +77,7 @@ public class LikeService {
 
     private void saveSympathy(Post post, User user, String clientIp, Integer sympathy) {
         Like like = new Like();
+        like.init();
         like.setClientIp(clientIp);
         like.setPost(post);
         like.setUser(user);
@@ -87,7 +90,11 @@ public class LikeService {
 //        System.out.println(RamUsageEstimator.shallowSizeOf(like));
 //        System.out.println(ClassLayout.parseInstance(like).toPrintable());
 
-        this.likeRepository.save(like);
+        try {
+            this.likeRepository.save(like);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
 

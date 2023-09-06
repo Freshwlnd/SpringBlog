@@ -46,6 +46,7 @@ public class FileStorageService {
     @RequestMapping(value = "/getFileById", method = RequestMethod.GET)
     @ResponseBody
     public StoredFile getFileById(@RequestParam("id") Long id) {
+        StoredFile storedFile = repository.findById(id);
         return repository.findById(id);
     }
 
@@ -69,6 +70,7 @@ public class FileStorageService {
     }
 
     @RequestMapping(value = "/storeFile", method = RequestMethod.GET)
+    @ResponseBody
     public void storeFile(@RequestParam("filename") String filename, @RequestParam("content") byte[] content) throws IOException {
         File storage = new File(appSetting.getStoragePath());
         if (!storage.exists()) {
@@ -91,6 +93,9 @@ public class FileStorageService {
         storedFile.setName(filename);
         storedFile.setSize(file.length());
 
+        // TODO
+        storedFile.init();
+
         this.repository.saveAndFlush(storedFile);
     }
 
@@ -110,16 +115,31 @@ public class FileStorageService {
     }
 
     @RequestMapping(value = "/deleteFileById", method = RequestMethod.GET)
+    @ResponseBody
     public void deleteFileById(@RequestParam("fileId") Long fileId) throws IOException {
         StoredFile storedFile = this.repository.findById(fileId);
-        Path path = Paths.get(storedFile.getPath());
-        // first delete info, second delete file
-        // because file might be deleted already
-        this.repository.delete(storedFile);
-        Files.delete(path);
+        Path path = null;
+        try {
+            path = Paths.get(storedFile.getPath());
+            // first delete info, second delete file
+            // because file might be deleted already
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        try {
+            this.repository.delete(storedFile);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        try{
+            Files.delete(path);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
     }
 
     @RequestMapping(value = "/getContentType", method = RequestMethod.GET)
+    @ResponseBody
     public String getContentType(@RequestParam("fileName") String fileName) {
         return HttpContentTypeSerializer.getContentType(fileName);
     }

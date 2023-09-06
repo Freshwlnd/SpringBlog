@@ -41,12 +41,15 @@ public interface UserServiceClient {
     User currentUser() ;
 
     @RequestMapping(value = "/isCurrentUserAdmin", method = RequestMethod.GET)
+    @ResponseBody
     Boolean isCurrentUserAdmin();
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @ResponseBody
     boolean changePassword(@RequestBody User user, @RequestParam("password") String password, @RequestParam("newPassword") String newPassword);
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    @ResponseBody
     void signin(@RequestBody User user);
 
 }

@@ -2,6 +2,7 @@ package com.raysmond.blog.microservice7.client;
 
 import com.raysmond.blog.common.models.Post;
 import com.raysmond.blog.common.models.PostParams;
+import com.raysmond.blog.common.models.RestPage;
 import com.raysmond.blog.common.models.support.PostStatus;
 import com.raysmond.blog.common.models.support.PostType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -24,22 +27,25 @@ public interface PostRepositoryRealClient {
 
     @RequestMapping(value = "/findAllByDeleted", method = RequestMethod.POST)
     @ResponseBody
-    Page<Post> findAllByDeleted(@RequestBody Pageable pageRequest, @RequestParam("deleted") Boolean deleted);
+    RestPage<Post> findAllByDeleted(@RequestBody PostParams postPrams);
+//    Page<Post> findAllByDeleted(@RequestBody Pageable pageRequest, @RequestParam("deleted") Boolean deleted);
 
     @RequestMapping(value = "/countPostsByTags", method = RequestMethod.POST)
     @ResponseBody
     List<Object[]> countPostsByTags(@RequestBody PostStatus status);
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     void delete(@RequestBody Post post);
 
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
     @ResponseBody
     List<Post> findAll();
 
-    @RequestMapping(value = "/findAllByPostTypeAndPostStatusAndDeleted", method = RequestMethod.POST)
+    @RequestMapping(value = "/findAllByPostTypeAndPostStatusAndDeleted", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    Page<Post> findAllByPostTypeAndPostStatusAndDeleted(@RequestBody PostParams postPrams);
+    RestPage<Post> findAllByPostTypeAndPostStatusAndDeleted(@RequestBody PostParams postPrams);
+//    Page<Post> findAllByPostTypeAndPostStatusAndDeleted(@RequestBody PostParams postPrams);
 
     @RequestMapping(value = "/findByIdAndPostStatusAndDeleted", method = RequestMethod.POST)
     @ResponseBody
@@ -51,7 +57,9 @@ public interface PostRepositoryRealClient {
 
     @RequestMapping(value = "/findByTag", method = RequestMethod.POST)
     @ResponseBody
-    Page<Post> findByTag(@RequestParam("tag") String tag, @RequestBody Pageable pageable);
+    RestPage<Post> findByTag(@RequestBody PostParams postPrams);
+//    Page<Post> findByTag(@RequestBody PostParams postPrams);
+//    Page<Post> findByTag(@RequestParam("tag") String tag, @RequestBody Pageable pageable);
 
     @RequestMapping(value = "/findOne", method = RequestMethod.POST)
     @ResponseBody

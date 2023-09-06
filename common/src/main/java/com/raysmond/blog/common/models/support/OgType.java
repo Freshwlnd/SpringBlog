@@ -2,9 +2,13 @@ package com.raysmond.blog.common.models.support;
 
 public enum OgType {
 
-    ARTICLE("article");
+    ARTICLE("ARTICLE");
 
     private String name;
+
+//    OgType(){
+//        this.name = "article";
+//    }
 
     OgType(String name){
         this.name = name;

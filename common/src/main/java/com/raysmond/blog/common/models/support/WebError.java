@@ -1,13 +1,15 @@
 package com.raysmond.blog.common.models.support;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
 
 @Getter
 @Setter
-//public class WebError implements Serializable {
+//@NoArgsConstructor
+// public class WebError implements Serializable {
 public class WebError {
 
     private String field;

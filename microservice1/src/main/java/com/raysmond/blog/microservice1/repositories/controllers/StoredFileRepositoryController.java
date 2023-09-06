@@ -81,6 +81,7 @@ public class StoredFileRepositoryController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     void delete(@RequestBody StoredFile storedFile) {
         try {
             storedFileRepository.delete(storedFile);

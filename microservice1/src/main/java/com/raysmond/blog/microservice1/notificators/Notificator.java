@@ -5,10 +5,7 @@ import com.raysmond.blog.microservice1.notificators.telegram.TelegramBotManager;
 import com.raysmond.blog.common.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 /**
@@ -26,6 +23,7 @@ public class Notificator {
 
 
     @RequestMapping(value = "/announcePost", method = RequestMethod.POST)
+    @ResponseBody
     public void announcePost(@RequestBody Post post) throws IllegalArgumentException, TelegramApiException {
         if (post == null || post.getAnnouncement().isEmpty()) {
             throw new IllegalArgumentException("Nothing to announce");

@@ -1,8 +1,6 @@
 package com.raysmond.blog.common.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import com.raysmond.blog.common.models.support.PostFormat;
 import com.raysmond.blog.common.models.support.PostStatus;
 import com.raysmond.blog.common.models.support.PostType;
@@ -14,6 +12,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,12 +22,12 @@ import java.util.Set;
 @Entity
 @Table(name = "posts")
 @Getter @Setter
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Post.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, scope = Post.class)
 public class Post extends BaseModel {
     private static final SimpleDateFormat SLUG_DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
 
     @Column(nullable = false, columnDefinition = "boolean DEFAULT false")
-    private Boolean deleted;
+    private Boolean deleted = false;
 
     @ManyToOne
 //    @JsonIgnore
@@ -108,5 +107,8 @@ public class Post extends BaseModel {
         renderedContent = "renderedContent";
         announcement = "announcement";
         permalink = "permalink";
+        this.setId(15L);
+        this.setCreatedAt(new Date());
+        this.setUpdatedAt(new Date());
     }
 }

@@ -14,12 +14,15 @@ import java.util.List;
 public interface VisitServiceClient {
 
     @RequestMapping(value = "/saveVisit", method = RequestMethod.POST)
+    @ResponseBody
     public void saveVisit(@RequestBody Post post, @RequestParam("clientIp") String clientIp, @RequestParam("userAgent") String userAgent);
 
     @RequestMapping(value = "/getUniqueVisitsCount", method = RequestMethod.POST)
+    @ResponseBody
     public Long getUniqueVisitsCount(@RequestBody Post post);
 
     @RequestMapping(value = "/getUniqueVisitsCount_old", method = RequestMethod.POST)
+    @ResponseBody
     public Long getUniqueVisitsCount_old(@RequestBody Post post);
 
 }

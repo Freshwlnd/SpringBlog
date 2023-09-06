@@ -1,5 +1,6 @@
 package com.raysmond.blog.microservice1.controllers;
 
+import com.raysmond.blog.common.models.FakeHttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "authenticate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String authenticate(Credentials credentials, HttpServletRequest request) {
+    // public String authenticate(Credentials credentials, HttpServletRequest request) {
+    public String authenticate(Credentials credentials, FakeHttpServletRequest request) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword());
 
 //        try {

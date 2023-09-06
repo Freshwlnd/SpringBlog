@@ -25,6 +25,7 @@ public interface FileStorageServiceClient {
     public StoredFile getFileByName(@RequestParam("fileName") String fileName);
 
     @RequestMapping(value = "/storeFile", method = RequestMethod.GET)
+    @ResponseBody
     public void storeFile(@RequestParam("filename") String filename, @RequestParam("content") byte[] content) throws IOException;
 
     @RequestMapping(value = "/getFileContentById", method = RequestMethod.GET)
@@ -36,6 +37,7 @@ public interface FileStorageServiceClient {
     public byte[] getFileContent(@RequestParam("fullname") String fullname) throws IOException;
 
     @RequestMapping(value = "/deleteFileById", method = RequestMethod.GET)
+    @ResponseBody
     public void deleteFileById(@RequestParam("fileId") Long fileId) throws IOException;
 
     @RequestMapping(value = "/getContentType", method = RequestMethod.GET)

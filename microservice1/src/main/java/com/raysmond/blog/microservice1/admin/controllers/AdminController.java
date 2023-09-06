@@ -68,6 +68,7 @@ public class AdminController {
     public String testUpdateSettings() {
         Model model = new BindingAwareModelMap();
         SettingsForm settingsForm = new SettingsForm();
+        settingsForm.init();
         Errors errors = new BeanPropertyBindingResult(settingsForm, "settingsForm", true, 256);
         RedirectAttributes ra = new RedirectAttributesModelMap();
         updateSettings(settingsForm, errors, model, ra);

@@ -51,6 +51,7 @@ public class TagRepositoryController {
 
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     void delete(@RequestBody Tag tag) {
         tagRepository.delete(tag);
     }

@@ -1,10 +1,14 @@
 package com.raysmond.blog.common.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // TODO
 @Data
-public class PostUserParams {
+@NoArgsConstructor
+public class PostUserParams extends BaseModel {
     private Post post;
     private User user;
 

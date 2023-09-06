@@ -1,5 +1,8 @@
 package com.raysmond.blog.common.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.raysmond.blog.common.models.support.OgLocale;
 import com.raysmond.blog.common.models.support.OgType;
 import lombok.Getter;
@@ -11,6 +14,7 @@ import javax.persistence.*;
 @Table(name = "seo_posts_data")
 @Getter
 @Setter
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, scope = SeoPostData.class)
 public class SeoPostData extends BaseModel {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "seoData", cascade = CascadeType.ALL)

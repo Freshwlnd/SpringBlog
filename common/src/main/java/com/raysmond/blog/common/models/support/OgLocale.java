@@ -7,6 +7,10 @@ public enum OgLocale {
 
     private String name;
 
+//    OgLocale(){
+//        this.name = "en_EN";
+//    }
+
     OgLocale(String name){
         this.name = name;
     }

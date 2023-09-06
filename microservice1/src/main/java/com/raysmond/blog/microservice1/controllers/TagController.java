@@ -49,7 +49,7 @@ public class TagController {
     @ResponseBody
     public String testShowTag() {
         Model model = new BindingAwareModelMap();
-        String tagName = "tag11";
+        String tagName = "tag";
         int page = 1;
 
         showTag(tagName, page, model);

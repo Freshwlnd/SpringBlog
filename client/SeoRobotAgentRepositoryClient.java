@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public interface SeoRobotAgentRepositoryClient {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     void delete(@RequestBody SeoRobotAgent ua);
 
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)

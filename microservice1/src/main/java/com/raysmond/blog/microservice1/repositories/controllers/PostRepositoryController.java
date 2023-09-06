@@ -2,12 +2,14 @@ package com.raysmond.blog.microservice1.repositories.controllers;
 
 import com.raysmond.blog.common.models.Post;
 import com.raysmond.blog.common.models.PostParams;
+import com.raysmond.blog.common.models.RestPage;
 import com.raysmond.blog.common.models.support.PostStatus;
 import com.raysmond.blog.common.models.support.PostType;
 import com.raysmond.blog.microservice1.client.PostServiceClient;
 import com.raysmond.blog.microservice1.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+// import com.raysmond.blog.common.models.PageRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -139,8 +141,13 @@ public class PostRepositoryController {
 
     @RequestMapping(value = "/findAllByDeleted", method = RequestMethod.POST)
     @ResponseBody
-    Page<Post> findAllByDeleted(@RequestBody Pageable pageRequest, @RequestParam("deleted") Boolean deleted) {
-        return postRepository.findAllByDeleted(pageRequest, deleted);
+    RestPage<Post> findAllByDeleted(@RequestBody PostParams postPrams) {
+        return new RestPage<Post>(postRepository.findAllByDeleted(postPrams.getPageRequest(), postPrams.getDeleted()));
+//    Page<Post> findAllByDeleted(@RequestBody PostParams postPrams) {
+//        return postRepository.findAllByDeleted(postPrams.getPageRequest(), postPrams.getDeleted());
+//    Page<Post> findAllByDeleted(@RequestBody Pageable pageRequest, @RequestParam("deleted") Boolean deleted) {
+    // Page<Post> findAllByDeleted(@RequestBody PageRequest pageRequest, @RequestParam("deleted") Boolean deleted) {
+//        return postRepository.findAllByDeleted(pageRequest, deleted);
     }
 
     @RequestMapping(value = "/countPostsByTags", method = RequestMethod.POST)
@@ -150,6 +157,7 @@ public class PostRepositoryController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     void delete(@RequestBody Post post) {
         postRepository.delete(post);
     }
@@ -163,15 +171,20 @@ public class PostRepositoryController {
 
     @RequestMapping(value = "/findAllByPostTypeAndPostStatusAndDeleted", method = RequestMethod.POST)
     @ResponseBody
-    Page<Post> findAllByPostTypeAndPostStatusAndDeleted(@RequestBody PostParams postPrams) {
+    RestPage<Post> findAllByPostTypeAndPostStatusAndDeleted(@RequestBody PostParams postPrams) {
+//    Page<Post> findAllByPostTypeAndPostStatusAndDeleted(@RequestBody PostParams postPrams) {
+
         PostType postType = postPrams.getPostType();
         PostStatus postStatus = postPrams.getPostStatus();
         Pageable pageRequest = postPrams.getPageRequest();
+////        PageRequest pageRequest = postPrams.getPageRequest();
         Boolean deleted = postPrams.getDeleted();
-        return postRepository.findAllByPostTypeAndPostStatusAndDeleted(postType, postStatus, pageRequest, deleted);
+//        return postRepository.findAllByPostTypeAndPostStatusAndDeleted(postType, postStatus, pageRequest, deleted);
+        return new RestPage<Post>(postRepository.findAllByPostTypeAndPostStatusAndDeleted(postType, postStatus, pageRequest, deleted));
     }
 
     Page<Post> findAllByPostTypeAndPostStatusAndDeleted(PostType postType, PostStatus postStatus, Pageable pageRequest, Boolean deleted) {
+    // Page<Post> findAllByPostTypeAndPostStatusAndDeleted(PostType postType, PostStatus postStatus, PageRequest pageRequest, Boolean deleted) {
         return postRepository.findAllByPostTypeAndPostStatusAndDeleted(postType, postStatus, pageRequest, deleted);
     }
 
@@ -189,7 +202,17 @@ public class PostRepositoryController {
 
     @RequestMapping(value = "/findByTag", method = RequestMethod.POST)
     @ResponseBody
-    Page<Post> findByTag(@RequestParam("tag") String tag, @RequestBody Pageable pageable) {
+    RestPage<Post> findByTag(@RequestBody PostParams postPrams) {
+//    Page<Post> findByTag(@RequestBody PostParams postPrams) {
+        String tag = postPrams.getTag();
+        Pageable pageable = postPrams.getPageRequest();
+//        return postRepository.findByTag(tag, pageable);
+        return new RestPage<Post>(postRepository.findByTag(tag, pageable));
+    }
+
+    Page<Post> findByTag(String tag, Pageable pageable) {
+//    Page<Post> findByTag(@RequestParam("tag") String tag, @RequestBody Pageable pageable) {
+    // Page<Post> findByTag(@RequestParam("tag") String tag, @RequestBody PageRequest pageable) {
         return postRepository.findByTag(tag, pageable);
     }
 
@@ -202,7 +225,12 @@ public class PostRepositoryController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     Post save(@RequestBody Post post) {
-        return postRepository.save(post);
+        try {
+            return postRepository.save(post);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return post;
+        }
     }
 
 }

@@ -12,6 +12,7 @@ import com.raysmond.blog.microservice1.utils.PaginatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+// import com.raysmond.blog.common.models.PageRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.mock.web.MockMultipartFile;
@@ -54,7 +55,7 @@ public class StoredFileController {
     @RequestMapping(value = "testDeletePost", method = RequestMethod.GET)
     @ResponseBody
     public String testDeletePost() {
-        deletePost(0L);
+        deletePost(1L);
 
         return "test";
     }
@@ -64,7 +65,7 @@ public class StoredFileController {
     public String testEditFileById() {
         Model model = new BindingAwareModelMap();
 
-        editFileById(0L, model);
+        editFileById(2L, model);
 
         return "test";
     }
@@ -83,9 +84,10 @@ public class StoredFileController {
     @ResponseBody
     public String testSaveFile() {
         StoredFileForm fileForm = new StoredFileForm();
+        fileForm.init();
         Errors errors = new BeanPropertyBindingResult(fileForm, "fileForm", true, 256);
 
-        saveFile(0L, fileForm, errors);
+        saveFile(1L, fileForm, errors);
 
         return "test";
     }
@@ -205,6 +207,15 @@ public class StoredFileController {
         }
 
         StoredFile storedFile = this.storedFileRepository.findById(fileId);
+        if(storedFile==null){
+            storedFile = new StoredFile();
+            storedFile.setPath("/tmp/testSaveFile.txt");
+            storedFile.setUser(null);
+            storedFile.setTitle("testSaveFile");
+            storedFile.setName("testSaveFile");
+            storedFile.setSize(11L);
+            storedFile.init();
+        }
         DTOUtil.mapTo(fileForm, storedFile);
         storedFile.setUser(this.userService.currentUser());
         storedFile.setUpdatedAt(new Date());

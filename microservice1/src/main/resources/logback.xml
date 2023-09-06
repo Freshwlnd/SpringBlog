@@ -12,22 +12,24 @@
 
 	<jmxConfigurator />
 
-	<logger name="com.raysmond.blog" level="WARN"/>
+<!--	<logger name="com.raysmond.blog" level="WARN"/>-->
 
-	<logger name="org.hibernate.SQL" level="WARN"/>
+<!--	<logger name="org.hibernate.SQL" level="WARN"/>-->
 
-	<!--<logger name="org.hibernate.type" level="TRACE"/>-->
+<!--	&lt;!&ndash;<logger name="org.hibernate.type" level="TRACE"/>&ndash;&gt;-->
 
-	<logger name="org.springframework.web" level="ERROR"/>
+<!--	<logger name="org.springframework.web" level="ERROR"/>-->
 
-	<logger name="com.raysmond.blog.controllers" level="WARN"/>
+<!--	<logger name="com.raysmond.blog.controllers" level="WARN"/>-->
 
-	<logger name="com.raysmond.blog.admin.controllers" level="DEBUG"/>
+<!--	<logger name="com.raysmond.blog.admin.controllers" level="DEBUG"/>-->
 
-    <logger name="com.raysmond.blog.notificators.telegram" level="DEBUG" />
-	<logger name="com.raysmond.blog.microservice1.notificators.telegram.TelegramBotManager.TelegramBot" level="DEBUG" />
+<!--    <logger name="com.raysmond.blog.notificators.telegram" level="DEBUG" />-->
+<!--	<logger name="com.raysmond.blog.microservice1.notificators.telegram.TelegramBotManager.TelegramBot" level="DEBUG" />-->
+
 
 	<root level="WARN">
+<!--	<root level="DEBUG">-->
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

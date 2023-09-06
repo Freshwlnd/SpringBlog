@@ -11,7 +11,7 @@ import java.util.Date;
  * @author Raysmond<i@raysmond.com>
  */
 @MappedSuperclass
-//public abstract class BaseModel implements Comparable<BaseModel>, Serializable {
+// public abstract class BaseModel implements Comparable<BaseModel>, Serializable {
 public abstract class BaseModel implements Comparable<BaseModel> {
 
     @Id

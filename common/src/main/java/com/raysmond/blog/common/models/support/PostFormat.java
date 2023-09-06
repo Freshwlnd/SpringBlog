@@ -4,10 +4,14 @@ package com.raysmond.blog.common.models.support;
  * @author Raysmond<i@raysmond.com>
  */
 public enum PostFormat {
-    HTML("Html"),
-    MARKDOWN("Markdown");
+    HTML("HTML"),
+    MARKDOWN("MARKDOWN");
 
     private String name;
+
+//    PostFormat(){
+//        this.name = "Markdown";
+//    }
 
     PostFormat(String name){
         this.name = name;

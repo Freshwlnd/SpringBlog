@@ -14,6 +14,7 @@ import java.util.List;
 public interface TagRepositoryClient {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     void delete(@RequestBody Tag tag);
 
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)

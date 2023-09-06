@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public interface MarkdownServiceClient {
     
     @RequestMapping(value = "/renderToHtml", method = RequestMethod.GET)
+    @ResponseBody
     public String renderToHtml(@RequestParam("content") String content);
 
     @RequestMapping(value = "/highlight", method = RequestMethod.GET)
+    @ResponseBody
     public String highlight(@RequestParam("content") String content);
 
 }

@@ -59,6 +59,7 @@ public class TagService {
             @CacheEvict(value = CACHE_NAME_TAGS, allEntries = true)
     })
     @RequestMapping(value = "/deleteTag", method = RequestMethod.POST)
+    @ResponseBody
     public void deleteTag(@RequestBody Tag tag) {
         tagRepository.delete(tag);
     }

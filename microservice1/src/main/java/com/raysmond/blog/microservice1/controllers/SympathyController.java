@@ -1,6 +1,7 @@
 package com.raysmond.blog.microservice1.controllers;
 
 import com.raysmond.blog.common.forms.LikeForm;
+import com.raysmond.blog.common.models.FakeHttpServletRequest;
 import com.raysmond.blog.common.models.Post;
 import com.raysmond.blog.microservice1.client.*;
 import lombok.Data;
@@ -35,7 +36,7 @@ public class SympathyController {
     @Data
     public static class SympathyRequestData {
         @NotNull
-        private String postId;
+        private String postId = "projects";
     }
 
     // TODO
@@ -44,7 +45,8 @@ public class SympathyController {
     @ResponseBody
     public String testDislikeIt() {
         SympathyRequestData data = new SympathyRequestData();
-        MockHttpServletRequest request = new MockHttpServletRequest();
+        // MockHttpServletRequest request = new MockHttpServletRequest();
+        FakeHttpServletRequest request = new FakeHttpServletRequest();
 
         dislikeIt(data, request);
 
@@ -55,7 +57,8 @@ public class SympathyController {
     @ResponseBody
     public String testLikeIt() {
         SympathyRequestData data = new SympathyRequestData();
-        MockHttpServletRequest request = new MockHttpServletRequest();
+        // MockHttpServletRequest request = new MockHttpServletRequest();
+        FakeHttpServletRequest request = new FakeHttpServletRequest();
 
         likeIt(data, request);
 
@@ -67,7 +70,8 @@ public class SympathyController {
 
     @PostMapping(value = "/like")
     public @ResponseBody
-    LikeForm likeIt(@RequestBody SympathyRequestData data, HttpServletRequest request) {
+    // LikeForm likeIt(@RequestBody SympathyRequestData data, HttpServletRequest request) {
+    LikeForm likeIt(@RequestBody SympathyRequestData data, FakeHttpServletRequest request) {
 
         // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
 //        System.out.println("SympathyRequestData");
@@ -84,7 +88,8 @@ public class SympathyController {
 
     @PostMapping(value = "/dislike")
     public @ResponseBody
-    LikeForm dislikeIt(@RequestBody SympathyRequestData data, HttpServletRequest request) {
+    // LikeForm dislikeIt(@RequestBody SympathyRequestData data, HttpServletRequest request) {
+    LikeForm dislikeIt(@RequestBody SympathyRequestData data, FakeHttpServletRequest request) {
         Post post = this.postService.findPostByPermalink(data.getPostId());
         this.likeService.dislikePost(post, this.requestProcessorService.getRealIp(request));
 //        ViewHelper viewHelper = new ViewHelper(this.appSetting);
@@ -101,7 +106,8 @@ public class SympathyController {
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
         SympathyRequestData data = new SympathyRequestData();
-        MockHttpServletRequest request = new MockHttpServletRequest();
+        // MockHttpServletRequest request = new MockHttpServletRequest();
+        FakeHttpServletRequest request = new FakeHttpServletRequest();
 
 
         if (method.equals("all") || method.equals("likeIt")) {
@@ -114,7 +120,8 @@ public class SympathyController {
         return "test";
     }
 
-    public LikeForm likeIt_test(SympathyRequestData data, HttpServletRequest request) {
+    // public LikeForm likeIt_test(SympathyRequestData data, HttpServletRequest request) {
+    public LikeForm likeIt_test(SympathyRequestData data, FakeHttpServletRequest request) {
 //        Post post = this.postService.findPostByPermalink(data.getPostId());
         Post post = new Post();
 //        this.likeService.likePost(post, this.requestProcessorService.getRealIp(request));
@@ -125,7 +132,8 @@ public class SympathyController {
         return result;
     }
 
-    public LikeForm dislikeIt_test(SympathyRequestData data, HttpServletRequest request) {
+    // public LikeForm dislikeIt_test(SympathyRequestData data, HttpServletRequest request) {
+    public LikeForm dislikeIt_test(SympathyRequestData data, FakeHttpServletRequest request) {
 //        Post post = this.postService.findPostByPermalink(data.getPostId());
         Post post = new Post();
 //        this.likeService.dislikePost(post, this.requestProcessorService.getRealIp(request));

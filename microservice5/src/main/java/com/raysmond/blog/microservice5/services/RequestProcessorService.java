@@ -3,6 +3,10 @@ package com.raysmond.blog.microservice5.services;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.raysmond.blog.common.models.FakeHttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +19,8 @@ public class RequestProcessorService {
 
     @RequestMapping(value = "/getRealIp", method = RequestMethod.POST)
     @ResponseBody
-    public String getRealIp(@RequestBody HttpServletRequest request) {
+    // public String getRealIp(@RequestBody HttpServletRequest request) {
+    public String getRealIp(@RequestBody FakeHttpServletRequest request) {
         String xRealIp = request.getHeader("X-Real-IP");
         if (xRealIp == null || request.getHeader("X-Real-IP").isEmpty()) {
             return request.getRemoteAddr();
@@ -25,7 +30,8 @@ public class RequestProcessorService {
 
     @RequestMapping(value = "/getUserAgent", method = RequestMethod.POST)
     @ResponseBody
-    public String getUserAgent(@RequestBody HttpServletRequest request) {
+    // public String getUserAgent(@RequestBody HttpServletRequest request) {
+    public String getUserAgent(@RequestBody FakeHttpServletRequest request) {
         String userAgent = request.getHeader("User-Agent");
         return userAgent;
     }
@@ -37,7 +43,8 @@ public class RequestProcessorService {
     @RequestMapping(value = "testCPU", method = RequestMethod.GET)
     @ResponseBody
     public String testCPU(@RequestParam(name = "method", defaultValue = "all") String method) {
-        HttpServletRequest request = new MockHttpServletRequest();
+        // HttpServletRequest request = new MockHttpServletRequest();
+        FakeHttpServletRequest request = new FakeHttpServletRequest();
 
         switch (method) {
             case "all":
@@ -59,7 +66,8 @@ public class RequestProcessorService {
         return "test";
     }
 
-    String getRealIp_test(HttpServletRequest request) {
+    // String getRealIp_test(HttpServletRequest request) {
+    String getRealIp_test(FakeHttpServletRequest request) {
 
         // TODO：增加数据大小获取功能（https://www.cnblogs.com/huaweiyun/p/16416147.html）
 //        System.out.println("request: ");
@@ -74,7 +82,8 @@ public class RequestProcessorService {
         return xRealIp;
     }
 
-    String getUserAgent_test(HttpServletRequest request) {
+    // String getUserAgent_test(HttpServletRequest request) {
+    String getUserAgent_test(FakeHttpServletRequest request) {
         String userAgent = request.getHeader("User-Agent");
         return userAgent;
     }

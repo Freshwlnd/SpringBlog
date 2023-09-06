@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = {"/seo"})
+@RequestMapping(value = "/seo")
 public class SitemapController {
 
     @Autowired
@@ -24,6 +24,7 @@ public class SitemapController {
     // TODO
 
     @RequestMapping(value = "testGetSiteMap", method = RequestMethod.GET)
+    @ResponseBody
     public String testGetSiteMap() {
         getSiteMap();
 

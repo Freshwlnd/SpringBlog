@@ -1,18 +1,17 @@
 package com.raysmond.blog.microservice1.client;
 
-import com.raysmond.blog.common.models.Post;
-import com.raysmond.blog.common.models.SeoPostData;
-import com.raysmond.blog.common.models.Tag;
-import com.raysmond.blog.common.models.User;
+import com.raysmond.blog.common.models.*;
 import com.raysmond.blog.common.models.dto.PostIdTitleDTO;
 import com.raysmond.blog.common.models.support.PostFormat;
 import com.raysmond.blog.common.models.support.PostStatus;
 import com.raysmond.blog.common.models.support.PostType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.data.domain.Page;
+// import com.raysmond.blog.common.models.PageRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,94 +22,97 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @Repository
-@FeignClient(name = "springblog-microservice7")
-@RequestMapping("/PostService")
-public interface PostServiceClient {
+public class PostServiceClient {
 
-    @RequestMapping(value = "/getPost", method = RequestMethod.GET)
-    @ResponseBody
-    public Post getPost(@RequestParam("postId") Long postId) ;
+    @Autowired
+    PostServiceRealClient postServiceRealClient;
 
-    @RequestMapping(value = "/getPublishedPost", method = RequestMethod.GET)
-    @ResponseBody
-    public Post getPublishedPost(@RequestParam("postId") Long postId) ;
+    public Post getPost(Long postId) {
+        return this.postServiceRealClient.getPost(postId);
+    }
 
-    @RequestMapping(value = "/getPublishedPostByPermalink", method = RequestMethod.GET)
-    @ResponseBody
-    public Post getPublishedPostByPermalink(@RequestParam("permalink") String permalink) ;
+    public Post getPublishedPost(Long postId) {
+        return this.postServiceRealClient.getPublishedPost(postId);
+    }
 
-    @RequestMapping(value = "/createPost", method = RequestMethod.POST)
-    @ResponseBody
-    public Post createPost(@RequestBody Post post) ;
+    public Post getPublishedPostByPermalink(String permalink) {
+        return this.postServiceRealClient.getPublishedPostByPermalink(permalink);
+    }
 
-    @RequestMapping(value = "/updatePost", method = RequestMethod.POST)
-    @ResponseBody
-    public Post updatePost(@RequestBody Post post) ;
+    public Post createPost(Post post) {
+        return this.postServiceRealClient.createPost(post);
+    }
 
-    @RequestMapping(value = "/deletePost", method = RequestMethod.POST)
-    public void deletePost(@RequestBody Post post) ;
+    public Post updatePost(Post post) {
+        return this.postServiceRealClient.updatePost(post);
+    }
 
-    @RequestMapping(value = "/deletePost", method = RequestMethod.GET)
-    public void deletePost(@RequestParam("postId") Long postId) ;
+    public void deletePost(Post post) {
+        this.postServiceRealClient.deletePost(post);
+    }
 
-    @RequestMapping(value = "/getArchivePosts", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Post> getArchivePosts() ;
+    public void deletePost(Long postId) {
+        this.postServiceRealClient.deletePost(postId);
+    }
 
-    @RequestMapping(value = "/getPostTags", method = RequestMethod.POST)
-    @ResponseBody
-    public List<Tag> getPostTags(@RequestBody Post post) ;
+    public List<Post> getArchivePosts() {
+        return this.postServiceRealClient.getArchivePosts();
+    }
 
-    @RequestMapping(value = "/getSeoKeywordsAsString", method = RequestMethod.POST)
-    @ResponseBody
-    public String getSeoKeywordsAsString(@RequestBody Post post) ;
+    public List<Tag> getPostTags(Post post) {
+        return this.postServiceRealClient.getPostTags(post);
+    }
 
-    @RequestMapping(value = "/getAllPublishedPostsByPage", method = RequestMethod.GET)
-    @ResponseBody
-    public Page<Post> getAllPublishedPostsByPage(@RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) ;
+    public String getSeoKeywordsAsString(Post post) {
+        return this.postServiceRealClient.getSeoKeywordsAsString(post);
+    }
 
-    @RequestMapping(value = "/getAllPublishedPosts", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Post> getAllPublishedPosts() ;
+    public RestPage<Post> getAllPublishedPostsByPage(Integer page, Integer pageSize) {
+        return this.postServiceRealClient.getAllPublishedPostsByPage(page, pageSize);
+    }
 
-    @RequestMapping(value = "/getAllPosts", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Post> getAllPosts() ;
+    public List<Post> getAllPublishedPosts() {
+        return this.postServiceRealClient.getAllPublishedPosts();
+    }
 
-    @RequestMapping(value = "/createAboutPage", method = RequestMethod.GET)
-    @ResponseBody
-    public Post createAboutPage() ;
+    public List<Post> getAllPosts() {
+        return this.postServiceRealClient.getAllPosts();
+    }
 
-    @RequestMapping(value = "/createProjectsPage", method = RequestMethod.GET)
-    @ResponseBody
-    public Post createProjectsPage(@RequestParam("needStore") Boolean needStore) ;
+    public Post createAboutPage() {
+        return this.postServiceRealClient.createAboutPage();
+    }
 
-    @RequestMapping(value = "/parseTagNames", method = RequestMethod.GET)
-    @ResponseBody
-    public Set<Tag> parseTagNames(@RequestParam("tagNames") String tagNames) ;
+    public Post createProjectsPage(Boolean needStore) {
+        return this.postServiceRealClient.createProjectsPage(needStore);
+    }
 
-    @RequestMapping(value = "/getTagNames", method = RequestMethod.POST)
-    @ResponseBody
-    public String getTagNames(@RequestBody Set<Tag> tags) ;
+    public Set<Tag> parseTagNames(String tagNames) {
+        return this.postServiceRealClient.parseTagNames(tagNames);
+    }
 
-    @RequestMapping(value = "/findPostsByTag", method = RequestMethod.GET)
-    @ResponseBody
-    public Page<Post> findPostsByTag(@RequestParam("tagName") String tagName, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) ;
+    public String getTagNames(Set<Tag> tags) {
+        return this.postServiceRealClient.getTagNames(tags);
+    }
 
-    @RequestMapping(value = "/countPostsByTags", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Object[]> countPostsByTags() ;
+    public RestPage<Post> findPostsByTag(String tagName, int page, int pageSize) {
+        return this.postServiceRealClient.findPostsByTag(tagName, page, pageSize);
+    }
 
-    @RequestMapping(value = "/findPostByPermalink", method = RequestMethod.GET)
-    @ResponseBody
-    public Post findPostByPermalink(@RequestParam("permalink") String permalink) ;
+    public List<Object[]> countPostsByTags() {
+        return this.postServiceRealClient.countPostsByTags();
+    }
 
-    @RequestMapping(value = "/getPostsIdTitleList", method = RequestMethod.GET)
-    @ResponseBody
-    public List<PostIdTitleDTO> getPostsIdTitleList() ;
+    public Post findPostByPermalink(String permalink) {
+        return this.postServiceRealClient.findPostByPermalink(permalink);
+    }
 
-    @RequestMapping(value = "/findAllPosts", method = RequestMethod.POST)
-    @ResponseBody
-    public Page<Post> findAllPosts(@RequestBody PageRequest pageRequest) ;
+    public List<PostIdTitleDTO> getPostsIdTitleList() {
+        return this.postServiceRealClient.getPostsIdTitleList();
+    }
+
+    public Page<Post> findAllPosts(PageRequest pageRequest) {
+        return this.postServiceRealClient.findAllPosts(new PostParams(pageRequest));
+    }
 
 }

@@ -64,18 +64,18 @@ public class PostForm {
     private OgLocale seoOgLocale;
 
     public void init() {
-        this.setTitle("");
-        this.setPermalink("");
-        this.setContent("");
-        this.setPostTags("");
+        this.setTitle("title");
+        this.setPermalink("permalink");
+        this.setContent("content");
+        this.setPostTags("tag");
         this.setPostStatus(PostStatus.DRAFT);
         this.setPostFormat(PostFormat.MARKDOWN);
-        this.setSeoKeywords("");
-        this.setSeoOgImage("");
+        this.setSeoKeywords("seoKeywords");
+        this.setSeoOgImage("seoOgImage");
         this.setSeoOgLocale(OgLocale.en_EN);
         //this.setSeoOgTitle("");
         this.setSeoOgType(OgType.ARTICLE);
-        this.setSeoOgVideo("");
+        this.setSeoOgVideo("seoOgVideo");
     }
 
     public void initFromPost(Post post) {

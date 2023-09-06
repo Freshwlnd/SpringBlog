@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public interface StoredFileRepositoryClient {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     void delete(@RequestBody StoredFile storedFile);
 
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)

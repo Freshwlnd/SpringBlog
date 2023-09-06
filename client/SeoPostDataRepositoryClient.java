@@ -14,6 +14,7 @@ import java.util.List;
 public interface SeoPostDataRepositoryClient {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
     void save(@RequestBody SeoPostData data);
 
 }

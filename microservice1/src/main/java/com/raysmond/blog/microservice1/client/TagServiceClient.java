@@ -24,6 +24,7 @@ public interface TagServiceClient {
     public Tag getTag(@RequestParam("tagName") String tagName);
 
     @RequestMapping(value = "/deleteTag", method = RequestMethod.POST)
+    @ResponseBody
     public void deleteTag(@RequestBody Tag tag);
 
     @RequestMapping(value = "/getAllTags", method = RequestMethod.GET)

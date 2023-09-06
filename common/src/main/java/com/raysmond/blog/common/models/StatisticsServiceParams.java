@@ -1,12 +1,15 @@
 package com.raysmond.blog.common.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 import java.util.List;
 
 // TODO
 @Data
+@NoArgsConstructor
 public class StatisticsServiceParams {
     private Date periodStart;
     private Date periodEnd;

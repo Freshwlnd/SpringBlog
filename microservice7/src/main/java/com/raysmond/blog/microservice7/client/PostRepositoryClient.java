@@ -8,10 +8,13 @@ import com.raysmond.blog.common.models.support.PostType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.data.domain.Page;
+// import com.raysmond.blog.common.models.PageRequest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -26,7 +29,8 @@ public class PostRepositoryClient {
     }
 
     public Page<Post> findAllByDeleted(Pageable pageRequest, Boolean deleted) {
-        return postRepositoryRealClient.findAllByDeleted(pageRequest, deleted);
+        PostParams postPrams = new PostParams(pageRequest, deleted);
+        return postRepositoryRealClient.findAllByDeleted(postPrams);
     }
 
     public List<Object[]> countPostsByTags(PostStatus status) {
@@ -42,6 +46,7 @@ public class PostRepositoryClient {
     }
 
     public Page<Post> findAllByPostTypeAndPostStatusAndDeleted(PostType postType, PostStatus postStatus, Pageable pageRequest, Boolean deleted) {
+    // public Page<Post> findAllByPostTypeAndPostStatusAndDeleted(PostType postType, PostStatus postStatus, PageRequest pageRequest, Boolean deleted) {
         PostParams postPrams = new PostParams(postType, postStatus, pageRequest, deleted);
         return postRepositoryRealClient.findAllByPostTypeAndPostStatusAndDeleted(postPrams);
     }
@@ -55,7 +60,10 @@ public class PostRepositoryClient {
     }
 
     public Page<Post> findByTag(String tag, Pageable pageable) {
-        return postRepositoryRealClient.findByTag(tag, pageable);
+    // public Page<Post> findByTag(String tag, PageRequest pageable) {
+        PostParams postPrams = new PostParams(tag, pageable);
+//        return postRepositoryRealClient.findByTag(tag, postPrams);
+        return postRepositoryRealClient.findByTag(postPrams);
     }
 
     public Post findOne(Long postId) {

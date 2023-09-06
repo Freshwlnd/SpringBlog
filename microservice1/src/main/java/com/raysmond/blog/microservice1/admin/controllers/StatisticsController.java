@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -35,9 +36,13 @@ public class StatisticsController {
     @RequestMapping(value = "testGetVisitsChartByPeriodAndPostsIdList", method = RequestMethod.GET)
     @ResponseBody
     public String testGetVisitsChartByPeriodAndPostsIdList() {
-        Date start = new Date(1);
-        Date end = new Date(1);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.add(Calendar.DATE, -1); //得到前一天
+//        Date start = calendar.getTime();
+        Date start = new Date();
+        Date end = new Date();
         PostsIdListDTO postsDto = new PostsIdListDTO();
+        postsDto.init();
 
         getVisitsChartByPeriodAndPostsIdList(start, end, postsDto);
 

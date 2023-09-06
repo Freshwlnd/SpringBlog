@@ -1,5 +1,6 @@
 package com.raysmond.blog.microservice1.error;
 
+import com.raysmond.blog.common.models.FakeHttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,8 @@ class ExceptionHandlerController {
 
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler(NotFoundException.class)
-	public ModelAndView notFound(HttpServletRequest request, NotFoundException exception){
+	// public ModelAndView notFound(HttpServletRequest request, NotFoundException exception){
+	public ModelAndView notFound(FakeHttpServletRequest request, NotFoundException exception){
 		String uri = request.getRequestURI();
 		logger.error("Request page: " + uri + " raised NotFoundException : " + exception);
 
@@ -39,7 +41,8 @@ class ExceptionHandlerController {
 	 */
 //	@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
 	@ExceptionHandler(Exception.class)
-	public ModelAndView exception(HttpServletRequest request, Exception exception) {
+	// public ModelAndView exception(HttpServletRequest request, Exception exception) {
+	public ModelAndView exception(FakeHttpServletRequest request, Exception exception) {
 		String uri = request.getRequestURI();
 		logger.error("Request page: " + uri + " raised exception : " + exception);
 

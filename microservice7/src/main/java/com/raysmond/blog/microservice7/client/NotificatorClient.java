@@ -15,6 +15,7 @@ import java.util.List;
 public interface NotificatorClient {
 
     @RequestMapping(value = "/announcePost", method = RequestMethod.POST)
+    @ResponseBody
     public void announcePost(@RequestBody Post post) throws IllegalArgumentException, TelegramApiException;
 
 }

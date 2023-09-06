@@ -17,8 +17,8 @@ public interface SettingRepositoryClient {
     @ResponseBody
     Setting findByKey(@RequestParam("key") String key);
 
-    @RequestMapping(value = "/save", method = RequestMethod.GET)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    Setting save(@RequestParam("setting") Setting setting);;
+    Setting save(@RequestBody Setting setting);;
 
 }

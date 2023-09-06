@@ -2,6 +2,7 @@ package com.raysmond.blog.common.models.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,4 +11,9 @@ import java.util.List;
 @Data
 public class PostsIdListDTO {
     private List<Integer> ids;
+
+    public void init() {
+        this.ids = new ArrayList<>();
+        ids.add(1);
+    }
 }

@@ -1,13 +1,19 @@
 package com.raysmond.blog.common.models.support;
 
+import lombok.NoArgsConstructor;
+
 /**
  * @author Raysmond<i@raysmond.com>
  */
 public enum PostStatus {
-    DRAFT("Draft"),
-    PUBLISHED("Published");
+    DRAFT("DRAFT"),
+    PUBLISHED("PUBLISHED");
 
     private String name;
+
+//    PostStatus(){
+//        this.name = "Published";
+//    }
 
     PostStatus(String name){
         this.name = name;
